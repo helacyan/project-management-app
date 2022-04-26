@@ -9,10 +9,14 @@ import { TranslocoRootModule } from './transloco-root.module';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
+import { HeaderComponent } from './core/components/header/header.component';
+import { FooterComponent } from './core/components/footer/footer.component';
+import { ModalComponent } from './core/components/modal/modal.component';
+import { LoginComponent } from './auth/components/login/login.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, ModalComponent, LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
