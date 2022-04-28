@@ -1,0 +1,38 @@
+@use "variables" as *;
+.header {
+  position: sticky;
+  z-index: 999;
+  top: 0px;
+  height: 8%;
+  background-color: $blue-light;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  .active {
+    background-color: $blue;
+  }
+  button:hover {
+    background-color: $blue;
+  }
+  .header-menu-container {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .header-menu-container {
+    min-width: 50%;
+  }
+}
+@media screen and (max-width: 900px) {
+  .header {
+    height: 13%;
+  }
+  .header-menu-container {
+    flex-direction: column;
+    min-width: 40%;
+  }
+}

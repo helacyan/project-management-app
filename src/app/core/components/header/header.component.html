@@ -1,1 +1,15 @@
-<p>header works!</p>
+<div class="header">
+  <div class="header-menu-container">
+    <mat-slide-toggle color="primary">ENG</mat-slide-toggle>
+    <button mat-raised-button>
+      <span>редактировать профиль</span>
+    </button>
+    <button mat-raised-button>создать новую доску</button>
+  </div>
+  <div class="header-login-container">
+    <button mat-raised-button (click)="openLoginPage()">
+      <span class="material-icons">login</span>
+      Вход
+    </button>
+  </div>
+</div>
