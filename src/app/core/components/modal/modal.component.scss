@@ -1,0 +1,8 @@
+@use 'variables' as *;
+.modal-buttons {
+  justify-content: center;
+}
+.ok-btn {
+  background-color: $blue;
+  margin-left: 10px;
+}

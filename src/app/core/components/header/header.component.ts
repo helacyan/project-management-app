@@ -1,5 +1,5 @@
-import { Component } from '@angular/core'
-import { Router } from '@angular/router'
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +10,6 @@ export class HeaderComponent {
   constructor(private router: Router) {}
 
   openLoginPage() {
-    this.router.navigate(['login'])
+    this.router.navigate(['login']);
   }
 }
