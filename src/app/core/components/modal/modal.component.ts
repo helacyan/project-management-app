@@ -9,11 +9,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class ModalComponent {
   constructor(private dialogRef: MatDialogRef<ModalComponent>) {}
 
-  save() {
-    this.dialogRef.close();
+  continue() {
+    this.dialogRef.close(true);
   }
 
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 }

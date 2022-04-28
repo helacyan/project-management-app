@@ -5,14 +5,14 @@ import { ModalComponent } from '../modal.component';
 @Injectable({
   providedIn: 'root',
 })
-export class OpenModalService {
+export class OpenConfirmationModalService {
   constructor(private dialog: MatDialog) {}
 
-  openDialog() {
+  openConfirmationDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.position = {
-      top: '5px',
+      top: '10px',
     };
-    this.dialog.open(ModalComponent, dialogConfig);
+    return this.dialog.open(ModalComponent, dialogConfig).afterClosed();
   }
 }

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OpenModalService } from './open-modal.service';
+import { OpenConfirmationModalService } from './open-modal.service';
 
 describe('OpenModalService', () => {
-  let service: OpenModalService;
+  let service: OpenConfirmationModalService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(OpenModalService);
+    service = TestBed.inject(OpenConfirmationModalService);
   });
 
   it('should be created', () => {
