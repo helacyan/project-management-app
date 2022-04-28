@@ -10,21 +10,21 @@ export class UsersService {
 
   getUsers() {
     this.http.get(`${baseUrl}users`).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
   getUserById(id: string) {
     this.http.get(`${baseUrl}users/${id}`).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
   deleteUser(id: string) {
     this.http.delete(`${baseUrl}users/${id}`).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
@@ -36,7 +36,7 @@ export class UsersService {
       password: password,
     };
     this.http.put(`${baseUrl}users/${id}`, options).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }

@@ -20,7 +20,7 @@ export class FilesService {
       formParams.append('taskId', taksId);
       let upload$ = this.http.post(`${baseUrl}file`, formParams);
       upload$.subscribe({
-        next: data => console.log(data),
+        next: data => data,
         error: error => console.log(error.error.message),
       });
     }

@@ -10,7 +10,7 @@ export class TasksService {
 
   getTasks(boardId: string, columnId: string) {
     this.http.get(`${baseUrl}boards/${boardId}/columns/${columnId}/tasks`).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
@@ -23,21 +23,21 @@ export class TasksService {
       userId: userId,
     };
     this.http.post(`${baseUrl}boards/${boardId}/columns/${columnId}/tasks`, options).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
   getTaskById(boardId: string, columnId: string, taskId: string) {
     this.http.get(`${baseUrl}boards/${boardId}/columns/${columnId}/tasks/${taskId}`).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
   deleteTask(boardId: string, columnId: string, taskId: string) {
     this.http.delete(`${baseUrl}boards/${boardId}/columns/${columnId}/tasks/${taskId}`).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
@@ -60,7 +60,7 @@ export class TasksService {
       columnId: columnId,
     };
     this.http.put(`${baseUrl}boards/${boardId}/columns/${columnId}/tasks/${taskId}`, options).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }

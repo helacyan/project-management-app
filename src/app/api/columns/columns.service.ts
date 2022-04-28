@@ -10,7 +10,7 @@ export class ColumnsService {
 
   getColumns(id: string) {
     this.http.get(`${baseUrl}boards/${id}/columns`).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
@@ -28,14 +28,14 @@ export class ColumnsService {
 
   getColumnById(boardId: string, columnId: string) {
     this.http.get(`${baseUrl}boards/${boardId}/columns/${columnId}`).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
   deleteColumn(boardId: string, columnId: string) {
     this.http.delete(`${baseUrl}boards/${boardId}/columns/${columnId}`).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
@@ -46,7 +46,7 @@ export class ColumnsService {
       order: order,
     };
     this.http.put(`${baseUrl}boards/${boardId}/columns/${columnId}`, options).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }

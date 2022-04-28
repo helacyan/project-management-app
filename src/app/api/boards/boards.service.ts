@@ -10,7 +10,7 @@ export class BoardsService {
 
   getBoards() {
     this.http.get(`${baseUrl}boards`).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
@@ -20,21 +20,21 @@ export class BoardsService {
       title: title,
     };
     this.http.post(`${baseUrl}boards`, options).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
   getBoardById(id: string) {
     this.http.get(`${baseUrl}boards/${id}`).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
   deleteBoard(id: string) {
     this.http.delete(`${baseUrl}boards/${id}`).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
@@ -44,7 +44,7 @@ export class BoardsService {
       title: title,
     };
     this.http.put(`${baseUrl}boards/${id}`, options).subscribe({
-      next: data => console.log(data),
+      next: data => data,
       error: error => console.log(error.error.message),
     });
   }
