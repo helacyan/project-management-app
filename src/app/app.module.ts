@@ -8,9 +8,6 @@ import { TranslocoRootModule } from './transloco-root.module';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { HeaderComponent } from './core/components/header/header.component';
-import { FooterComponent } from './core/components/footer/footer.component';
-import { ModalComponent } from './core/components/modal/modal.component';
 import { LoginComponent } from './auth/components/login/login.component';
 import { environment } from 'src/environments/environment';
 import { FormsModule } from '@angular/forms';
@@ -23,14 +20,9 @@ const INTERCEPTOR_PROVIDER: Provider = {
   multi: true,
   deps: [UtilsService],
 };
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';
-
-
+import CoreModule from './core/core.module';
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent, ModalComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -38,10 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     HttpClientModule,
     FormsModule,
     TranslocoRootModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSlideToggleModule,
-    MatDialogModule,
+    CoreModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
     }),
@@ -52,6 +41,5 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   providers: [INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent],
-  entryComponents: [ModalComponent],
 })
 export class AppModule {}

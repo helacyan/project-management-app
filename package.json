@@ -26,6 +26,7 @@
     "@ngneat/transloco": "^4.0.0",
     "@ngrx/store": "^13.1.0",
     "@ngrx/store-devtools": "^13.1.0",
+    "angular-svg-icon": "^13.0.0",
     "patch-package": "^6.4.7",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

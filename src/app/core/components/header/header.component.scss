@@ -3,7 +3,7 @@
   position: sticky;
   z-index: 999;
   top: 0px;
-  height: 8%;
+  height: 70px;
   background-color: $blue-light;
   display: flex;
   justify-content: space-between;
@@ -29,10 +29,14 @@
 }
 @media screen and (max-width: 900px) {
   .header {
-    height: 13%;
+    height: 110px;
   }
   .header-menu-container {
     flex-direction: column;
-    min-width: 40%;
+    min-width: 100px;
+  }
+  .header-menu-btn {
+    width: 175px;
+    padding: 0px;
   }
 }
