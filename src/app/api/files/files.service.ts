@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { baseUrl } from '../consts';
+import { BASE_URL } from '../consts';
 import { saveAs } from 'file-saver';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class FilesService {
       let formParams = new FormData();
       formParams.append('file', file);
       formParams.append('taskId', taksId);
-      let upload$ = this.http.post(`${baseUrl}file`, formParams);
+      let upload$ = this.http.post(`${BASE_URL}file`, formParams);
       upload$.subscribe({
         next: data => data,
         error: error => console.log(error.error.message),
@@ -27,7 +27,7 @@ export class FilesService {
   }
 
   downloadFile(taskId: string, filename: string) {
-    this.http.get(`${baseUrl}file/${taskId}/${filename}`, { responseType: 'blob' }).subscribe(data => {
+    this.http.get(`${BASE_URL}file/${taskId}/${filename}`, { responseType: 'blob' }).subscribe(data => {
       saveAs(data, `${filename}`);
     });
   }

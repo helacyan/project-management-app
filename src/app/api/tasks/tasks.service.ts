@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { baseUrl } from '../consts';
+import { BASE_URL } from '../consts';
+import { ITask, IUpdateTask } from '../utils/models/api.model';
 
 @Injectable({
   providedIn: 'root',
@@ -9,57 +10,36 @@ export class TasksService {
   constructor(private http: HttpClient) {}
 
   getTasks(boardId: string, columnId: string) {
-    this.http.get(`${baseUrl}boards/${boardId}/columns/${columnId}/tasks`).subscribe({
+    this.http.get(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks`).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
-  createTask(boardId: string, columnId: string, title: string, order: number, description: string, userId: string) {
-    const options = {
-      title: title,
-      order: order,
-      description: description,
-      userId: userId,
-    };
-    this.http.post(`${baseUrl}boards/${boardId}/columns/${columnId}/tasks`, options).subscribe({
+  createTask(boardId: string, columnId: string, task: ITask) {
+    this.http.post(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks`, task).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
   getTaskById(boardId: string, columnId: string, taskId: string) {
-    this.http.get(`${baseUrl}boards/${boardId}/columns/${columnId}/tasks/${taskId}`).subscribe({
+    this.http.get(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks/${taskId}`).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
   deleteTask(boardId: string, columnId: string, taskId: string) {
-    this.http.delete(`${baseUrl}boards/${boardId}/columns/${columnId}/tasks/${taskId}`).subscribe({
+    this.http.delete(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks/${taskId}`).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
-  updateTask(
-    boardId: string,
-    columnId: string,
-    taskId: string,
-    title: string,
-    description: string,
-    order: number,
-    userId: string
-  ) {
-    const options = {
-      title: title,
-      order: order,
-      description: description,
-      userId: userId,
-      boardId: boardId,
-      columnId: columnId,
-    };
-    this.http.put(`${baseUrl}boards/${boardId}/columns/${columnId}/tasks/${taskId}`, options).subscribe({
+  updateTask(taskId: string, updatedTask: IUpdateTask) {
+    const { boardId, columnId } = updatedTask;
+    this.http.put(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks/${taskId}`, updatedTask).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });

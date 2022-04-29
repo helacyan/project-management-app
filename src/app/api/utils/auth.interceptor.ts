@@ -6,8 +6,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private utils: UtilsService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let cloned;
-    cloned = !(req.url.includes('signin') || req.url.includes('signup'))
+    const cloned = !(req.url.includes('signin') || req.url.includes('signup'))
       ? req.clone({
           setHeaders: { Authorization: `Bearer ${this.utils.getTokenFromStorage()}` },
         })

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { baseUrl } from '../consts';
+import { BASE_URL } from '../consts';
+import { ILogin, IUser } from '../utils/models/api.model';
 import { UtilsService } from '../utils/utils.service';
 
 @Injectable({
@@ -9,24 +10,15 @@ import { UtilsService } from '../utils/utils.service';
 export class SignInService {
   constructor(private http: HttpClient, private utils: UtilsService) {}
 
-  signUp(name: string, login: string, password: string) {
-    const options = {
-      name: name,
-      login: login,
-      password: password,
-    };
-    this.http.post(`${baseUrl}signup`, options).subscribe({
+  signUp(user: IUser) {
+    this.http.post(`${BASE_URL}signup`, user).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
-  signIn(login: string, password: string) {
-    const options = {
-      login: login,
-      password: password,
-    };
-    this.http.post<{ token: string }>(`${baseUrl}signin`, options).subscribe({
+  signIn(login: ILogin) {
+    this.http.post<{ token: string }>(`${BASE_URL}signin`, login).subscribe({
       next: data => this.utils.setLocalStorage(data.token),
       error: error => console.log(error.error.message),
     });

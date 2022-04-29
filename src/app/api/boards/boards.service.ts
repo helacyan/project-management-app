@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { baseUrl } from '../consts';
+import { BASE_URL } from '../consts';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ export class BoardsService {
   constructor(private http: HttpClient) {}
 
   getBoards() {
-    this.http.get(`${baseUrl}boards`).subscribe({
+    this.http.get(`${BASE_URL}boards`).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });
@@ -17,23 +17,23 @@ export class BoardsService {
 
   createBoard(title: string) {
     const options = {
-      title: title,
+      title,
     };
-    this.http.post(`${baseUrl}boards`, options).subscribe({
+    this.http.post(`${BASE_URL}boards`, options).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
   getBoardById(id: string) {
-    this.http.get(`${baseUrl}boards/${id}`).subscribe({
+    this.http.get(`${BASE_URL}boards/${id}`).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
   deleteBoard(id: string) {
-    this.http.delete(`${baseUrl}boards/${id}`).subscribe({
+    this.http.delete(`${BASE_URL}boards/${id}`).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });
@@ -41,9 +41,9 @@ export class BoardsService {
 
   updateBoard(id: string, title: string) {
     const options = {
-      title: title,
+      title,
     };
-    this.http.put(`${baseUrl}boards/${id}`, options).subscribe({
+    this.http.put(`${BASE_URL}boards/${id}`, options).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });
