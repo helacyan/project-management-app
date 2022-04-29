@@ -1,0 +1,27 @@
+@use "variables" as *;
+.footer {
+  height: 70px;
+  width: 100%;
+  background-color: $blue-light;
+  position: fixed;
+  bottom: 0;
+  color: $blue;
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px 0px 20px;
+    align-items: center;
+  }
+}
+.github-members {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+}
+.name {
+  display: inline-block;
+  color: $blue;
+  font-size: var(--global--font-size-sm);
+  vertical-align: middle;
+}
