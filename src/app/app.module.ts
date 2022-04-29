@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './../app/api/utils/auth.interceptor';
 import { UtilsService } from './api/utils/utils.service';
+import CoreModule from './core/core.module';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -20,7 +21,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
   multi: true,
   deps: [UtilsService],
 };
-import CoreModule from './core/core.module';
+
 @NgModule({
   declarations: [AppComponent, LoginComponent],
   imports: [
