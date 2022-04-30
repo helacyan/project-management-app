@@ -1,8 +1,40 @@
-.board {
-  width: 350px;
-  height: 150px;
+@use "variables" as *;
+.main {
+  height: 80vh;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+.board-wrapper {
+  width: 300px;
+  min-height: 160px;
   background-image: url(../../../../assets/bg.jpg);
-  background-size: contain;
+  background-size: cover;
   padding: 10px;
   margin-bottom: 20px;
+  position: relative;
+}
+.board-preview {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+.board-preview:hover {
+  background-color: $blue;
+}
+.board-title {
+  font-size: var(--global--font-size-sm);
+}
+
+@media screen and (max-width: 1500px) {
+  .board {
+    width: 250px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .board {
+    width: 150px;
+  }
 }

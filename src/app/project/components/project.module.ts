@@ -7,6 +7,7 @@ import { SearchComponent } from './search/search.component';
 import { MainComponent } from './main/main.component';
 import { RouterModule } from '@angular/router';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import SharedModule from 'src/app/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: '',

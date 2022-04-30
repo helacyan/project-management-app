@@ -14,6 +14,7 @@ export class MainComponent {
   constructor(private readonly openConfirmationModalService: OpenConfirmationModalService) {
     this.boardList = boards;
   }
+
   openModal() {
     this.openConfirmationModalService.openConfirmationDialog().forEach(res => console.log(res));
   }
