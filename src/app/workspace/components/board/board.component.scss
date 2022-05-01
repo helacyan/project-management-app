@@ -1,0 +1,28 @@
+@use "variables" as *;
+
+.board-wrapper {
+  max-width: 300px;
+  min-height: 160px;
+  background-image: url(../../../../assets/bg.jpg);
+  background-size: cover;
+  padding: 10px;
+  position: relative;
+  border-radius: $border-radius;
+}
+.board-preview {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+.board-preview:hover {
+  background-color: $blue;
+}
+.board-title {
+  font-size: var(--global--font-size-sm);
+}
+
+@media screen and (max-width: 320px) {
+  .board-wrapper {
+    max-width: calc(300px - 2rem);
+  }
+}

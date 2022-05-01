@@ -1,0 +1,12 @@
+.main {
+  height: 100%;
+  padding: 1rem;
+  .boards-list {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}

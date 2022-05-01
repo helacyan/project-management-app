@@ -1,12 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './auth/components/login/login.component';
+import { ErrorPageComponent } from './core/pages/error-page/error-page.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
   {
     path: '',
-    loadChildren: () => import('./project/components/project.module').then(m => m.ProjectModule),
+    loadChildren: () => import('./workspace/workspace.module').then(m => m.WorkspaceModule),
+  },
+  { path: 'login', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
+  {
+    path: 'error',
+    component: ErrorPageComponent,
+  },
+  {
+    path: '**',
+    redirectTo: 'error',
   },
 ];
 

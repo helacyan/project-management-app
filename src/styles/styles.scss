@@ -1,3 +1,48 @@
 @use "variables";
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+$project-management-app-primary: mat.define-palette(mat.$light-blue-palette, 800);
+$project-management-app-accent: mat.define-palette(mat.$blue-gray-palette, 500);
+$project-management-app-warn: mat.define-palette(mat.$red-palette);
+
+$project-management-app-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $project-management-app-primary,
+      accent: $project-management-app-accent,
+      warn: $project-management-app-warn,
+    ),
+  )
+);
+
+@include mat.all-component-themes($project-management-app-theme);
+
+html,
+body {
+  height: 100%;
+}
+
+body{
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+main {
+  padding-bottom: 70px;
+}
+
+.container {
+  max-width: 1800px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 700px) {
+  main {
+    padding-bottom: 90px;
+  }
+}
