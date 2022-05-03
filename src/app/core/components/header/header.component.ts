@@ -14,6 +14,10 @@ export class HeaderComponent {
     this.router.navigate(['login']);
   }
 
+  openRegistrationPage() {
+    this.router.navigate(['register']);
+  }
+
   public openCreateBoardModal() {
     this.openCreateBoardModalService.openCreateBoardDialog().forEach(res => console.log(res));
   }

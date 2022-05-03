@@ -29,8 +29,11 @@
     background-color: transparent;
     color: $blue;
   }
-  mat-slide-toggle {
-    align-self: center;
+}
+
+@media screen and (max-width: 1500px) {
+  .header-menu-container {
+    min-width: 50%;
   }
 }
 

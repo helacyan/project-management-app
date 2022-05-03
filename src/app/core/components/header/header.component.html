@@ -7,9 +7,13 @@
     <button mat-raised-button class="header-menu-btn" (click)="openCreateBoardModal()">создать новую доску</button>
   </div>
   <div class="header-login-container">
-    <button mat-raised-button (click)="openLoginPage()">
+    <button mat-button class="login-btn" (click)="openLoginPage()">
       <span class="material-icons">login</span>
       Вход
+    </button>
+    <button mat-button class="login-btn" (click)="openRegistrationPage()">
+      <span class="material-icons">person</span>
+      Регистрация
     </button>
   </div>
 </div>
