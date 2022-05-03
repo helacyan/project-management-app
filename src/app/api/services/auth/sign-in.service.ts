@@ -13,14 +13,14 @@ export class SignInService {
   signUp(user: IUser) {
     this.http.post(`${BASE_URL}signup`, user).subscribe({
       next: data => data,
-      error: error => console.log(error.error.message),
+      error: error => console.log(error),
     });
   }
 
   signIn(login: ILogin) {
     this.http.post<{ token: string }>(`${BASE_URL}signin`, login).subscribe({
       next: data => this.utils.setLocalStorage(data.token),
-      error: error => console.log(error.error.message),
+      error: error => console.log(error),
     });
   }
 }

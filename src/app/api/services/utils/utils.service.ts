@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class UtilsService {
   setLocalStorage(token: string) {
-    localStorage.setItem('userInfo', JSON.stringify(token));
+    localStorage.setItem('userInfo', token);
   }
 
   getTokenFromStorage = () => {
-    return localStorage.getItem('userInfo');
+    return JSON.parse(localStorage.getItem('userInfo') as string);
   };
 }
