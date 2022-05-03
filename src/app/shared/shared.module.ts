@@ -6,12 +6,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const MATERIAL_MODULES = [MatSlideToggleModule, MatButtonModule, MatIconModule, MatDialogModule];
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, HttpClientModule, AngularSvgIconModule.forRoot(), ...MATERIAL_MODULES],
-  exports: [CommonModule, HttpClientModule, AngularSvgIconModule, ...MATERIAL_MODULES],
+  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, AngularSvgIconModule.forRoot(), ...MATERIAL_MODULES],
+  exports: [CommonModule, HttpClientModule, ...MATERIAL_MODULES],
 })
 export default class SharedModule {}

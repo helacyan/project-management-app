@@ -1,0 +1,51 @@
+@use "variables" as *;
+.new-board-modal {
+  margin: 0 auto;
+  padding: 15px;
+  width: 30vw;
+  min-height: 45vh;
+  background-color: $blue-light;
+  text-align: center;
+  p {
+    font-family: 'Roboto';
+    font-size: 12px;
+    color: #929292;
+  }
+  input {
+    width: 70%;
+    height: 30px;
+    margin: 0 auto;
+    display: block;
+  }
+}
+.modal-container {
+  padding: 20px;
+}
+.label {
+  display: block;
+  text-align: left;
+  margin-left: 14%;
+}
+input.ng-touched.ng-invalid {
+  border: 2px solid $ferra;
+}
+
+form.ng-touched.ng-invalid {
+  background-color: $ferra-light;
+}
+
+.text-danger {
+  display: block;
+  color: $ferra;
+}
+
+.modal-buttons {
+  justify-content: center;
+  .form-btn {
+    margin: 5px;
+  }
+  .form-btn:hover {
+    background-color: $blue;
+  }
+
+}
