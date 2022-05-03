@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IBoardItem } from '../../models/board-item.model';
-import boards from '../../mocks/board-list.mock';
+import { BoardsService } from 'src/app/api/services/boards/boards.service';
 
 @Component({
   selector: 'app-main-page',
@@ -10,7 +10,9 @@ import boards from '../../mocks/board-list.mock';
 export class MainPageComponent implements OnInit {
   boardList!: Array<IBoardItem>;
 
+  constructor(private readonly boardsService: BoardsService) {}
+
   ngOnInit(): void {
-    this.boardList = boards;
+    this.boardsService.getBoards().forEach(boards => (this.boardList = boards));
   }
 }
