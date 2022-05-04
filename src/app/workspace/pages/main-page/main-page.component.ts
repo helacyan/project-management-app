@@ -4,7 +4,7 @@ import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { select, Store } from '@ngrx/store';
 import { State } from 'src/app/store/state.model';
 import { getStoreBoards } from '../../../store/selectors/getStoreBoards.selector';
-import { getBoards } from 'src/app/store/actions/getBoards.action';
+import { getBoards } from '../../../store/actions/getBoards.action';
 
 @Component({
   selector: 'app-main-page',
