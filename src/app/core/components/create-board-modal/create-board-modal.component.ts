@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { BoardsService } from 'src/app/api/boards/boards.service';
+import { OpenConfirmationModalService } from '../modal/services/open-modal.service';
 
 @Component({
   selector: 'app-create-board-modal',
@@ -19,7 +20,8 @@ export class CreateBoardModalComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CreateBoardModalComponent>,
-    private readonly boardsService: BoardsService
+    private readonly boardsService: BoardsService,
+    private readonly openConfirmationModalService: OpenConfirmationModalService,
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +39,14 @@ export class CreateBoardModalComponent implements OnInit {
     if (this.createBoardForm.valid) {
       this.formValue = this.createBoardForm.value;
       this.boardsService.createBoard(this.formValue.title);
-      console.log(this.formValue);
+      this.openConfirmationModalService.openConfirmationDialog().forEach(res => {
+        if (res === true) {
+          this.boardsService.createBoard(this.formValue.title);
+          this.boardsService.getBoards().forEach(boards => {
+            this.store.dispatch(getBoards({ boardsResponse: boards }));
+          });
+        }
+      });
       this.dialogRef.close(true);
     }
   }
