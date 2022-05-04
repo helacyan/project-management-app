@@ -1,10 +1,12 @@
-import { ActionReducerMap, MetaReducer } from '@ngrx/store';
+import { MetaReducer } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
+import { State } from '../state.model';
+import { boardsReducer } from './boards.reducer';
 
-export interface State {
-  
-}
+export const state = {
+  boards: boardsReducer,
+};
 
-export const reducers: ActionReducerMap<State> = {};
+// export const reducers: ActionReducerMap<State> = {};
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];

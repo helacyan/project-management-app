@@ -14,3 +14,5 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(cloned);
   }
 }
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwODNlMTA1My04MTA1LTRjNjUtYTU2Mi04YjIxZmNjNGEzYzMiLCJsb2dpbiI6InVzZXIwMDEiLCJpYXQiOjE2NTE2NDMyMjd9.La9ful2aSMW1DbtZFVuQ8orx2fcdEDPxcrIOzton3mk
