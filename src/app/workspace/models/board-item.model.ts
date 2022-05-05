@@ -1,5 +1,14 @@
+import { ITaskItem } from './task-item.model';
+
 export interface IBoardItem {
-  title: string;
-  description: string;
   id: string;
+  title: string;
+  columns: Array<IColumn>;
+}
+
+export interface IColumn {
+  id: string;
+  title: string;
+  order: number;
+  tasks: Array<ITaskItem>;
 }
