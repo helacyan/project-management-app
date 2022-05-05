@@ -1,7 +1,7 @@
 @use "variables" as *;
 
 .board-wrapper {
-  max-width: 300px;
+  width: 300px;
   min-height: 160px;
   background-image: url(../../../../assets/bg.jpg);
   background-size: cover;
