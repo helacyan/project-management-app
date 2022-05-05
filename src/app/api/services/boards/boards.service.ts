@@ -18,10 +18,7 @@ export class BoardsService {
     const options = {
       title,
     };
-    this.http.post(`${BASE_URL}boards`, options).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
+    return this.http.post<IBoardItem>(`${BASE_URL}boards`, options);
   }
 
   getBoardById(id: string) {

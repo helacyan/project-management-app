@@ -7,6 +7,7 @@
   background-color: $blue-light;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   .container {
     display: flex;
     justify-content: space-between;
@@ -28,6 +29,9 @@
   .login-btn:hover {
     background-color: transparent;
     color: $blue;
+  }
+  mat-slide-toggle {
+    align-self: center;
   }
 }
 
