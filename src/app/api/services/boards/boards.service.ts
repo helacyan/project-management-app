@@ -32,10 +32,7 @@ export class BoardsService {
   }
 
   deleteBoard(id: string) {
-    this.http.delete(`${BASE_URL}boards/${id}`).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
+    return this.http.delete<void>(`${BASE_URL}boards/${id}`);
   }
 
   updateBoard(id: string, title: string) {

@@ -27,9 +27,10 @@ export class BoardComponent {
   public deleteBoard() {
     this.openConfirmationModalService.openConfirmationDialog().forEach(res => {
       if (res === true) {
-        this.boardsService.deleteBoard(this.board.id);
-        this.boardsService.getBoards().forEach(boards => {
-          this.store.dispatch(getBoards({ boardsResponse: boards }));
+        this.boardsService.deleteBoard(this.board.id).forEach(() => {
+          this.boardsService.getBoards().forEach(boards => {
+            this.store.dispatch(getBoards({ boardsResponse: boards }));
+          });
         });
       }
     });

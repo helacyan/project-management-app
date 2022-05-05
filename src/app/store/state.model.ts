@@ -3,7 +3,6 @@ import { IBoardItem } from '../workspace/models/board-item.model';
 export interface State {
   boards: IBoardsState;
 }
-
 export interface IBoardsState {
   boards: IBoardItem[];
 }
