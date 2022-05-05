@@ -14,16 +14,19 @@ import { environment } from 'src/environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthInterceptor } from '../api/interceptors/auth.interceptor';
 import { UtilsService } from '../api/services/utils/utils.service';
+import { AuthGuardService } from '../auth/guards/auth-guard.service';
+import { ToastService } from '../api/services/auth/toast.service';
+import { WelcomePageComponent } from './pages/welcome-page/welcome-page.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthInterceptor,
   multi: true,
-  deps: [UtilsService],
+  deps: [UtilsService, ToastService],
 };
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, ModalComponent, ErrorPageComponent],
+  declarations: [HeaderComponent, FooterComponent, ModalComponent, ErrorPageComponent, WelcomePageComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -39,6 +42,6 @@ const INTERCEPTOR_PROVIDER: Provider = {
     }),
   ],
   exports: [HeaderComponent, FooterComponent, ModalComponent, ErrorPageComponent],
-  providers: [INTERCEPTOR_PROVIDER],
+  providers: [INTERCEPTOR_PROVIDER, AuthGuardService],
 })
 export default class CoreModule {}

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
 import { BASE_URL } from '../../consts';
 import { ILogin, IUser } from '../../models/api.model';
 import { UtilsService } from '../utils/utils.service';
@@ -18,9 +19,11 @@ export class SignInService {
   }
 
   signIn(login: ILogin) {
-    this.http.post<{ token: string }>(`${BASE_URL}signin`, login).subscribe({
-      next: data => this.utils.setLocalStorage(data.token),
-      error: error => console.log(error),
-    });
+    return this.http.post<{ token: string }>(`${BASE_URL}signin`, login).pipe(
+      map((data: { token: string }) => {
+        this.utils.setLocalStorage(data.token);
+        return data.token;
+      })
+    );
   }
 }

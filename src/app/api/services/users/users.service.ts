@@ -12,7 +12,7 @@ export class UsersService {
   getUsers() {
     this.http.get(`${BASE_URL}users`).subscribe({
       next: data => data,
-      error: error => console.log(error.error.message),
+      error: error => console.log(error),
     });
   }
 

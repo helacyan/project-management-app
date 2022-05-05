@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SignInService } from 'src/app/api/services/auth/sign-in.service';
 
 @Component({
@@ -7,6 +8,24 @@ import { SignInService } from 'src/app/api/services/auth/sign-in.service';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
 })
-export class LoginPageComponent {
-  constructor(public signinService: SignInService, private http: HttpClient) {}
+export class LoginPageComponent implements OnInit {
+  constructor(public signinService: SignInService, private router: Router) {}
+
+  ngOnInit() {
+    this.form = new FormGroup({
+      login: new FormControl('', [Validators.required]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+    });
+  }
+
+  form: FormGroup = new FormGroup({});
+
+  submit() {
+    if (this.form.valid) {
+      this.signinService.signIn({ ...this.form.value }).subscribe(() => {
+        return localStorage.getItem('userInfo') ? this.router.navigate(['/']) : null;
+      });
+    }
+    return;
+  }
 }
