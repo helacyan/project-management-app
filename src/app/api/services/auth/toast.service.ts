@@ -10,4 +10,8 @@ export class ToastService {
   showToasterError(message: string) {
     this.toastr.error(message);
   }
+
+  showToasterSuccess(message: string) {
+    this.toastr.success(message);
+  }
 }

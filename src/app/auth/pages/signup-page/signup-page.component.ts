@@ -31,7 +31,6 @@ export class SignupPageComponent implements OnInit {
   submit() {
     if (this.form.valid) {
       this.signinService.signUp({ ...this.form.value });
-      console.log('Form Data:', { ...this.form.value });
     }
   }
 }
