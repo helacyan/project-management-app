@@ -9,6 +9,6 @@ export class UtilsService {
   }
 
   getTokenFromStorage = () => {
-    return JSON.parse(localStorage.getItem('userInfo') as string);
+    return localStorage.getItem('userInfo');
   };
 }

@@ -1,14 +1,19 @@
 <div class="logPageWrapper">
   <form class="card" [formGroup]="form" (ngSubmit)="submit()">
     <div class="pageTitle">
-      <h1>Login</h1>
+      <h1>Registration</h1>
     </div>
     <div>
+      <div>
+        <p class="logLabel">name</p>
+        <input class="logInput" type="text" formControlName="name" />
+      </div>
       <div>
         <p class="logLabel">login</p>
         <input class="logInput" type="text" formControlName="login" />
         <div *ngIf="form.get('login')!.invalid && form.get('login')!.touched" class="validation">
-          <small class="requirement" *ngIf="form.get('login')!.errors?.['required']"> Please enter a login</small>
+          <small class="requirement" *ngIf="form.get('login')!.errors?.['required']"> Please enter a login </small>
+          <small class="requirement" *ngIf="form.get('login')!.errors?.['login']"> The login is invalid </small>
         </div>
       </div>
       <div>
@@ -18,16 +23,20 @@
           <small class="requirement" *ngIf="form.get('password')!.errors?.['required']">
             Please enter a password
           </small>
-
           <small class="requirement" *ngIf="form.get('password')!.errors?.['minlength']">
             Length must be at least {{form.get('password')!.errors?.['minlength'].requiredLength}}. Number of characters
             {{form.get('password')!.errors?.['minlength'].actualLength}}
+          </small>
+          <small
+            class="requirement"
+            *ngIf="(form.controls['password'].hasError('hasSmallCase') || form.controls['password'].hasError('hasSpecialCharacters') || form.controls['password'].hasError('hasCapitalCase') || form.controls['password'].hasError('hasNumber')) && !form.get('password')!.errors?.['minlength']">
+            Your password isn't strong enough
           </small>
         </div>
       </div>
     </div>
     <div class="buttonWrapper">
-      <button class="loginButton" [disabled]="form.invalid" mat-raised-button color="primary">Login</button>
+      <button class="loginButton" [disabled]="form.invalid" mat-raised-button color="primary">Register</button>
     </div>
   </form>
 </div>
