@@ -7,6 +7,7 @@
   background-color: $blue-light;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   .container {
     display: flex;
     justify-content: space-between;
@@ -31,6 +32,12 @@
   }
   mat-slide-toggle {
     align-self: center;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .header-menu-container {
+    min-width: 50%;
   }
 }
 

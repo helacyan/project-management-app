@@ -1,14 +1,20 @@
+
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { OpenCreateBoardModalService } from '../create-board-modal/services/open-create-board-modal.service';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { UsersService } from 'src/app/api/services/users/users.service';
 import jwt_decode from 'jwt-decode';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
+
 export class HeaderComponent implements OnInit {
-  constructor(private router: Router, private usersService: UsersService) {}
+  constructor(private router: Router, private usersService: UsersService, private readonly openCreateBoardModalService: OpenCreateBoardModalService) {}
 
   ngOnInit(): void {
     this.router.events.subscribe(ev => {
@@ -25,5 +31,13 @@ export class HeaderComponent implements OnInit {
 
   openLoginPage() {
     this.router.navigate(['login']);
+  }
+
+  openRegistrationPage() {
+    this.router.navigate(['register']);
+  }
+
+  public openCreateBoardModal() {
+    this.openCreateBoardModalService.openCreateBoardDialog().forEach(res => console.log(res));
   }
 }
