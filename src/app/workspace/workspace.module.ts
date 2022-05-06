@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import SharedModule from 'src/app/shared/shared.module';
 import { BoardPageComponent } from './pages/board-page/board-page.component';
 import { SearchPageComponent } from './pages/search-page/search-page.component';
+import { AuthGuardService } from '../auth/guards/auth-guard.service';
 
 @NgModule({
   declarations: [MainPageComponent, BoardPageComponent, BoardComponent, SearchPageComponent],
@@ -16,14 +17,17 @@ import { SearchPageComponent } from './pages/search-page/search-page.component';
       {
         path: '',
         component: MainPageComponent,
+        canActivate: [AuthGuardService],
       },
       {
         path: 'board/:id',
         component: BoardPageComponent,
+        canActivate: [AuthGuardService],
       },
       {
         path: 'search',
         component: SearchPageComponent,
+        canActivate: [AuthGuardService],
       },
     ]),
   ],
