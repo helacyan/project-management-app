@@ -1,18 +1,21 @@
 @use "variables" as *;
 
 .board-wrapper {
+  display: flex;
+  flex-direction: column;
   width: 300px;
-  min-height: 160px;
+  height: 140px;
   background-image: url(../../../../assets/bg.jpg);
   background-size: cover;
   padding: 10px;
-  position: relative;
   border-radius: $border-radius;
 }
+.board {
+  height: 70%;
+}
 .board-preview {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
+  align-self: flex-end;
+  height: 30%;
 }
 .board-preview:hover {
   background-color: $blue;

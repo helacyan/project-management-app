@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { OpenConfirmationModalService } from 'src/app/core/components/modal/services/open-modal.service';
@@ -17,11 +18,16 @@ export class BoardComponent {
   constructor(
     private readonly openConfirmationModalService: OpenConfirmationModalService,
     private readonly boardsService: BoardsService,
-    private store: Store<State>
+    private store: Store<State>,
+    private router: Router
   ) {}
 
   public openModal() {
     this.openConfirmationModalService.openConfirmationDialog().forEach(res => console.log(res));
+  }
+
+  public openBoard() {
+    this.router.navigate(['/board/', this.board.id]);
   }
 
   public deleteBoard() {

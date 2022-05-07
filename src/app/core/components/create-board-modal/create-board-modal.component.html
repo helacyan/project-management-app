@@ -14,18 +14,6 @@
           *ngIf="createBoardFormControl.title.errors?.minlength || createBoardFormControl.title.errors?.maxlength">
           Длина строки должна быть от 8 до 12 символов
         </span>
-        <label class="label" for="description">Описание</label>
-        <input type="text" id="descr" placeholder="Description" formControlName="description" />
-        <span class="text-danger" *ngIf="createBoardFormControl.description.errors?.required">
-          Пожалуйста введите описание
-        </span>
-        <span
-          class="text-danger"
-          *ngIf="
-            createBoardFormControl.description.errors?.minlength || createBoardFormControl.description.errors?.maxlength
-          ">
-          Длина строки должна быть от 8 до 12 символов
-        </span>
       </form>
     </mat-dialog-content>
 

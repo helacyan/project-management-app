@@ -15,7 +15,6 @@ import { OpenConfirmationModalService } from '../modal/services/open-modal.servi
 export class CreateBoardModalComponent implements OnInit {
   formValue!: {
     title: string;
-    description: string;
   };
 
   public createBoardForm!: FormGroup;
@@ -31,7 +30,6 @@ export class CreateBoardModalComponent implements OnInit {
   ngOnInit(): void {
     this.createBoardForm = this.formBuilder.group({
       title: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(12)]],
-      description: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(12)]],
     });
   }
 
