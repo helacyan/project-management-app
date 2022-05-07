@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IColumnItem } from 'src/app/workspace/models/column-item.model';
 import { BASE_URL } from '../../consts';
 import { IColumn } from '../../models/api.model';
 
@@ -9,15 +11,12 @@ import { IColumn } from '../../models/api.model';
 export class ColumnsService {
   constructor(private http: HttpClient) {}
 
-  getColumns(id: string) {
-    this.http.get(`${BASE_URL}boards/${id}/columns`).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
-  }
+  getColumns = (boardId: string): Observable<IColumnItem[]> => {
+    return this.http.get<IColumnItem[]>(`${BASE_URL}boards/${boardId}/columns`);
+  };
 
-  createColumns(id: string, column: IColumn) {
-    this.http.post(`${BASE_URL}boards/${id}/columns`, column).subscribe({
+  createColumn(boardId: string, column: IColumn) {
+    this.http.post(`${BASE_URL}boards/${boardId}/columns`, column).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });

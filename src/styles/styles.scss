@@ -1,4 +1,4 @@
-@use "variables";
+@use "variables" as *;
 
 @use "@angular/material" as mat;
 
@@ -39,6 +39,25 @@ main {
   padding-left: 1rem;
   padding-right: 1rem;
   margin: 0 auto;
+}
+
+button:hover {
+  background-color: $blue;
+  color: white;
+}
+
+button:disabled,
+button:disabled:active{
+  background-color: initial;
+}
+
+button:active {
+  background-color: $ferra;
+  color: white;
+}
+
+mat-form-field {
+  width: 100%;
 }
 
 @media screen and (max-width: 700px) {

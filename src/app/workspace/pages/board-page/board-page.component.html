@@ -1,1 +1,4 @@
-<p>board-page works!</p>
+<div class="container">
+  <app-column *ngFor="let column of columns$ | async" [column]="column"></app-column>
+  <button mat-raised-button (click)="openDialog()">+ создать колонку</button>
+</div>

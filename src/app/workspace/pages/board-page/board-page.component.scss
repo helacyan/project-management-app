@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+  box-sizing: border-box;
+  min-height: calc(100vh - 140px);
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  button {
+    height: 2.25rem;
+    min-width: fit-content;
+  }
+}
