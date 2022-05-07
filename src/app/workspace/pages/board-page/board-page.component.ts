@@ -39,6 +39,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.columns$ = this.store.select(selectColumns);
 
     const subscription = this.store.select(selectColumnsCount).subscribe(count => (this.columnsCount = count));
+
     this.subscriptions.push(subscription);
 
     this.loadColumns();

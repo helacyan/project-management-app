@@ -31,22 +31,6 @@
     min-width: 2rem;
   }
 
-  .login-btn,
-  .home-btn {
-    background-color: transparent;
-    padding: 0;
-    color: $gray;
-  }
-  .login-btn:hover,
-  .home-btn:hover {
-    background-color: transparent;
-    color: $blue-dark;
-  }
-  .login-btn:active,
-  .home-btn:active {
-    background-color: transparent;
-    color: $primary-color;
-  }
   mat-slide-toggle {
     align-self: center;
   }

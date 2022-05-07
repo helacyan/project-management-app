@@ -58,6 +58,22 @@ button:active {
   color: white;
 }
 
+button.mat-button {
+  background-color: transparent;
+  padding: 0;
+  color: $gray;
+}
+
+button.mat-button:hover {
+  background-color: transparent;
+  color: $blue-dark;
+}
+
+button.mat-button:active {
+  background-color: transparent;
+  color: $primary-color;
+}
+
 mat-form-field {
   width: 100%;
 }

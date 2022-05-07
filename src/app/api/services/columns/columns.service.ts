@@ -34,9 +34,6 @@ export class ColumnsService {
   }
 
   updateColumn(boardId: string, columnId: string, column: IColumn) {
-    this.http.put(`${BASE_URL}boards/${boardId}/columns/${columnId}`, column).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
+    return this.http.put(`${BASE_URL}boards/${boardId}/columns/${columnId}`, column);
   }
 }
