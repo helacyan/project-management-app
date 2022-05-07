@@ -1,7 +1,6 @@
 <div class="board-wrapper">
   <div class="board" [routerLink]="['/board/', board.id]">
     <p class="board-title">{{ board.title }}</p>
-    <p class="board-description">{{ board.description }}</p>
   </div>
   <button mat-raised-button (click)="openModal()" class="board-preview">удалить</button>
 </div>

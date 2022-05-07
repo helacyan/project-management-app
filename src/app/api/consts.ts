@@ -1,1 +1,1 @@
-export const BASE_URL = `http://localhost:4200/api/`;
+export const BASE_URL = `https://warm-ravine-52148.herokuapp.com/`;
