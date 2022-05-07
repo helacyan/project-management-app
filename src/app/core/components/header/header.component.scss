@@ -24,15 +24,17 @@
 
   .header-login-container {
     display: flex;
+    column-gap: 1rem;
   }
 
   .login-btn {
     background-color: transparent;
     padding: 0;
+    color: $gray;
   }
   .login-btn:hover {
     background-color: transparent;
-    color: $blue;
+    color: $blue-dark;
   }
   .login-btn:active {
     background-color: transparent;

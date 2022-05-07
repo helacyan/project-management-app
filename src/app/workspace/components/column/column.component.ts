@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
 import { IColumnItem } from '../../models/column-item.model';
 import { ITaskItem } from '../../models/task-item.model';
 
@@ -8,8 +7,12 @@ import { ITaskItem } from '../../models/task-item.model';
   templateUrl: './column.component.html',
   styleUrls: ['./column.component.scss'],
 })
-export class ColumnComponent {
-  public tasks$!: Observable<ITaskItem[]>;
+export class ColumnComponent implements OnInit {
+  public tasks!: ITaskItem[];
 
   @Input() column!: IColumnItem;
+
+  ngOnInit(): void {
+    this.tasks = this.column.tasks;
+  }
 }

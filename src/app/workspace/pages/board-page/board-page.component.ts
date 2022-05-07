@@ -4,10 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { mergeMap, Observable, Subscription } from 'rxjs';
 import { IColumn } from 'src/app/api/models/api.model';
+import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { ColumnsService } from 'src/app/api/services/columns/columns.service';
 import { clearColumns, fetchColumns } from 'src/app/store/actions/columns.actions';
-import { selectColumns } from 'src/app/store/selectors/columns.selectors';
+import { selectColumns, selectColumnsCount } from 'src/app/store/selectors/columns.selectors';
 import { CreateColumnModalComponent } from '../../components/create-column-modal/create-column-modal.component';
+import { IBoardItem } from '../../models/board-item.model';
 import { IColumnItem } from '../../models/column-item.model';
 
 @Component({
@@ -18,15 +20,16 @@ import { IColumnItem } from '../../models/column-item.model';
 export class BoardPageComponent implements OnInit, OnDestroy {
   private boardId!: string;
 
-  private columnsCount!: number;
-
   public columns$!: Observable<IColumnItem[]>;
+
+  private columnsCount: number = 0;
 
   private subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private store: Store,
+    private boardsService: BoardsService,
     private columnsService: ColumnsService,
     private dialog: MatDialog
   ) {}
@@ -34,6 +37,10 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.boardId = this.route.snapshot.params.id;
     this.columns$ = this.store.select(selectColumns);
+
+    const subscription = this.store.select(selectColumnsCount).subscribe(count => (this.columnsCount = count));
+    this.subscriptions.push(subscription);
+
     this.loadColumns();
   }
 
@@ -42,11 +49,13 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(clearColumns());
   }
 
+  private updateColumnsState = (board: IBoardItem) =>
+    this.store.dispatch(fetchColumns({ columns: board.columns || [] }));
+
   private loadColumns = (): void => {
-    const subscription = this.columnsService.getColumns(this.boardId).subscribe((columns: IColumnItem[]) => {
-      this.store.dispatch(fetchColumns({ columns }));
-      this.columnsCount = columns.length;
-    });
+    const subscription = this.boardsService
+      .getBoardById(this.boardId)
+      .subscribe((board: IBoardItem) => this.updateColumnsState(board));
 
     this.subscriptions.push(subscription);
   };
@@ -60,11 +69,8 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
     const subscription = this.columnsService
       .createColumn(this.boardId, newColumn)
-      .pipe(mergeMap(() => this.columnsService.getColumns(this.boardId)))
-      .subscribe((columns: IColumnItem[]) => {
-        this.store.dispatch(fetchColumns({ columns }));
-        this.columnsCount = columns.length;
-      });
+      .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
+      .subscribe((board: IBoardItem) => this.updateColumnsState(board));
     this.subscriptions.push(subscription);
   };
 
@@ -74,9 +80,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     });
 
     const subscription = dialogRef.afterClosed().subscribe(title => {
-      if (title && typeof title === 'string') {
-        this.createColumn(title);
-      }
+      if (title) this.createColumn(title);
     });
     this.subscriptions.push(subscription);
   }

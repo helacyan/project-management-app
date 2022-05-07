@@ -6,6 +6,8 @@
   gap: 1rem;
   box-sizing: border-box;
   width: calc(320px - 1rem);
+  max-height: calc(100% - 2rem);
+  overflow: scroll;
   padding: 1rem;
   border-radius: $border-radius;
   background-color: $ferra-light;

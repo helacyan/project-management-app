@@ -1,0 +1,7 @@
+@use "variables" as *;
+
+.task-wrapper {
+  background-color: white;
+  border-radius: $border-radius;
+  padding: 0.5rem;
+}

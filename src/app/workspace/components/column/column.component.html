@@ -1,4 +1,5 @@
 <div class="column">
   <h2 class="column-title">{{ column.title }}</h2>
+  <app-task *ngFor="let task of tasks" [task]="task"></app-task>
   <button mat-raised-button>+ создать задачу</button>
 </div>

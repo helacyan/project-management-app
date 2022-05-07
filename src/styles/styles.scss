@@ -36,8 +36,15 @@ main {
   margin: 0 auto;
 }
 
+//buttons
+
+button.mat-raised-button {
+  background-color: $gray;
+  color: white;
+}
+
 button:hover {
-  background-color: $blue;
+  background-color: $blue-dark;
   color: white;
 }
 
