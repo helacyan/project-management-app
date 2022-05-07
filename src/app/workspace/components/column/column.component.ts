@@ -80,13 +80,15 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public onTitleSubmit = (): void => {
     const newTitle = this.editTitleForm.controls.title.value;
-    this.title$.next(newTitle);
+    if (this.title$.value !== newTitle) {
+      this.title$.next(newTitle);
+      const newColumn: IColumn = {
+        title: newTitle,
+        order: this.column.order,
+      };
+      this.updateColumn(newColumn);
+    }
 
-    const newColumn: IColumn = {
-      title: newTitle,
-      order: this.column.order,
-    };
-    this.updateColumn(newColumn);
     this.hideEditTitleInput();
   };
 

@@ -1,5 +1,9 @@
 .container {
   height: calc(100vh - 140px);
+  background-image: url('../../../../assets/bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .wrapper {
@@ -19,6 +23,6 @@
 
 @media screen and (max-width: 700px) {
   .container {
-    height: calc(100vh - 210px);
+    height: calc(100vh - 220px);
   }
 }
