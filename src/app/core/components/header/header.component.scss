@@ -27,16 +27,23 @@
     column-gap: 1rem;
   }
 
-  .login-btn {
+  .home-btn {
+    min-width: 2rem;
+  }
+
+  .login-btn,
+  .home-btn {
     background-color: transparent;
     padding: 0;
     color: $gray;
   }
-  .login-btn:hover {
+  .login-btn:hover,
+  .home-btn:hover {
     background-color: transparent;
     color: $blue-dark;
   }
-  .login-btn:active {
+  .login-btn:active,
+  .home-btn:active {
     background-color: transparent;
     color: $primary-color;
   }

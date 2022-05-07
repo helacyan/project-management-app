@@ -32,6 +32,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['signup']);
   }
 
+  public redirectToMainPage(): void {
+    this.router.navigate(['']);
+  }
+
   public openCreateBoardModal() {
     this.openCreateBoardModalService.openCreateBoardDialog().forEach(res => console.log(res));
   }
