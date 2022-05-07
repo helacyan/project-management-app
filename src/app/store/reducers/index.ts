@@ -5,7 +5,7 @@ import { boardsReducer } from './boards.reducer';
 import { columnsReducer } from './columns.reducer';
 
 export const reducers: ActionReducerMap<State> = {
-  boards: boardsReducer,
+  boardsState: boardsReducer,
   columnsState: columnsReducer,
 };
 

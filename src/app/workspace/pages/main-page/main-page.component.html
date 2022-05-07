@@ -1,5 +1,5 @@
 <div class="main container">
   <div class="boards-list">
-    <app-board *ngFor="let board of boardList" [board]="board"></app-board>
+    <app-board *ngFor="let board of boards$ | async" [board]="board"></app-board>
   </div>
 </div>

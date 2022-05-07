@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { fetchColumns } from '../actions/columns.actions';
+import { clearColumns, fetchColumns } from '../actions/columns.actions';
 import { columnsInitialState, IColumnsState } from '../state.model';
 
 export const columnsReducer = createReducer(
@@ -9,6 +9,13 @@ export const columnsReducer = createReducer(
     (state, { columns }): IColumnsState => ({
       ...state,
       columns,
+    })
+  ),
+  on(
+    clearColumns,
+    (state): IColumnsState => ({
+      ...state,
+      columns: [],
     })
   )
 );

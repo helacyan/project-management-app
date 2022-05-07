@@ -20,11 +20,6 @@ $project-management-app-theme: mat.define-light-theme(
 
 @include mat.all-component-themes($project-management-app-theme);
 
-html,
-body {
-  height: 100%;
-}
-
 body{
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -52,7 +47,7 @@ button:disabled:active{
 }
 
 button:active {
-  background-color: $ferra;
+  background-color: $primary-color;
   color: white;
 }
 
@@ -60,8 +55,17 @@ mat-form-field {
   width: 100%;
 }
 
+.material-icons {
+  font-size: 1rem;
+}
+
 @media screen and (max-width: 700px) {
   main {
     padding-bottom: 90px;
+  }
+
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 }

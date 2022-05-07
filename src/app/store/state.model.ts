@@ -2,7 +2,7 @@ import { IBoardItem } from 'src/app/workspace/models/board-item.model';
 import { IColumnItem } from 'src/app/workspace/models/column-item.model';
 
 export interface State {
-  boards: IBoardsState;
+  boardsState: IBoardsState;
   columnsState: IColumnsState;
 }
 
@@ -23,6 +23,6 @@ export const columnsInitialState: IColumnsState = {
 };
 
 export const initialState: State = {
-  boards: boardsInitialState,
+  boardsState: boardsInitialState,
   columnsState: columnsInitialState,
 };

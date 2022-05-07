@@ -16,10 +16,7 @@ export class ColumnsService {
   };
 
   createColumn(boardId: string, column: IColumn) {
-    this.http.post(`${BASE_URL}boards/${boardId}/columns`, column).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
+    return this.http.post(`${BASE_URL}boards/${boardId}/columns`, column);
   }
 
   getColumnById(boardId: string, columnId: string) {

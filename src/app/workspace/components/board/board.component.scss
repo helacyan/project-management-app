@@ -1,7 +1,8 @@
 @use "variables" as *;
 
 .board-wrapper {
-  width: 300px;
+  box-sizing: border-box;
+  width: calc(320px - 1rem);
   min-height: 160px;
   background-image: url(../../../../assets/bg.jpg);
   background-size: cover;
@@ -19,10 +20,4 @@
 }
 .board-title {
   font-size: var(--global--font-size-sm);
-}
-
-@media screen and (max-width: 320px) {
-  .board-wrapper {
-    max-width: calc(300px - 2rem);
-  }
 }

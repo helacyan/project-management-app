@@ -1,4 +1,6 @@
 <div class="container">
-  <app-column *ngFor="let column of columns$ | async" [column]="column"></app-column>
-  <button mat-raised-button (click)="openDialog()">+ создать колонку</button>
+  <div class="wrapper">
+    <app-column *ngFor="let column of columns$ | async" [column]="column"></app-column>
+    <button mat-raised-button (click)="openDialog()">+ создать колонку</button>
+  </div>
 </div>
