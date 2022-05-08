@@ -1,5 +1,5 @@
 import { OpenCreateBoardModalService } from '../create-board-modal/services/open-create-board-modal.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,8 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
+
+  isSticky: boolean = false;
 
   constructor(private router: Router, private readonly openCreateBoardModalService: OpenCreateBoardModalService) {}
 
@@ -25,6 +27,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  checkScroll() {
+    this.isSticky = window.pageYOffset > 0;
   }
 
   openLoginPage() {
