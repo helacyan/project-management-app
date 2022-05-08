@@ -4,11 +4,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class UtilsService {
-  setLocalStorage(token: string) {
-    localStorage.setItem('userInfo', token);
+  setLocalStorage(login: string, token: string) {
+    localStorage.setItem('userLogin', login);
+    localStorage.setItem('userToken', token);
   }
 
+  getLoginFromStorage = () => localStorage.getItem('userLogin');
+
   getTokenFromStorage = () => {
-    return localStorage.getItem('userInfo');
+    return localStorage.getItem('userToken');
   };
 }

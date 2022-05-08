@@ -21,9 +21,7 @@ export class BoardsService {
     return this.http.post<IBoardItem>(`${BASE_URL}boards`, options);
   }
 
-  getBoardById = (id: string): Observable<IBoardItem> => {
-    return this.http.get<IBoardItem>(`${BASE_URL}boards/${id}`);
-  };
+  getBoardById = (id: string): Observable<IBoardItem> => this.http.get<IBoardItem>(`${BASE_URL}boards/${id}`);
 
   deleteBoard(id: string) {
     return this.http.delete<void>(`${BASE_URL}boards/${id}`);

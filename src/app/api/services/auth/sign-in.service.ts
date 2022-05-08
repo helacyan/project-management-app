@@ -25,7 +25,7 @@ export class SignInService {
   signIn(login: ILogin) {
     return this.http.post<{ token: string }>(`${BASE_URL}signin`, login).pipe(
       map((data: { token: string }) => {
-        this.utils.setLocalStorage(data.token);
+        this.utils.setLocalStorage(login.login, data.token);
         return data.token;
       })
     );

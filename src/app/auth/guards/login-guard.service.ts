@@ -6,7 +6,7 @@ export class LoginGuardService implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate() {
-    if (localStorage.getItem('userInfo')) {
+    if (localStorage.getItem('userToken')) {
       this.router.navigate(['/']);
       return false;
     }

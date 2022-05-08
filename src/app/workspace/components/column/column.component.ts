@@ -46,7 +46,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.boardId = this.route.snapshot.params.id;
     this.title$ = new BehaviorSubject<string>(this.column.title);
-    this.tasks = this.column.tasks;
+    this.tasks = this.column.tasks ? this.column.tasks : [];
     this.isTitleVisible$ = new BehaviorSubject<boolean>(true);
     this.isTitleInputVisible$ = new BehaviorSubject<boolean>(false);
     this.editTitleForm = this.fb.group({

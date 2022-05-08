@@ -10,6 +10,7 @@ import { ColumnComponent } from './components/column/column.component';
 import { CreateColumnModalComponent } from './components/create-column-modal/create-column-modal.component';
 import { TaskComponent } from './components/task/task.component';
 import { AuthGuardService } from '../auth/guards/auth-guard.service';
+import { SortByOrderPipe } from './pipes/sort-by-order.pipe';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { AuthGuardService } from '../auth/guards/auth-guard.service';
     ColumnComponent,
     CreateColumnModalComponent,
     TaskComponent,
+    SortByOrderPipe,
   ],
   imports: [
     CommonModule,

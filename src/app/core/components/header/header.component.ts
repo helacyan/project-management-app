@@ -14,11 +14,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe(ev => {
       if (ev instanceof NavigationEnd) {
-        if (localStorage.getItem('userInfo')) {
-          let decoded: { iat: number } = jwt_decode(localStorage.getItem('userInfo') as string);
+        if (localStorage.getItem('userToken')) {
+          let decoded: { iat: number } = jwt_decode(localStorage.getItem('userToken') as string);
           let actualTimeInSeconds: number = Math.round(new Date().getTime() / 1000);
           let timeDelta = actualTimeInSeconds - decoded.iat;
-          return timeDelta > 86400 ? localStorage.removeItem('userInfo') : null;
+          return timeDelta > 86400 ? localStorage.removeItem('userToken') : null;
         }
       }
     });

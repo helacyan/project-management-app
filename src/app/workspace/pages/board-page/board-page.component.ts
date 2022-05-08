@@ -7,7 +7,7 @@ import { IColumn } from 'src/app/api/models/api.model';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { ColumnsService } from 'src/app/api/services/columns/columns.service';
 import { clearColumns, fetchColumns } from 'src/app/store/actions/columns.actions';
-import { selectColumns, selectColumnsCount } from 'src/app/store/selectors/columns.selectors';
+import { selectColumns } from 'src/app/store/selectors/columns.selectors';
 import { CreateColumnModalComponent } from '../../components/create-column-modal/create-column-modal.component';
 import { IBoardItem } from '../../models/board-item.model';
 import { IColumnItem } from '../../models/column-item.model';
@@ -24,7 +24,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
   public columns$!: Observable<IColumnItem[]>;
 
-  private columnsCount: number = 0;
+  private columnsCount!: number;
 
   private subscriptions: Subscription[] = [];
 
@@ -39,11 +39,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.boardId = this.route.snapshot.params.id;
     this.columns$ = this.store.select(selectColumns);
-
-    const subscription = this.store.select(selectColumnsCount).subscribe(count => (this.columnsCount = count));
-
-    this.subscriptions.push(subscription);
-
     this.loadColumns();
   }
 
@@ -52,8 +47,13 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(clearColumns());
   }
 
-  private updateColumnsState = (board: IBoardItem) =>
-    this.store.dispatch(fetchColumns({ columns: board.columns || [] }));
+  private updateColumnsState = (board: IBoardItem) => {
+    if (board.columns) {
+      const columnsOrders: number[] = board.columns.map(column => column.order);
+      this.columnsCount = columnsOrders.length ? Math.max(...columnsOrders) : 0;
+      this.store.dispatch(fetchColumns({ columns: board.columns || [] }));
+    }
+  };
 
   private loadColumns = (): void => {
     const subscription = this.boardsService.getBoardById(this.boardId).subscribe((board: IBoardItem) => {
