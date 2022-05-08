@@ -1,14 +1,17 @@
 import { OpenCreateBoardModalService } from '../create-board-modal/services/open-create-board-modal.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
+
   constructor(private router: Router, private readonly openCreateBoardModalService: OpenCreateBoardModalService) {}
 
   ngOnInit(): void {
@@ -36,7 +39,12 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['']);
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
   public openCreateBoardModal() {
-    this.openCreateBoardModalService.openCreateBoardDialog().forEach(res => console.log(res));
+    const subscription = this.openCreateBoardModalService.openCreateBoardDialog().subscribe(res => console.log(res));
+    this.subscriptions.push(subscription);
   }
 }
