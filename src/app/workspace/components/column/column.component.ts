@@ -108,10 +108,12 @@ export class ColumnComponent implements OnInit, OnDestroy {
   };
 
   public onDeleteButtonClick() {
-    this.openConfirmationModalService.openConfirmationDialog().forEach(res => {
+    const subscription = this.openConfirmationModalService.openConfirmationDialog().subscribe(res => {
       if (res === true) {
         this.deleteColumn();
       }
     });
+
+    this.subscriptions.push(subscription);
   }
 }

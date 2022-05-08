@@ -20,6 +20,8 @@ import { IColumnItem } from '../../models/column-item.model';
 export class BoardPageComponent implements OnInit, OnDestroy {
   private boardId!: string;
 
+  public boardTitle!: string;
+
   public columns$!: Observable<IColumnItem[]>;
 
   private columnsCount: number = 0;
@@ -54,9 +56,10 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(fetchColumns({ columns: board.columns || [] }));
 
   private loadColumns = (): void => {
-    const subscription = this.boardsService
-      .getBoardById(this.boardId)
-      .subscribe((board: IBoardItem) => this.updateColumnsState(board));
+    const subscription = this.boardsService.getBoardById(this.boardId).subscribe((board: IBoardItem) => {
+      this.boardTitle = board.title;
+      this.updateColumnsState(board);
+    });
 
     this.subscriptions.push(subscription);
   };

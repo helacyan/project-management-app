@@ -1,17 +1,25 @@
+@use "variables" as *;
+
 .container {
-  height: calc(100vh - 140px);
+  height: calc(100vh - 140px - 2rem);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   background-image: url('../../../../assets/bg.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.wrapper {
+h2 {
+  height: 2rem;
+  padding-left: 1rem;
+  color: $blue-dark;
+}
+
+.columns-container {
   display: flex;
-  height: 100%;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
   gap: 1rem;
+  height: calc(100vh - 140px - 4rem);
   overflow-x: scroll;
   overflow-y: hidden;
 
@@ -21,8 +29,13 @@
   }
 }
 
+
 @media screen and (max-width: 700px) {
   .container {
     height: calc(100vh - 220px);
+  }
+
+  .columns-container {
+    height: calc(100vh - 220px - 2rem);
   }
 }

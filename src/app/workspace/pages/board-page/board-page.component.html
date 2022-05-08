@@ -1,5 +1,6 @@
 <div class="container">
-  <div class="wrapper">
+  <h2>{{ boardTitle }}</h2>
+  <div class="columns-container">
     <app-column *ngFor="let column of columns$ | async" [column]="column"></app-column>
     <button mat-raised-button (click)="openDialog()">+ создать колонку</button>
   </div>

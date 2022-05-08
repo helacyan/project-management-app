@@ -37,6 +37,6 @@ export class HeaderComponent implements OnInit {
   }
 
   public openCreateBoardModal() {
-    this.openCreateBoardModalService.openCreateBoardDialog().forEach(res => console.log(res));
+    this.openCreateBoardModalService.openCreateBoardDialog();
   }
 }
