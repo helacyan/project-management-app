@@ -1,11 +1,13 @@
 @use 'variables' as *;
+
+mat-dialog-title {
+  color: $blue-dark;
+}
+
 .modal-buttons {
   justify-content: center;
-}
-.ok-btn {
-  background-color: $blue;
-  margin-left: 10px;
-}
-.ok-btn:hover {
-  background-color: $blue-dark;
+
+  button {
+    padding: 0 1rem;
+  }
 }

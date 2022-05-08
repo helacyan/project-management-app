@@ -21,10 +21,6 @@ export class BoardComponent {
     private store: Store<State>
   ) {}
 
-  public openModal() {
-    this.openConfirmationModalService.openConfirmationDialog().forEach(res => console.log(res));
-  }
-
   public deleteBoard() {
     this.openConfirmationModalService.openConfirmationDialog().forEach(res => {
       if (res === true) {
