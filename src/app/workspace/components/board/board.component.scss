@@ -15,9 +15,7 @@
   right: 10px;
   bottom: 10px;
 }
-.board-preview:hover {
-  background-color: $blue;
-}
 .board-title {
   font-size: var(--global--font-size-sm);
+  color: $blue-dark;
 }

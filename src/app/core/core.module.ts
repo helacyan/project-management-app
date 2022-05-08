@@ -11,12 +11,12 @@ import { UtilsService } from '../api/services/utils/utils.service';
 import { AuthGuardService } from '../auth/guards/auth-guard.service';
 import { ToastService } from '../api/services/auth/toast.service';
 import { WelcomePageComponent } from './pages/welcome-page/welcome-page.component';
-import { CreateBoardModalComponent } from './components/create-board-modal/create-board-modal.component';
 import { environment } from 'src/environments/environment';
 import { metaReducers, reducers } from '../store/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
+import { CreateBoardModalComponent } from './components/create-board-modal/create-board-modal.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
