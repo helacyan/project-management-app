@@ -4,6 +4,7 @@
   z-index: 999;
   top: 0px;
   height: 70px;
+  width: 100vw;
   background-color: $blue-light;
   display: flex;
   align-items: center;
@@ -13,23 +14,29 @@
     justify-content: space-between;
     width: 100%;
   }
-  button:hover {
-    background-color: $blue;
-  }
   .header-menu-container {
     min-width: 30%;
     display: flex;
     justify-content: space-between;
     column-gap: 1rem;
     row-gap: 0.3rem;
+
+    .wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
   }
-  .login-btn {
-    background-color: transparent;
+
+  .header-login-container {
+    display: flex;
+    column-gap: 1rem;
   }
-  .login-btn:hover {
-    background-color: transparent;
-    color: $blue;
+
+  .home-btn {
+    min-width: 2rem;
   }
+
   mat-slide-toggle {
     align-self: center;
   }
@@ -43,17 +50,24 @@
 
 @media screen and (max-width: 700px) {
   .header {
-    height: 120px;
-  }
-  .header-menu-container {
-    flex-direction: column;
-    min-width: 100px;
-    mat-slide-toggle {
-      align-self: auto;
+    height: 130px;
+
+    .header-menu-container {
+      flex-direction: column;
+      min-width: unset;
+
+      mat-slide-toggle {
+        align-self: auto;
+      }
     }
-  }
-  .header-menu-btn {
-    width: 175px;
-    padding: 0px;
+
+    .header-login-container {
+      flex-direction: column;
+    }
+
+    .header-menu-btn {
+      width: 175px;
+      padding: 0px;
+    }
   }
 }

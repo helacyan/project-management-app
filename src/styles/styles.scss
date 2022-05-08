@@ -1,10 +1,10 @@
-@use "variables";
+@use "variables" as *;
 
 @use "@angular/material" as mat;
 
 @include mat.core();
 
-$project-management-app-primary: mat.define-palette(mat.$light-blue-palette, 800);
+$project-management-app-primary: mat.define-palette(mat.$blue-palette, 900);
 $project-management-app-accent: mat.define-palette(mat.$blue-gray-palette, 500);
 $project-management-app-warn: mat.define-palette(mat.$red-palette);
 
@@ -19,11 +19,6 @@ $project-management-app-theme: mat.define-light-theme(
 );
 
 @include mat.all-component-themes($project-management-app-theme);
-
-html,
-body {
-  height: 100%;
-}
 
 body{
   margin: 0;
@@ -41,8 +36,59 @@ main {
   margin: 0 auto;
 }
 
+//buttons
+
+button.mat-raised-button {
+  background-color: $gray;
+  color: white;
+}
+
+button:hover {
+  background-color: $blue-dark;
+  color: white;
+}
+
+button:disabled,
+button:disabled:active{
+  background-color: initial;
+}
+
+button:active {
+  background-color: $primary-color;
+  color: white;
+}
+
+button.mat-button {
+  background-color: transparent;
+  padding: 0;
+  color: $gray;
+}
+
+button.mat-button:hover {
+  background-color: transparent;
+  color: $blue-dark;
+}
+
+button.mat-button:active {
+  background-color: transparent;
+  color: $primary-color;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.material-icons {
+  font-size: 1.2rem;
+}
+
 @media screen and (max-width: 700px) {
   main {
     padding-bottom: 90px;
+  }
+
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 }

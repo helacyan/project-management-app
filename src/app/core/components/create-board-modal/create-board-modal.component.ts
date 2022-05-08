@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { getBoards } from 'src/app/store/actions/getBoards.action';
+import { mergeMap } from 'rxjs';
+import { fetchBoards } from 'src/app/store/actions/boards.actions';
 import { State } from 'src/app/store/state.model';
+import { IBoardItem } from 'src/app/workspace/models/board-item.model';
 import { BoardsService } from '../../../api/services/boards/boards.service';
-import { OpenConfirmationModalService } from '../modal/services/open-modal.service';
 
 @Component({
   selector: 'app-create-board-modal',
@@ -23,7 +24,6 @@ export class CreateBoardModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CreateBoardModalComponent>,
     private readonly boardsService: BoardsService,
-    private readonly openConfirmationModalService: OpenConfirmationModalService,
     private store: Store<State>
   ) {}
 
@@ -40,11 +40,13 @@ export class CreateBoardModalComponent implements OnInit {
   public submit() {
     if (this.createBoardForm.valid) {
       this.formValue = this.createBoardForm.value;
-      this.boardsService.createBoard(this.formValue.title).forEach(() => {
-        this.boardsService.getBoards().forEach(boards => {
-          this.store.dispatch(getBoards({ boardsResponse: boards }));
+
+      this.boardsService
+        .createBoard(this.formValue.title)
+        .pipe(mergeMap(() => this.boardsService.getBoards()))
+        .subscribe((boards: IBoardItem[]) => {
+          this.store.dispatch(fetchBoards({ boards }));
         });
-      });
 
       this.dialogRef.close(true);
     }

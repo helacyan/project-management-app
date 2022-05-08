@@ -2,7 +2,7 @@
 
 .footer {
   height: 70px;
-  width: 100%;
+  width: 100vw;
   background-color: $blue-light;
   position: fixed;
   bottom: 0;
@@ -10,7 +10,7 @@
   .footer-container {
     display: flex;
     justify-content: space-between;
-    padding: 10px 1rem 0px 1rem;
+    padding-top: 10px;
     align-items: center;
   }
 }

@@ -1,7 +1,6 @@
 import { OpenCreateBoardModalService } from '../create-board-modal/services/open-create-board-modal.service';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { UsersService } from 'src/app/api/services/users/users.service';
 import jwt_decode from 'jwt-decode';
 
 @Component({
@@ -10,11 +9,7 @@ import jwt_decode from 'jwt-decode';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(
-    private router: Router,
-    private usersService: UsersService,
-    private readonly openCreateBoardModalService: OpenCreateBoardModalService
-  ) {}
+  constructor(private router: Router, private readonly openCreateBoardModalService: OpenCreateBoardModalService) {}
 
   ngOnInit(): void {
     this.router.events.subscribe(ev => {
@@ -34,7 +29,11 @@ export class HeaderComponent implements OnInit {
   }
 
   openRegistrationPage() {
-    this.router.navigate(['register']);
+    this.router.navigate(['signup']);
+  }
+
+  public redirectToMainPage(): void {
+    this.router.navigate(['']);
   }
 
   public openCreateBoardModal() {

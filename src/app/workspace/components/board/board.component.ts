@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { mergeMap } from 'rxjs';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { OpenConfirmationModalService } from 'src/app/core/components/modal/services/open-modal.service';
-import { getBoards } from 'src/app/store/actions/getBoards.action';
+import { fetchBoards } from 'src/app/store/actions/boards.actions';
 import { State } from 'src/app/store/state.model';
 import { IBoardItem } from '../../models/board-item.model';
 
@@ -33,11 +34,12 @@ export class BoardComponent {
   public deleteBoard() {
     this.openConfirmationModalService.openConfirmationDialog().forEach(res => {
       if (res === true) {
-        this.boardsService.deleteBoard(this.board.id).forEach(() => {
-          this.boardsService.getBoards().forEach(boards => {
-            this.store.dispatch(getBoards({ boardsResponse: boards }));
+        this.boardsService
+          .deleteBoard(this.board.id)
+          .pipe(mergeMap(() => this.boardsService.getBoards()))
+          .subscribe((boards: IBoardItem[]) => {
+            this.store.dispatch(fetchBoards({ boards }));
           });
-        });
       }
     });
   }

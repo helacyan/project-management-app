@@ -21,12 +21,9 @@ export class BoardsService {
     return this.http.post<IBoardItem>(`${BASE_URL}boards`, options);
   }
 
-  getBoardById(id: string) {
-    this.http.get(`${BASE_URL}boards/${id}`).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
-  }
+  getBoardById = (id: string): Observable<IBoardItem> => {
+    return this.http.get<IBoardItem>(`${BASE_URL}boards/${id}`);
+  };
 
   deleteBoard(id: string) {
     return this.http.delete<void>(`${BASE_URL}boards/${id}`);
