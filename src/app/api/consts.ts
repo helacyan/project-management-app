@@ -1,1 +1,1 @@
-export const BASE_URL = `https://warm-ravine-52148.herokuapp.com/`;
+export const BASE_URL = `https://shielded-shore-08241.herokuapp.com/`;
