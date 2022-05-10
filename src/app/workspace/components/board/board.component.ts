@@ -25,11 +25,6 @@ export class BoardComponent implements OnDestroy {
     private router: Router
   ) {}
 
-  public openModal() {
-    const subscription = this.openConfirmationModalService.openConfirmationDialog().subscribe(res => console.log(res));
-    this.subscriptions.push(subscription);
-  }
-
   public openBoard() {
     this.router.navigate(['/board/', this.board.id]);
   }

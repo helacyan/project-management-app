@@ -16,6 +16,7 @@ import { BoardsService } from '../../../api/services/boards/boards.service';
 export class CreateBoardModalComponent implements OnInit {
   formValue!: {
     title: string;
+    description: string;
   };
 
   public createBoardForm!: FormGroup;
@@ -30,6 +31,7 @@ export class CreateBoardModalComponent implements OnInit {
   ngOnInit(): void {
     this.createBoardForm = this.formBuilder.group({
       title: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(12)]],
+      description: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(12)]],
     });
   }
 
@@ -42,7 +44,7 @@ export class CreateBoardModalComponent implements OnInit {
       this.formValue = this.createBoardForm.value;
 
       this.boardsService
-        .createBoard(this.formValue.title)
+        .createBoard(this.formValue.title, this.formValue.description)
         .pipe(mergeMap(() => this.boardsService.getBoards()))
         .subscribe((boards: IBoardItem[]) => {
           this.store.dispatch(fetchBoards({ boards }));
