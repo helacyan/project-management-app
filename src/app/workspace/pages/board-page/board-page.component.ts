@@ -78,6 +78,9 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   public openDialog(): void {
     const dialogRef = this.dialog.open(CreateColumnModalComponent, {
       width: '300px',
+      position: {
+        top: 'calc(70px + 2rem)',
+      },
     });
 
     const subscription = dialogRef.afterClosed().subscribe(title => {

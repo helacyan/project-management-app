@@ -6,6 +6,7 @@ import { BehaviorSubject, mergeMap, Subscription } from 'rxjs';
 import { IColumn } from 'src/app/api/models/api.model';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { ColumnsService } from 'src/app/api/services/columns/columns.service';
+import { OpenConfirmationModalService } from 'src/app/core/components/modal/services/open-modal.service';
 import { fetchColumns } from 'src/app/store/actions/columns.actions';
 import { IBoardItem } from '../../models/board-item.model';
 import { IColumnItem } from '../../models/column-item.model';
@@ -38,7 +39,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private store: Store,
     private boardsService: BoardsService,
-    private columnsService: ColumnsService
+    private columnsService: ColumnsService,
+    private readonly openConfirmationModalService: OpenConfirmationModalService
   ) {}
 
   ngOnInit(): void {
@@ -95,4 +97,21 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public onTitleCancel = (): void => {
     this.hideEditTitleInput();
   };
+
+  private deleteColumn = (): void => {
+    const subscription = this.columnsService
+      .deleteColumn(this.boardId, this.column.id)
+      .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
+      .subscribe((board: IBoardItem) => this.updateColumnsState(board));
+
+    this.subscriptions.push(subscription);
+  };
+
+  public onDeleteButtonClick() {
+    this.openConfirmationModalService.openConfirmationDialog().forEach(res => {
+      if (res === true) {
+        this.deleteColumn();
+      }
+    });
+  }
 }
