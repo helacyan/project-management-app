@@ -28,7 +28,6 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.title = this.task.title;
-    this.order = this.task.order;
     this.description = this.task.description;
     this.setExecutor();
     this.done = this.task.done;
