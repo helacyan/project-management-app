@@ -6,10 +6,21 @@ import { RouterModule } from '@angular/router';
 import SharedModule from 'src/app/shared/shared.module';
 import { BoardPageComponent } from './pages/board-page/board-page.component';
 import { SearchPageComponent } from './pages/search-page/search-page.component';
+import { ColumnComponent } from './components/column/column.component';
+import { CreateColumnModalComponent } from './components/create-column-modal/create-column-modal.component';
+import { TaskComponent } from './components/task/task.component';
 import { AuthGuardService } from '../auth/guards/auth-guard.service';
 
 @NgModule({
-  declarations: [MainPageComponent, BoardPageComponent, BoardComponent, SearchPageComponent],
+  declarations: [
+    MainPageComponent,
+    BoardPageComponent,
+    BoardComponent,
+    SearchPageComponent,
+    ColumnComponent,
+    CreateColumnModalComponent,
+    TaskComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,

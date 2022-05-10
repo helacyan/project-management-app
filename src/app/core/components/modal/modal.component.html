@@ -1,12 +1,12 @@
 <div class="modal">
   <h2 mat-dialog-title>Вы подтверждаете действие?</h2>
 
-  <mat-dialog-content>
+  <div mat-dialog-content>
     <p>Это действие не может быть отменено. Вы действительно хотите его выполнить?</p>
-  </mat-dialog-content>
+  </div>
 
-  <mat-dialog-actions class="modal-buttons">
-    <button class="mat-raised-button" (click)="close()">отмена</button>
-    <button class="mat-raised-button ok-btn" (click)="continue()">продолжить</button>
-  </mat-dialog-actions>
+  <div mat-dialog-actions class="modal-buttons">
+    <button mat-button (click)="close()">отмена</button>
+    <button mat-button (click)="continue()" cdkFocusInitial>продолжить</button>
+  </div>
 </div>

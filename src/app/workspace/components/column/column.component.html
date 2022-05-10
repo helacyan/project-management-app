@@ -1,0 +1,23 @@
+<div class="column">
+  <form class="title-form" [formGroup]="editTitleForm" (ngSubmit)="onTitleSubmit()">
+    <div *ngIf="isTitleVisible$ | async" class="column-title">
+      <h2 (click)="showEditTitleInput()">{{ title$ | async }}</h2>
+      <button mat-button type="button" (click)="onDeleteButtonClick()">
+        <span class="material-icons">delete</span>
+      </button>
+    </div>
+    <div *ngIf="isTitleInputVisible$ | async" class="title-btns">
+      <button mat-button type="button" (click)="onTitleCancel()">
+        <span class="material-icons">close</span>
+      </button>
+      <button mat-button type="submit">
+        <span class="material-icons">done</span>
+      </button>
+    </div>
+    <mat-form-field *ngIf="isTitleInputVisible$ | async" appearance="fill">
+      <input type="text" matInput formControlName="title" />
+    </mat-form-field>
+  </form>
+  <app-task *ngFor="let task of tasks" [task]="task"></app-task>
+  <button mat-raised-button>+ создать задачу</button>
+</div>

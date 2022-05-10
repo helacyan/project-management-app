@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IColumnItem } from 'src/app/workspace/models/column-item.model';
 import { BASE_URL } from '../../consts';
 import { IColumn } from '../../models/api.model';
 
@@ -9,38 +11,23 @@ import { IColumn } from '../../models/api.model';
 export class ColumnsService {
   constructor(private http: HttpClient) {}
 
-  getColumns(id: string) {
-    this.http.get(`${BASE_URL}boards/${id}/columns`).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
-  }
+  getColumns = (boardId: string): Observable<IColumn[]> => {
+    return this.http.get<IColumn[]>(`${BASE_URL}boards/${boardId}/columns`);
+  };
 
-  createColumns(id: string, column: IColumn) {
-    this.http.post(`${BASE_URL}boards/${id}/columns`, column).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
-  }
+  createColumn = (boardId: string, column: IColumn): Observable<IColumn> => {
+    return this.http.post<IColumn>(`${BASE_URL}boards/${boardId}/columns`, column);
+  };
 
-  getColumnById(boardId: string, columnId: string) {
-    this.http.get(`${BASE_URL}boards/${boardId}/columns/${columnId}`).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
-  }
+  getColumnById = (boardId: string, columnId: string): Observable<IColumnItem> => {
+    return this.http.get<IColumnItem>(`${BASE_URL}boards/${boardId}/columns/${columnId}`);
+  };
 
-  deleteColumn(boardId: string, columnId: string) {
-    this.http.delete(`${BASE_URL}boards/${boardId}/columns/${columnId}`).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
-  }
+  deleteColumn = (boardId: string, columnId: string): Observable<IColumn> => {
+    return this.http.delete<IColumn>(`${BASE_URL}boards/${boardId}/columns/${columnId}`);
+  };
 
-  updateColumn(boardId: string, columnId: string, column: IColumn) {
-    this.http.put(`${BASE_URL}boards/${boardId}/columns/${columnId}`, column).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
-  }
+  updateColumn = (boardId: string, columnId: string, column: IColumn): Observable<IColumn> => {
+    return this.http.put<IColumn>(`${BASE_URL}boards/${boardId}/columns/${columnId}`, column);
+  };
 }

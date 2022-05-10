@@ -1,0 +1,28 @@
+.container {
+  height: calc(100vh - 140px);
+  background-image: url('../../../../assets/bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.wrapper {
+  display: flex;
+  height: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  gap: 1rem;
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  button {
+    height: 2.25rem;
+    min-width: fit-content;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .container {
+    height: calc(100vh - 220px);
+  }
+}

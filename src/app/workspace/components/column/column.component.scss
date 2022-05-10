@@ -1,0 +1,57 @@
+@use "variables" as *;
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-sizing: border-box;
+  width: calc(320px - 1rem);
+  max-height: calc(100% - 2rem);
+  overflow: scroll;
+  padding: 1rem;
+  border-radius: $border-radius;
+  background-color: $ferra-light;
+
+  .title-form {
+    display: flex;
+    gap: 0.2rem;
+
+    .column-title {
+      display: flex;
+      gap: 0.2rem;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      h2 {
+        color: $ferra-dark;
+        font-size: 1.2rem;
+        padding: 0.75em;
+        cursor: pointer;
+      }
+
+      button {
+        min-width: 2rem;
+        height: 2.25rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+    .title-btns {
+      display: flex;
+      gap: 0.2rem;
+      flex-direction: column;
+
+        button {
+          height: 1.77rem;
+          min-width: 1.77rem;
+          padding: 0;
+          line-height: normal;
+        }
+    }
+
+    input {
+      font-size: 1.2rem;
+    }
+  }
+}
