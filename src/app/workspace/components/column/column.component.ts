@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, mergeMap, Subscription } from 'rxjs';
@@ -11,6 +11,7 @@ import { fetchColumns } from 'src/app/store/actions/columns.actions';
 import { IBoardItem } from '../../models/board-item.model';
 import { IColumnItem } from '../../models/column-item.model';
 import { ITaskItem } from '../../models/task-item.model';
+import { TITLE_ERRORS_MESSAGES } from './consts';
 
 @Component({
   selector: 'app-column',
@@ -29,6 +30,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public isTitleInputVisible$!: BehaviorSubject<boolean>;
 
   public editTitleForm!: FormGroup;
+
+  public readonly TITLE_ERRORS_MESSAGES = TITLE_ERRORS_MESSAGES;
 
   private subscriptions: Subscription[] = [];
 
@@ -50,7 +53,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.isTitleVisible$ = new BehaviorSubject<boolean>(true);
     this.isTitleInputVisible$ = new BehaviorSubject<boolean>(false);
     this.editTitleForm = this.fb.group({
-      title: [this.column.title],
+      title: [this.column.title, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     });
   }
 
