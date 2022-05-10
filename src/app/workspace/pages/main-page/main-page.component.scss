@@ -1,3 +1,4 @@
+@use "variables" as *;
 .main {
   height: 100%;
   padding: 1rem;
@@ -10,3 +11,16 @@
     gap: 1rem;
   }
 }
+.search {
+  padding: 1rem;
+  text-align: right;
+}
+.search-input {
+  background-color: transparent;
+  border: 1px solid $gray;
+  vertical-align: middle;
+}
+.search-icon {
+  vertical-align: middle;
+}
+

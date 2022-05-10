@@ -1,4 +1,8 @@
 <div class="main container">
+  <div class="search">
+    <mat-icon matPrefix class="search-icon">search</mat-icon>
+    <input matInput type="search" placeholder="поиск" class="search-input" />
+  </div>
   <div class="boards-list">
     <app-board *ngFor="let board of boards$ | async" [board]="board"></app-board>
   </div>
