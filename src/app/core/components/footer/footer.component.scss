@@ -21,9 +21,17 @@
   vertical-align: middle;
   column-gap: 1rem;
 
-  a {
+  .footer__link {
     height: 24px;
   }
+  .footer__link:hover p{
+    color: $blue-dark;
+  }
+  .footer__link:hover .footer_svg{
+    stroke: $blue-dark; 
+    fill: $blue-dark;
+  } 
+
 }
 .name {
   display: inline-block;

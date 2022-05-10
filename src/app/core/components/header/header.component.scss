@@ -1,8 +1,5 @@
 @use "variables" as *;
 .header {
-  position: sticky;
-  z-index: 999;
-  top: 0px;
   height: 70px;
   width: 100vw;
   background-color: $blue-light;
@@ -40,6 +37,17 @@
   mat-slide-toggle {
     align-self: center;
   }
+}
+.mat-elevation-z5 {
+  position: relative;
+}
+.sticky {
+  position: fixed;
+  top: 0px;
+  height: 60px;
+  transition: height 0.5s;
+  z-index: 999;
+  background-color: $ferra-light;
 }
 
 @media screen and (max-width: 1500px) {

@@ -14,9 +14,10 @@ export class BoardsService {
     return this.http.get<Array<IBoardItem>>(`${BASE_URL}boards`);
   }
 
-  createBoard(title: string) {
+  createBoard(title: string, description: string) {
     const options = {
       title,
+      description,
     };
     return this.http.post<IBoardItem>(`${BASE_URL}boards`, options);
   }

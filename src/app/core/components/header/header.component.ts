@@ -1,5 +1,5 @@
 import { OpenCreateBoardModalService } from '../create-board-modal/services/open-create-board-modal.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 
@@ -9,6 +9,8 @@ import jwt_decode from 'jwt-decode';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  isSticky: boolean = false;
+
   constructor(private router: Router, private readonly openCreateBoardModalService: OpenCreateBoardModalService) {}
 
   ngOnInit(): void {
@@ -24,6 +26,11 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  @HostListener('window:scroll', ['$event'])
+  checkScroll() {
+    this.isSticky = window.pageYOffset > 0;
+  }
+
   openLoginPage() {
     this.router.navigate(['login']);
   }
@@ -37,6 +44,6 @@ export class HeaderComponent implements OnInit {
   }
 
   public openCreateBoardModal() {
-    this.openCreateBoardModalService.openCreateBoardDialog().forEach(res => console.log(res));
+    this.openCreateBoardModalService.openCreateBoardDialog();
   }
 }

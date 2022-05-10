@@ -1,6 +1,6 @@
 <div class="board-wrapper">
-  <div class="board" [routerLink]="['/board/', board.id]">
+  <div class="board" (click)="openBoard()">
     <p class="board-title">{{ board.title }}</p>
   </div>
-  <button mat-raised-button (click)="deleteBoard()" class="board-preview">удалить</button>
+  <div class="board-preview"><button mat-raised-button (click)="deleteBoard()">удалить</button></div>
 </div>

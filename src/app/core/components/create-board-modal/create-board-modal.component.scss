@@ -49,3 +49,9 @@ form.ng-touched.ng-invalid {
   }
 
 }
+
+@media screen and (max-width: 900px) {
+  .new-board-modal {
+    width: 60vw;
+  }
+}

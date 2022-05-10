@@ -44,7 +44,7 @@ export class CreateBoardModalComponent implements OnInit {
       this.formValue = this.createBoardForm.value;
 
       this.boardsService
-        .createBoard(this.formValue.title)
+        .createBoard(this.formValue.title, this.formValue.description)
         .pipe(mergeMap(() => this.boardsService.getBoards()))
         .subscribe((boards: IBoardItem[]) => {
           this.store.dispatch(fetchBoards({ boards }));
