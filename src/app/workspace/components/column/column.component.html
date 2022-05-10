@@ -18,6 +18,6 @@
       <input type="text" matInput formControlName="title" />
     </mat-form-field>
   </form>
-  <app-task *ngFor="let task of tasks" [task]="task"></app-task>
+  <app-task *ngFor="let task of tasks | sortByOrder" [task]="task"></app-task>
   <button mat-raised-button>+ создать задачу</button>
 </div>

@@ -6,7 +6,9 @@ import { mergeMap, Observable, Subscription } from 'rxjs';
 import { IColumn } from 'src/app/api/models/api.model';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { ColumnsService } from 'src/app/api/services/columns/columns.service';
+import { UsersService } from 'src/app/api/services/users/users.service';
 import { clearColumns, fetchColumns } from 'src/app/store/actions/columns.actions';
+import { fetchUsers } from 'src/app/store/actions/users.actions';
 import { selectColumns } from 'src/app/store/selectors/columns.selectors';
 import { CreateColumnModalComponent } from '../../components/create-column-modal/create-column-modal.component';
 import { IBoardItem } from '../../models/board-item.model';
@@ -31,6 +33,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private store: Store,
+    private usersService: UsersService,
     private boardsService: BoardsService,
     private columnsService: ColumnsService,
     private dialog: MatDialog
@@ -39,6 +42,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.boardId = this.route.snapshot.params.id;
     this.columns$ = this.store.select(selectColumns);
+    this.loadUsers();
     this.loadColumns();
   }
 
@@ -53,6 +57,14 @@ export class BoardPageComponent implements OnInit, OnDestroy {
       this.columnsCount = columnsOrders.length ? Math.max(...columnsOrders) : 0;
       this.store.dispatch(fetchColumns({ columns: board.columns || [] }));
     }
+  };
+
+  private loadUsers = (): void => {
+    const subscription = this.usersService.getUsers().subscribe(users => {
+      this.store.dispatch(fetchUsers({ users }));
+    });
+
+    this.subscriptions.push(subscription);
   };
 
   private loadColumns = (): void => {

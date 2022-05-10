@@ -11,6 +11,7 @@ import { CreateColumnModalComponent } from './components/create-column-modal/cre
 import { TaskComponent } from './components/task/task.component';
 import { AuthGuardService } from '../auth/guards/auth-guard.service';
 import { SortByOrderPipe } from './pipes/sort-by-order.pipe';
+import { CheckboxColorDirective } from './components/task/directives/checkbox-color.directive';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SortByOrderPipe } from './pipes/sort-by-order.pipe';
     CreateColumnModalComponent,
     TaskComponent,
     SortByOrderPipe,
+    CheckboxColorDirective,
   ],
   imports: [
     CommonModule,

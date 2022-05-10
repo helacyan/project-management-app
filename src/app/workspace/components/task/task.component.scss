@@ -1,7 +1,21 @@
 @use "variables" as *;
 
-.task-wrapper {
-  background-color: white;
+mat-card-title {
+  color: $primary-color;
+  font-size: var(--global--font-size-sm);
+}
+
+p {
+  margin-bottom: 0.2rem;
+  color: $gray;
+
+  &.description {
+    margin-bottom: 0.5rem;
+    color: $blue-dark;
+  }
+}
+
+mat-checkbox {
+  padding: 0 0.5rem;
   border-radius: $border-radius;
-  padding: 0.5rem;
 }

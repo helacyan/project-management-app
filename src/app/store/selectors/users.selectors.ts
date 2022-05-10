@@ -6,4 +6,7 @@ const selectUsersState = createFeatureSelector<IUsersState>('usersState');
 export const selectUsers = createSelector(selectUsersState, state => state.users);
 
 export const selectCurrentUser = (login: string) =>
-  createSelector(selectUsersState, state => state.users.find(item => item.login === login));
+  createSelector(selectUsersState, state => state.users.find(user => user.login === login));
+
+export const selectUser = (userId: string) =>
+  createSelector(selectUsersState, state => state.users.find(user => user.id === userId));

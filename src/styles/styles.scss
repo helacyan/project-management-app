@@ -4,8 +4,8 @@
 
 @include mat.core();
 
-$project-management-app-primary: mat.define-palette(mat.$blue-palette, 900);
-$project-management-app-accent: mat.define-palette(mat.$blue-gray-palette, 500);
+$project-management-app-primary: mat.define-palette(mat.$blue-gray-palette, 500);
+$project-management-app-accent: mat.define-palette(mat.$blue-palette, 900);
 $project-management-app-warn: mat.define-palette(mat.$red-palette);
 
 $project-management-app-theme: mat.define-light-theme(

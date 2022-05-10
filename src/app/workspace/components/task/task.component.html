@@ -1,1 +1,9 @@
-<div class="task-wrapper">task works</div>
+<mat-card>
+  <mat-card-title>{{ title }} #{{ order }}</mat-card-title>
+  <mat-card-title></mat-card-title>
+  <mat-card-content>
+    <p class="description">{{ description }}</p>
+    <p>Исполнитель: {{ executor }}</p>
+    <mat-checkbox [(ngModel)]="done" [appCheckboxColor]="done">Выполнено</mat-checkbox>
+  </mat-card-content>
+</mat-card>
