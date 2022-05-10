@@ -41,7 +41,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         .signIn({ ...this.form.value })
         .pipe(mergeMap(() => this.usersService.getUsers()))
         .subscribe(users => {
-          console.log(users);
           this.store.dispatch(fetchUsers({ users }));
           return localStorage.getItem('userToken') ? this.router.navigate(['/']) : null;
         });

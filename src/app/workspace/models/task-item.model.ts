@@ -1,9 +1,7 @@
-import { ITask } from 'src/app/api/models/api.model';
+import { IUpdatedTask } from 'src/app/api/models/api.model';
 import { IFileItem } from './file-item.model';
 
-export interface ITaskItem extends ITask {
+export interface ITaskItem extends IUpdatedTask {
   id: string;
-  order: number;
-  done: boolean;
   files: IFileItem[];
 }

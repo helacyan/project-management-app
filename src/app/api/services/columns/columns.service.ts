@@ -11,8 +11,8 @@ import { IColumn } from '../../models/api.model';
 export class ColumnsService {
   constructor(private http: HttpClient) {}
 
-  getColumns = (boardId: string): Observable<IColumn[]> =>
-    this.http.get<IColumn[]>(`${BASE_URL}boards/${boardId}/columns`);
+  getColumns = (boardId: string): Observable<IColumnItem[]> =>
+    this.http.get<IColumnItem[]>(`${BASE_URL}boards/${boardId}/columns`);
 
   createColumn = (boardId: string, column: IColumn): Observable<IColumnItem> =>
     this.http.post<IColumnItem>(`${BASE_URL}boards/${boardId}/columns`, column);
@@ -20,8 +20,8 @@ export class ColumnsService {
   getColumnById = (boardId: string, columnId: string): Observable<IColumnItem> =>
     this.http.get<IColumnItem>(`${BASE_URL}boards/${boardId}/columns/${columnId}`);
 
-  deleteColumn = (boardId: string, columnId: string): Observable<IColumn> =>
-    this.http.delete<IColumn>(`${BASE_URL}boards/${boardId}/columns/${columnId}`);
+  deleteColumn = (boardId: string, columnId: string): Observable<null> =>
+    this.http.delete<null>(`${BASE_URL}boards/${boardId}/columns/${columnId}`);
 
   updateColumn = (boardId: string, columnId: string, column: IColumn): Observable<IColumnItem> =>
     this.http.put<IColumnItem>(`${BASE_URL}boards/${boardId}/columns/${columnId}`, column);
