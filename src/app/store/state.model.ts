@@ -9,6 +9,7 @@ export interface State {
 }
 
 export interface IUsersState {
+  currentUserId: string;
   users: IUserItem[];
 }
 
@@ -21,6 +22,7 @@ export interface IColumnsState {
 }
 
 export const usersInitialState: IUsersState = {
+  currentUserId: '',
   users: [],
 };
 

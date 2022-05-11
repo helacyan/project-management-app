@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterContentInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -15,16 +15,15 @@ import { IColumnItem } from '../../models/column-item.model';
 import { ITaskItem } from '../../models/task-item.model';
 import { CreateTaskModalComponent } from '../modals/create-task-modal/create-task-modal.component';
 import { TITLE_ERRORS_MESSAGES } from '../modals/consts';
-import { selectCurrentUser } from 'src/app/store/selectors/users.selectors';
-import { UtilsService } from 'src/app/api/services/utils/utils.service';
 import { selectColumns } from 'src/app/store/selectors/columns.selectors';
+import { selectCurrentUserId } from 'src/app/store/selectors/users.selectors';
 
 @Component({
   selector: 'app-column',
   templateUrl: './column.component.html',
   styleUrls: ['./column.component.scss'],
 })
-export class ColumnComponent implements OnInit, OnDestroy {
+export class ColumnComponent implements OnInit, AfterContentInit, OnDestroy {
   private currentUserId!: string | undefined;
 
   private boardId!: string;
@@ -56,13 +55,11 @@ export class ColumnComponent implements OnInit, OnDestroy {
     private boardsService: BoardsService,
     private columnsService: ColumnsService,
     private tasksService: TasksService,
-    private utilsService: UtilsService,
     private dialog: MatDialog,
     private readonly openConfirmationModalService: OpenConfirmationModalService
   ) {}
 
   ngOnInit(): void {
-    this.setCurrentUserId();
     this.boardId = this.route.snapshot.params.id;
     this.title$ = new BehaviorSubject<string>(this.column.title);
     this.isTitleVisible$ = new BehaviorSubject<boolean>(true);
@@ -73,17 +70,20 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.tasks = this.column.tasks ? this.column.tasks : [];
   }
 
+  ngAfterContentInit(): void {
+    this.setCurrentUserId();
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   private setCurrentUserId = (): void => {
-    const login: string | null = this.utilsService.getLoginFromStorage();
-    if (login) {
-      this.store.select(selectCurrentUser(login)).subscribe(userId => {
-        this.currentUserId = userId;
-      });
-    }
+    const subscription = this.store
+      .select(selectCurrentUserId)
+      .subscribe(currentUserId => (this.currentUserId = currentUserId));
+
+    this.subscriptions.push(subscription);
   };
 
   public showEditTitleInput = (): void => {

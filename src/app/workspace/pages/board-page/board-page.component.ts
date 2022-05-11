@@ -7,8 +7,9 @@ import { IColumn } from 'src/app/api/models/api.model';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { ColumnsService } from 'src/app/api/services/columns/columns.service';
 import { UsersService } from 'src/app/api/services/users/users.service';
+import { UtilsService } from 'src/app/api/services/utils/utils.service';
 import { clearColumns, fetchColumns } from 'src/app/store/actions/columns.actions';
-import { fetchUsers } from 'src/app/store/actions/users.actions';
+import { fetchUsers, setCurrentUserId } from 'src/app/store/actions/users.actions';
 import { selectColumns } from 'src/app/store/selectors/columns.selectors';
 import { CreateColumnModalComponent } from '../../components/modals/create-column-modal/create-column-modal.component';
 import { IBoardItem } from '../../models/board-item.model';
@@ -36,6 +37,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     private usersService: UsersService,
     private boardsService: BoardsService,
     private columnsService: ColumnsService,
+    private utilsService: UtilsService,
     private dialog: MatDialog
   ) {}
 
@@ -57,6 +59,11 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   private loadUsers = (): void => {
     const subscription = this.usersService.getUsers().subscribe(users => {
       this.store.dispatch(fetchUsers({ users }));
+      const currentUserLogin: string | null = this.utilsService.getLoginFromStorage();
+      if (currentUserLogin) {
+        const currentUserId: string = users.find(user => user.login === currentUserLogin)?.id || '';
+        this.store.dispatch(setCurrentUserId({ currentUserId }));
+      }
     });
 
     this.subscriptions.push(subscription);
