@@ -11,8 +11,9 @@ import { CreateColumnModalComponent } from './components/modals/create-column-mo
 import { TaskComponent } from './components/task/task.component';
 import { AuthGuardService } from '../auth/guards/auth-guard.service';
 import { SortByOrderPipe } from './pipes/sort-by-order.pipe';
-import { CheckboxColorDirective } from './components/task/directives/checkbox-color.directive';
+import { CheckboxColorDirective } from './directives/checkbox-color.directive';
 import { CreateTaskModalComponent } from './components/modals/create-task-modal/create-task-modal.component';
+import { MatCardBackgroundColorDirective } from './directives/mat-card-background-color.directive';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CreateTaskModalComponent } from './components/modals/create-task-modal/
     SortByOrderPipe,
     CheckboxColorDirective,
     CreateTaskModalComponent,
+    MatCardBackgroundColorDirective,
   ],
   imports: [
     CommonModule,

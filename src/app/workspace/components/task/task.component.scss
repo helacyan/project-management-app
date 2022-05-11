@@ -1,8 +1,16 @@
 @use "variables" as *;
 
 mat-card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: $primary-color;
   font-size: var(--global--font-size-sm);
+
+  .delete-btn {
+    min-width: 2rem;
+    height: 2.25rem;
+  }
 }
 
 p {

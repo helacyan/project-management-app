@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input } from '@angular/core';
+import { Color } from './consts';
 
 @Directive({
   selector: '[appCheckboxColor]',
@@ -8,8 +9,8 @@ export class CheckboxColorDirective {
 
   @Input() set appCheckboxColor(done: boolean) {
     if (done) {
-      this.el.nativeElement.style.backgroundColor = '#0d47a1';
-      this.el.nativeElement.style.color = 'white';
+      this.el.nativeElement.style.backgroundColor = Color.PrimaryColor;
+      this.el.nativeElement.style.color = Color.White;
     }
   }
 }

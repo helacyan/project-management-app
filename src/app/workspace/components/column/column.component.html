@@ -2,7 +2,7 @@
   <form class="title-form" [formGroup]="editTitleForm" (ngSubmit)="onTitleSubmit()">
     <div *ngIf="isTitleVisible$ | async" class="column-title">
       <h2 (click)="showEditTitleInput()">{{ title$ | async }}</h2>
-      <button mat-button type="button" (click)="onDeleteButtonClick()">
+      <button mat-button class="delete-btn" type="button" (click)="onDeleteButtonClick()">
         <span class="material-icons">delete</span>
       </button>
     </div>
@@ -30,7 +30,7 @@
     </mat-form-field>
   </form>
   <div class="tasks-container">
-    <app-task *ngFor="let task of tasks | sortByOrder" [task]="task"></app-task>
+    <app-task *ngFor="let task of tasks | sortByOrder" [task]="task" [columnId]="column.id"></app-task>
   </div>
   <button mat-raised-button (click)="openCreateTaskDialog()">+ создать задачу</button>
 </div>

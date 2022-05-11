@@ -13,7 +13,7 @@ export class UsersService {
 
   getUsers = (): Observable<IUserItem[]> => this.http.get<IUserItem[]>(`${BASE_URL}users`);
 
-  getUserById = (id: string) => this.http.get(`${BASE_URL}users/${id}`);
+  getUserById = (id: string): Observable<IUserItem> => this.http.get<IUserItem>(`${BASE_URL}users/${id}`);
 
   deleteUser(id: string) {
     this.http.delete(`${BASE_URL}users/${id}`).subscribe({

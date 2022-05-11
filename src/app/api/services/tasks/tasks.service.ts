@@ -23,8 +23,12 @@ export class TasksService {
   deleteTask = (boardId: string, columnId: string, taskId: string): Observable<null> =>
     this.http.delete<null>(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
 
-  updateTask = (taskId: string, updatedTask: IUpdatedTask): Observable<ITaskItem> => {
-    const { boardId, columnId } = updatedTask;
+  updateTask = (
+    boardId: string,
+    columnId: string,
+    taskId: string,
+    updatedTask: IUpdatedTask
+  ): Observable<ITaskItem> => {
     return this.http.put<ITaskItem>(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks/${taskId}`, updatedTask);
   };
 }

@@ -1,6 +1,10 @@
-<mat-card>
-  <mat-card-title>{{ title }}</mat-card-title>
-  <mat-card-title></mat-card-title>
+<mat-card [appMatCardBackgroundColor]="isTaskOwnByCurrentUser">
+  <mat-card-title
+    >{{ title }}
+    <button *ngIf="isTaskOwnByCurrentUser" mat-button class="delete-btn" type="button" (click)="onDeleteButtonClick()">
+      <span class="material-icons">delete</span>
+    </button>
+  </mat-card-title>
   <mat-card-content>
     <p class="description">{{ description }}</p>
     <p>Исполнитель: {{ executor }}</p>
