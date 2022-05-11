@@ -18,4 +18,5 @@ p {
 mat-checkbox {
   padding: 0 0.5rem;
   border-radius: $border-radius;
+  pointer-events: none;
 }

@@ -2,6 +2,6 @@
   <h2>{{ boardTitle }}</h2>
   <div class="columns-container">
     <app-column *ngFor="let column of columns$ | async | sortByOrder" [column]="column"></app-column>
-    <button mat-raised-button (click)="openDialog()">+ создать колонку</button>
+    <button mat-raised-button (click)="openCreateColumnDialog()">+ создать колонку</button>
   </div>
 </div>

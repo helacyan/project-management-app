@@ -29,6 +29,8 @@
       </mat-error>
     </mat-form-field>
   </form>
-  <app-task *ngFor="let task of tasks | sortByOrder" [task]="task"></app-task>
-  <button mat-raised-button>+ создать задачу</button>
+  <div class="tasks-container">
+    <app-task *ngFor="let task of tasks | sortByOrder" [task]="task"></app-task>
+  </div>
+  <button mat-raised-button (click)="openCreateTaskDialog()">+ создать задачу</button>
 </div>

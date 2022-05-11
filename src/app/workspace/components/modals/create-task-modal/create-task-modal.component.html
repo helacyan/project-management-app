@@ -1,0 +1,59 @@
+<h3 mat-dialog-title>Создание новой задачи</h3>
+<div mat-dialog-content>
+  <form id="create-task-form" [formGroup]="createTaskForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Название</mat-label>
+      <input type="text" matInput name="title" formControlName="title" />
+      <mat-error>
+        <span *ngIf="createTaskForm.controls['title'].hasError('required')">
+          {{ TITLE_ERRORS_MESSAGES.required }}
+        </span>
+        <span *ngIf="createTaskForm.controls['title'].hasError('minlength')">
+          {{ TITLE_ERRORS_MESSAGES.minLength }}
+        </span>
+        <span *ngIf="createTaskForm.controls['title'].hasError('maxlength')">
+          {{ TITLE_ERRORS_MESSAGES.maxLength }}
+        </span>
+        <span *ngIf="createTaskForm.controls['title'].hasError('hashSymbol')">
+          {{ TITLE_ERRORS_MESSAGES.hashSymbol }}
+        </span>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Описание</mat-label>
+      <textarea
+        matInput
+        name="description"
+        formControlName="description"
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="8"></textarea>
+      <mat-error>
+        <span *ngIf="createTaskForm.controls['description'].hasError('required')">
+          {{ DESCRIPTION_ERRORS_MESSAGES.required }}
+        </span>
+        <span *ngIf="createTaskForm.controls['description'].hasError('minlength')">
+          {{ DESCRIPTION_ERRORS_MESSAGES.minLength }}
+        </span>
+        <span *ngIf="createTaskForm.controls['description'].hasError('maxlength')">
+          {{ DESCRIPTION_ERRORS_MESSAGES.maxLength }}
+        </span>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" cdkFocusInitial>отмена</button>
+  <button
+    mat-button
+    type="submit"
+    form="create-task-form"
+    [disabled]="!createTaskForm.valid"
+    [mat-dialog-close]="{
+      title: createTaskForm.controls['title'].value,
+      description: createTaskForm.controls['description'].value
+    }">
+    создать
+  </button>
+</div>

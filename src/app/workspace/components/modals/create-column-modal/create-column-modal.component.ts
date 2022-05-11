@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TITLE_ERRORS_MESSAGES } from '../column/consts';
+import { TITLE_ERRORS_MESSAGES } from '../consts';
 
 @Component({
   selector: 'app-create-column-modal',
