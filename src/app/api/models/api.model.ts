@@ -4,10 +4,7 @@ export interface IUser {
   password: string;
 }
 
-export interface ILogin {
-  login: string;
-  password: string;
-}
+export type LoginType = Omit<IUser, 'name'>;
 
 export interface IColumn {
   title: string;
@@ -16,16 +13,13 @@ export interface IColumn {
 
 export interface ITask {
   title: string;
+  done: boolean;
   order: number;
   description: string;
   userId: string;
 }
 
-export interface IUpdateTask {
+export interface IUpdatedTask extends ITask {
   boardId: string;
   columnId: string;
-  title: string;
-  description: string;
-  order: number;
-  userId: string;
 }

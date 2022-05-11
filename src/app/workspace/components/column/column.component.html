@@ -2,22 +2,35 @@
   <form class="title-form" [formGroup]="editTitleForm" (ngSubmit)="onTitleSubmit()">
     <div *ngIf="isTitleVisible$ | async" class="column-title">
       <h2 (click)="showEditTitleInput()">{{ title$ | async }}</h2>
-      <button mat-button type="button" (click)="onDeleteButtonClick()">
+      <button mat-button class="delete-btn" type="button" (click)="onDeleteButtonClick()">
         <span class="material-icons">delete</span>
       </button>
     </div>
     <div *ngIf="isTitleInputVisible$ | async" class="title-btns">
-      <button mat-button type="button" (click)="onTitleCancel()">
+      <button mat-button type="button" (click)="onTitleCancel()" cdkFocusInitial>
         <span class="material-icons">close</span>
       </button>
-      <button mat-button type="submit">
+      <button mat-button type="submit" [disabled]="!editTitleForm.valid">
         <span class="material-icons">done</span>
       </button>
     </div>
     <mat-form-field *ngIf="isTitleInputVisible$ | async" appearance="fill">
       <input type="text" matInput formControlName="title" />
+      <mat-error>
+        <span *ngIf="editTitleForm.controls['title'].hasError('required')">
+          {{ TITLE_ERRORS_MESSAGES.required }}
+        </span>
+        <span *ngIf="editTitleForm.controls['title'].hasError('minlength')">
+          {{ TITLE_ERRORS_MESSAGES.minLength }}
+        </span>
+        <span *ngIf="editTitleForm.controls['title'].hasError('maxlength')">
+          {{ TITLE_ERRORS_MESSAGES.maxLength }}
+        </span>
+      </mat-error>
     </mat-form-field>
   </form>
-  <app-task *ngFor="let task of tasks" [task]="task"></app-task>
-  <button mat-raised-button>+ создать задачу</button>
+  <div class="tasks-container">
+    <app-task *ngFor="let task of tasks | sortByOrder" [task]="task" [columnId]="column.id"></app-task>
+  </div>
+  <button mat-raised-button (click)="openCreateTaskDialog()">+ создать задачу</button>
 </div>

@@ -7,9 +7,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { TranslocoRootModule } from '../transloco-root.module';
 
-const MATERIAL_MODULES = [MatSlideToggleModule, MatButtonModule, MatIconModule, MatDialogModule, MatInputModule];
+const MATERIAL_MODULES = [
+  MatSlideToggleModule,
+  MatButtonModule,
+  MatIconModule,
+  MatDialogModule,
+  MatInputModule,
+  MatCardModule,
+  MatCheckboxModule,
+  TextFieldModule,
+];
 
 @NgModule({
   declarations: [],

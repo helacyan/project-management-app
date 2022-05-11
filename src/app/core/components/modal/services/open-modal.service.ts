@@ -11,7 +11,7 @@ export class OpenConfirmationModalService {
   openConfirmationDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.position = {
-      top: '10px',
+      top: 'calc(70px + 2rem)',
     };
     return this.dialog.open(ModalComponent, dialogConfig).afterClosed();
   }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { BASE_URL } from '../../consts';
-import { ILogin, IUser } from '../../models/api.model';
+import { IUser, LoginType } from '../../models/api.model';
 import { UtilsService } from '../utils/utils.service';
 import { ToastService } from './toast.service';
 
@@ -22,10 +22,10 @@ export class SignInService {
     });
   }
 
-  signIn(login: ILogin) {
+  signIn(login: LoginType) {
     return this.http.post<{ token: string }>(`${BASE_URL}signin`, login).pipe(
       map((data: { token: string }) => {
-        this.utils.setLocalStorage(data.token);
+        this.utils.setLocalStorage(login.login, data.token);
         return data.token;
       })
     );

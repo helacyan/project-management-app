@@ -23,7 +23,7 @@ export class LoginPageComponent implements OnInit {
   submit() {
     if (this.form.valid) {
       this.signinService.signIn({ ...this.form.value }).subscribe(() => {
-        return localStorage.getItem('userInfo') ? this.router.navigate(['/']) : null;
+        return localStorage.getItem('userToken') ? this.router.navigate(['/']) : null;
       });
     }
     return;

@@ -6,9 +6,12 @@ import { mergeMap, Observable, Subscription } from 'rxjs';
 import { IColumn } from 'src/app/api/models/api.model';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { ColumnsService } from 'src/app/api/services/columns/columns.service';
+import { UsersService } from 'src/app/api/services/users/users.service';
+import { UtilsService } from 'src/app/api/services/utils/utils.service';
 import { clearColumns, fetchColumns } from 'src/app/store/actions/columns.actions';
-import { selectColumns, selectColumnsCount } from 'src/app/store/selectors/columns.selectors';
-import { CreateColumnModalComponent } from '../../components/create-column-modal/create-column-modal.component';
+import { fetchUsers, setCurrentUserId } from 'src/app/store/actions/users.actions';
+import { selectColumns } from 'src/app/store/selectors/columns.selectors';
+import { CreateColumnModalComponent } from '../../components/modals/create-column-modal/create-column-modal.component';
 import { IBoardItem } from '../../models/board-item.model';
 import { IColumnItem } from '../../models/column-item.model';
 
@@ -20,28 +23,28 @@ import { IColumnItem } from '../../models/column-item.model';
 export class BoardPageComponent implements OnInit, OnDestroy {
   private boardId!: string;
 
+  public boardTitle!: string;
+
   public columns$!: Observable<IColumnItem[]>;
 
-  private columnsCount: number = 0;
+  private newColumnOrder!: number;
 
   private subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private store: Store,
+    private usersService: UsersService,
     private boardsService: BoardsService,
     private columnsService: ColumnsService,
+    private utilsService: UtilsService,
     private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.boardId = this.route.snapshot.params.id;
     this.columns$ = this.store.select(selectColumns);
-
-    const subscription = this.store.select(selectColumnsCount).subscribe(count => (this.columnsCount = count));
-
-    this.subscriptions.push(subscription);
-
+    this.loadUsers();
     this.loadColumns();
   }
 
@@ -53,20 +56,43 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   private updateColumnsState = (board: IBoardItem) =>
     this.store.dispatch(fetchColumns({ columns: board.columns || [] }));
 
+  private loadUsers = (): void => {
+    const subscription = this.usersService.getUsers().subscribe(users => {
+      this.store.dispatch(fetchUsers({ users }));
+      const currentUserLogin: string | null = this.utilsService.getLoginFromStorage();
+      if (currentUserLogin) {
+        const currentUserId: string = users.find(user => user.login === currentUserLogin)?.id || '';
+        this.store.dispatch(setCurrentUserId({ currentUserId }));
+      }
+    });
+
+    this.subscriptions.push(subscription);
+  };
+
   private loadColumns = (): void => {
-    const subscription = this.boardsService
-      .getBoardById(this.boardId)
-      .subscribe((board: IBoardItem) => this.updateColumnsState(board));
+    const subscription = this.boardsService.getBoardById(this.boardId).subscribe((board: IBoardItem) => {
+      this.boardTitle = board.title;
+      this.updateColumnsState(board);
+    });
+
+    this.subscriptions.push(subscription);
+  };
+
+  private updateNewColumnOrder = () => {
+    const subscription = this.columns$.subscribe(columns => {
+      const columnsOrders: number[] = columns.map(column => column.order);
+      this.newColumnOrder = columnsOrders.length ? Math.max(...columnsOrders) + 1 : 1;
+    });
 
     this.subscriptions.push(subscription);
   };
 
   private createColumn = (title: string): void => {
+    this.updateNewColumnOrder();
     const newColumn: IColumn = {
       title,
-      order: this.columnsCount + 1,
+      order: this.newColumnOrder,
     };
-    this.columnsService.createColumn(this.boardId, newColumn);
 
     const subscription = this.columnsService
       .createColumn(this.boardId, newColumn)
@@ -75,7 +101,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   };
 
-  public openDialog(): void {
+  public openCreateColumnDialog(): void {
     const dialogRef = this.dialog.open(CreateColumnModalComponent, {
       width: '300px',
       position: {
