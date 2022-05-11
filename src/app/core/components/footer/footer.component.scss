@@ -23,15 +23,16 @@
 
   .footer__link {
     height: 24px;
-  }
-  .footer__link:hover p{
-    color: $blue-dark;
-  }
-  .footer__link:hover .footer_svg{
-    stroke: $blue-dark; 
-    fill: $blue-dark;
-  } 
 
+    p {
+      transition: 0.3s ease all;
+    }
+
+    svg-icon {
+      fill: $blue;
+      transition: 0.3s ease all;
+    }
+  }
 }
 .name {
   display: inline-block;

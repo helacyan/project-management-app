@@ -17,6 +17,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
 import { CreateBoardModalComponent } from './components/create-board-modal/create-board-modal.component';
+import { HighlightFooterLinkDirective } from './directives/highlight-footer-link.directive';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -33,6 +34,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     ErrorPageComponent,
     CreateBoardModalComponent,
     WelcomePageComponent,
+    HighlightFooterLinkDirective,
   ],
   imports: [
     CommonModule,
