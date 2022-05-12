@@ -12,15 +12,19 @@
   }
 }
 .search {
-  padding: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 3rem;
   text-align: right;
 }
 .search-input {
   background-color: transparent;
-  border: 1px solid $gray;
   vertical-align: middle;
+  height: 2rem;
+  width: 13rem;
+  border: 2px solid $gray;
 }
 .search-icon {
   vertical-align: middle;
+  font-size: 2rem;
 }
 

@@ -7,6 +7,7 @@ import { getStoreBoards } from '../../../store/selectors/boards.selectors';
 import { clearBoards, fetchBoards } from '../../../store/actions/boards.actions';
 import { Observable, Subscription } from 'rxjs';
 import { SearchTasksService } from '../../services/search-tasks.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -23,7 +24,8 @@ export class MainPageComponent implements OnInit, OnDestroy {
   constructor(
     private readonly boardsService: BoardsService,
     private store: Store<State>,
-    private readonly searchTasksService: SearchTasksService
+    private readonly searchTasksService: SearchTasksService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -50,5 +52,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   public searchTask() {
     this.searchTasksService.changeTitleSearch(this.inputSearch);
+    this.router.navigate(['/search']);
   }
 }

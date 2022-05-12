@@ -10,10 +10,7 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   getUsers() {
-    this.http.get(`${BASE_URL}users`).subscribe({
-      next: data => data,
-      error: error => console.log(error),
-    });
+    return this.http.get<Array<IUser>>(`${BASE_URL}users`);
   }
 
   getUserById(id: string) {

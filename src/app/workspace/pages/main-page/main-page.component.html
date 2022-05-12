@@ -7,7 +7,7 @@
       placeholder="поиск"
       class="search-input"
       [(ngModel)]="inputSearch"
-      (ngModelChange)="searchTask()" />
+      (focus)="searchTask()" />
   </div>
   <div class="boards-list">
     <app-board *ngFor="let board of boards$ | async" [board]="board"></app-board>
