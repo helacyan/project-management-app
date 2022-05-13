@@ -28,10 +28,6 @@ h2 {
     min-width: fit-content;
   }
 
-  // .column-box {
-  //   cursor: move;
-  // }
-
   .column-placeholder {
     width: calc(320px - 1rem);
     height: inherit;
@@ -54,10 +50,10 @@ h2 {
 
 @media screen and (max-width: 700px) {
   .container {
-    height: calc(100vh - 220px);
+    height: calc(100vh - 220px - 2rem);
   }
 
   .columns-container {
-    height: calc(100vh - 220px - 2rem);
+    height: calc(100vh - 220px - 4rem);
   }
 }
