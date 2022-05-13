@@ -9,6 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TranslocoRootModule } from '../transloco-root.module';
@@ -21,7 +22,7 @@ const MATERIAL_MODULES = [
   MatInputModule,
   MatCardModule,
   MatCheckboxModule,
-  TextFieldModule,
+  MatProgressBarModule,
 ];
 
 @NgModule({
@@ -31,6 +32,7 @@ const MATERIAL_MODULES = [
     AngularSvgIconModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
+    TextFieldModule,
     DragDropModule,
     TranslocoRootModule,
     ...MATERIAL_MODULES,
@@ -40,6 +42,7 @@ const MATERIAL_MODULES = [
     AngularSvgIconModule,
     FormsModule,
     ReactiveFormsModule,
+    TextFieldModule,
     DragDropModule,
     TranslocoRootModule,
     ...MATERIAL_MODULES,
