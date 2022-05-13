@@ -181,7 +181,7 @@ export class ColumnComponent implements OnInit, AfterContentInit, OnDestroy {
     });
 
     const subscription = dialogRef.afterClosed().subscribe(task => {
-      if (this.currentUserId) {
+      if (task && this.currentUserId) {
         this.updateNewTaskNumber();
         this.updateNewTaskOrder();
         const newTask: ITask = {
