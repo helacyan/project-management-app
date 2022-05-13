@@ -1,1 +1,93 @@
-{}
+{
+  "header": {
+    "edit": "edit profile",
+    "create": "create board",
+    "login": "Login",
+    "registration": "Signup",
+    "logout": "Logout"
+  },
+  "edit": {
+    "edit": "Edit profile details",
+    "name": "Name",
+    "login": "Login",
+    "password": "Password",
+    "delete": "Delete profile",
+    "save": "Save changes"
+  },
+  "board": {
+    "create-task": "create task",
+    "responsible": "Performer",
+    "create-column": "create column",
+    "delete": "delete",
+    "done": "Done"
+  },
+  "task": {
+    "create-task": "Create new task",
+    "title": "Title",
+    "description": "Description",
+    "cancel": "cancel",
+    "create": "create",
+    "validation": {
+      "required": "Please enter a description",
+      "minLength": "The description is too short",
+      "maxLength": "The description is too long"
+    }
+  },
+  "login": {
+    "login": "Login",
+    "small-login": "login",
+    "small-password": "password"
+  },
+  "registration": {
+    "register": "Signup"
+  },
+  "validation": {
+    "name": {
+      "required": "Please enter a name"
+    },
+    "login": {
+      "required": "Please enter a login",
+      "login": "The login is invalid"
+    },
+    "password": {
+      "required": "Please enter a password",
+      "length": "Length must be at least",
+      "characters": "symbols. Number of characters",
+      "strong": "Your password isn't strong enough"
+    }
+  },
+  "column": {
+    "createColumn": "Create a new column",
+    "title": "Title",
+    "validation": {
+      "required": "Please, enter a title",
+      "minLength": "The title is too short",
+      "maxLength": "The title is too long",
+      "hashSymbol": "The name cannot contain the '#' character."
+    },
+    "create": "create",
+    "cancel": "cancel"
+  },
+  "b-modal": {
+    "create": "Create board",
+    "title": "Title",
+    "description": "Description",
+    "validation": {
+      "title": {
+        "required": "Please enter a title",
+        "length": "String length should be 8 to 12 characters"
+      },
+      "description": {
+        "required": "Please enter a description"
+      }
+    },
+    "cancel": "cancel",
+    "bCreate": "create"
+  },
+  "c-modal": {
+    "title": "Are you confirming this action?",
+    "content": "This action cannot be reversed. Do you really want to do it?",
+    "continue": "continue",
+    "cancel": "cancel"
+  }
+}

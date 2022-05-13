@@ -17,6 +17,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
 import { CreateBoardModalComponent } from './components/create-board-modal/create-board-modal.component';
+import { RouterModule } from '@angular/router';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -37,6 +38,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
   imports: [
     CommonModule,
     SharedModule,
+    RouterModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
     }),

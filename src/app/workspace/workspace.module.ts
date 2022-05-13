@@ -14,6 +14,7 @@ import { SortByOrderPipe } from './pipes/sort-by-order.pipe';
 import { CheckboxColorDirective } from './directives/checkbox-color.directive';
 import { CreateTaskModalComponent } from './components/modals/create-task-modal/create-task-modal.component';
 import { MatCardBackgroundColorDirective } from './directives/mat-card-background-color.directive';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MatCardBackgroundColorDirective } from './directives/mat-card-backgroun
     CheckboxColorDirective,
     CreateTaskModalComponent,
     MatCardBackgroundColorDirective,
+    ProfilePageComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +48,11 @@ import { MatCardBackgroundColorDirective } from './directives/mat-card-backgroun
       {
         path: 'search',
         component: SearchPageComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'profile',
+        component: ProfilePageComponent,
         canActivate: [AuthGuardService],
       },
     ]),

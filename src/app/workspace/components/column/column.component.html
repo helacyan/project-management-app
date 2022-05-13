@@ -1,4 +1,4 @@
-<div class="column">
+<div class="column" *transloco="let t; lang: 'en'">
   <form class="title-form" [formGroup]="editTitleForm" (ngSubmit)="onTitleSubmit()">
     <div *ngIf="isTitleVisible$ | async" class="column-title">
       <h2 (click)="showEditTitleInput()">{{ title$ | async }}</h2>
@@ -18,13 +18,13 @@
       <input type="text" matInput formControlName="title" />
       <mat-error>
         <span *ngIf="editTitleForm.controls['title'].hasError('required')">
-          {{ TITLE_ERRORS_MESSAGES.required }}
+          {{ t('column.validation.required') }}
         </span>
         <span *ngIf="editTitleForm.controls['title'].hasError('minlength')">
-          {{ TITLE_ERRORS_MESSAGES.minLength }}
+          {{ t('column.validation.minLength') }}
         </span>
         <span *ngIf="editTitleForm.controls['title'].hasError('maxlength')">
-          {{ TITLE_ERRORS_MESSAGES.maxLength }}
+          {{ t('column.validation.maxLength') }}
         </span>
       </mat-error>
     </mat-form-field>
@@ -32,5 +32,5 @@
   <div class="tasks-container">
     <app-task *ngFor="let task of tasks | sortByOrder" [task]="task" [columnId]="column.id"></app-task>
   </div>
-  <button mat-raised-button (click)="openCreateTaskDialog()">+ создать задачу</button>
+  <button mat-raised-button (click)="openCreateTaskDialog()">+ {{ t('board.create-task') }}</button>
 </div>

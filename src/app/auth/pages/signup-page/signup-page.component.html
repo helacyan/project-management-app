@@ -1,42 +1,48 @@
 <div class="logPageWrapper">
   <form class="card" [formGroup]="form" (ngSubmit)="submit()">
-    <div class="pageTitle">
-      <h1>Registration</h1>
+    <div class="pageTitle" *transloco="let t; read: 'header'">
+      <h1>{{ t('registration') }}</h1>
     </div>
-    <div>
-      <div>
-        <p class="logLabel">name</p>
+    <div *transloco="let ed; read: 'edit'">
+      <div *transloco="let e; read: 'validation'">
+        <p class="logLabel">{{ ed('name') }}</p>
         <input class="logInput" type="text" formControlName="name" />
-      </div>
-      <div>
-        <p class="logLabel">login</p>
-        <input class="logInput" type="text" formControlName="login" />
         <div *ngIf="form.get('login')!.invalid && form.get('login')!.touched" class="validation">
-          <small class="requirement" *ngIf="form.get('login')!.errors?.['required']"> Please enter a login </small>
-          <small class="requirement" *ngIf="form.get('login')!.errors?.['login']"> The login is invalid </small>
+          <small class="requirement" *ngIf="form.get('name')!.errors?.['required']">{{ e('name.required') }}</small>
         </div>
       </div>
-      <div>
-        <p class="logLabel">password</p>
+      <div *transloco="let e; read: 'validation'">
+        <p class="logLabel">{{ ed('login') }}</p>
+        <input class="logInput" type="text" formControlName="login" />
+        <div *ngIf="form.get('login')!.invalid && form.get('login')!.touched" class="validation">
+          <small class="requirement" *ngIf="form.get('login')!.errors?.['required']">{{ e('login.required') }}</small>
+          <small class="requirement" *ngIf="form.get('login')!.errors?.['login']">{{ e('login.login') }}</small>
+        </div>
+      </div>
+      <div *transloco="let e; read: 'validation'">
+        <p class="logLabel">{{ ed('password') }}</p>
         <input class="logInput" type="password" formControlName="password" />
         <div *ngIf="form.get('password')!.invalid && form.get('password')!.touched" class="validation">
           <small class="requirement" *ngIf="form.get('password')!.errors?.['required']">
-            Please enter a password
+            {{ e('password.required') }}
           </small>
           <small class="requirement" *ngIf="form.get('password')!.errors?.['minlength']">
-            Length must be at least {{form.get('password')!.errors?.['minlength'].requiredLength}}. Number of characters
+            {{ e('password.length') }} {{form.get('password')!.errors?.['minlength'].requiredLength}}
+            {{ e('password.characters') }}
             {{form.get('password')!.errors?.['minlength'].actualLength}}
           </small>
           <small
             class="requirement"
             *ngIf="(form.controls['password'].hasError('hasSmallCase') || form.controls['password'].hasError('hasSpecialCharacters') || form.controls['password'].hasError('hasCapitalCase') || form.controls['password'].hasError('hasNumber')) && !form.get('password')!.errors?.['minlength']">
-            Your password isn't strong enough
+            {{ e('password.strong') }}
           </small>
         </div>
       </div>
     </div>
-    <div class="buttonWrapper">
-      <button class="loginButton" [disabled]="form.invalid" mat-raised-button color="primary">Register</button>
+    <div class="buttonWrapper" *transloco="let r; read: 'registration'">
+      <button class="loginButton" [disabled]="form.invalid" mat-raised-button color="primary">
+        {{ r('register') }}
+      </button>
     </div>
   </form>
 </div>

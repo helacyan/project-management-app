@@ -16,6 +16,7 @@ export class UsersService {
   getUserById = (id: string): Observable<IUserItem> => this.http.get<IUserItem>(`${BASE_URL}users/${id}`);
 
   deleteUser(id: string) {
+    localStorage.clear();
     this.http.delete(`${BASE_URL}users/${id}`).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),

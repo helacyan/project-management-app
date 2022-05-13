@@ -14,7 +14,6 @@ import { IBoardItem } from '../../models/board-item.model';
 import { IColumnItem } from '../../models/column-item.model';
 import { ITaskItem } from '../../models/task-item.model';
 import { CreateTaskModalComponent } from '../modals/create-task-modal/create-task-modal.component';
-import { TITLE_ERRORS_MESSAGES } from '../modals/consts';
 import { selectColumns } from 'src/app/store/selectors/columns.selectors';
 import { selectCurrentUserId } from 'src/app/store/selectors/users.selectors';
 
@@ -41,8 +40,6 @@ export class ColumnComponent implements OnInit, AfterContentInit, OnDestroy {
   public isTitleInputVisible$!: BehaviorSubject<boolean>;
 
   public editTitleForm!: FormGroup;
-
-  public readonly TITLE_ERRORS_MESSAGES = TITLE_ERRORS_MESSAGES;
 
   private subscriptions: Subscription[] = [];
 

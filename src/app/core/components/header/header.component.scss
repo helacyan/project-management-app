@@ -1,7 +1,7 @@
 @use "variables" as *;
 .header {
   height: 70px;
-  width: 100vw;
+  width: 100%;
   background-color: $blue-light;
   display: flex;
   align-items: center;
