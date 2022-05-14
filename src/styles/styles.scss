@@ -30,7 +30,6 @@ main {
 }
 
 .container {
-  max-width: 1800px;
   padding-left: 1rem;
   padding-right: 1rem;
   margin: 0 auto;
@@ -86,7 +85,7 @@ mat-form-field {
   font-size: 1.2rem;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 750px) {
   main {
     padding-bottom: 90px;
   }
