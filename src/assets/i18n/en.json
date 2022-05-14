@@ -89,5 +89,9 @@
     "content": "This action cannot be reversed. Do you really want to do it?",
     "continue": "continue",
     "cancel": "cancel"
+  },
+  "error": {
+    "text": "The page you're looking for can't be found",
+    "okay": "Okay"
   }
 }
