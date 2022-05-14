@@ -10,6 +10,7 @@ import { ColumnsService } from 'src/app/api/services/columns/columns.service';
 import { UsersService } from 'src/app/api/services/users/users.service';
 import { UtilsService } from 'src/app/api/services/utils/utils.service';
 import {
+  addColumn,
   clearColumns,
   disableCdkDrag,
   enableCdkDrag,
@@ -35,8 +36,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   public columns$!: Observable<IColumnItem[]>;
 
   private columns!: IColumnItem[];
-
-  private newColumnOrder!: number;
 
   public cdkDragDisabled$!: Observable<boolean>;
 
@@ -71,8 +70,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   };
 
-  private updateColumnsState = (columns: IColumnItem[]) => this.store.dispatch(fetchColumns({ columns }));
-
   private loadUsers = (): void => {
     const subscription = this.usersService.getUsers().subscribe(users => {
       this.store.dispatch(fetchUsers({ users }));
@@ -89,32 +86,31 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   private loadColumns = (): void => {
     const subscription = this.boardsService.getBoardById(this.boardId).subscribe((board: IBoardItem) => {
       this.boardTitle = board.title;
-      this.updateColumnsState(board.columns || []);
-    });
-
-    this.subscriptions.push(subscription);
-  };
-
-  private updateNewColumnOrder = () => {
-    const subscription = this.columns$.subscribe(columns => {
-      const columnsOrders: number[] = columns.map(column => column.order);
-      this.newColumnOrder = columnsOrders.length ? Math.max(...columnsOrders) + 1 : 1;
+      this.store.dispatch(fetchColumns({ columns: board.columns || [] }));
     });
 
     this.subscriptions.push(subscription);
   };
 
   private createColumn = (title: string): void => {
-    this.updateNewColumnOrder();
-    const newColumn: IColumn = {
-      title,
-      order: this.newColumnOrder,
-    };
+    const subscription = this.boardsService
+      .getBoardById(this.boardId)
+      .pipe(
+        mergeMap(board => {
+          const columns = board.columns || [];
+          this.store.dispatch(fetchColumns({ columns }));
+          const columnsOrders: number[] = columns.map(column => column.order);
+          const newColumn: IColumn = {
+            title,
+            order: columnsOrders.length ? Math.max(...columnsOrders) + 1 : 1,
+          };
+          return this.columnsService.createColumn(this.boardId, newColumn);
+        })
+      )
+      .subscribe(column => {
+        this.store.dispatch(addColumn({ column }));
+      });
 
-    const subscription = this.columnsService
-      .createColumn(this.boardId, newColumn)
-      .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
-      .subscribe((board: IBoardItem) => this.updateColumnsState(board.columns || []));
     this.subscriptions.push(subscription);
   };
 
