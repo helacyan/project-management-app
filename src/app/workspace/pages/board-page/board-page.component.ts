@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { concat, mergeMap, Observable, Subscription } from 'rxjs';
+import { concat, map, mergeMap, Observable, Subscription } from 'rxjs';
 import { IColumn } from 'src/app/api/models/api.model';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { ColumnsService } from 'src/app/api/services/columns/columns.service';
@@ -22,6 +22,7 @@ import { selectCdkDragDisabled, selectColumns } from 'src/app/store/selectors/co
 import { CreateColumnModalComponent } from '../../components/modals/create-column-modal/create-column-modal.component';
 import { IBoardItem } from '../../models/board-item.model';
 import { IColumnItem } from '../../models/column-item.model';
+import { IUserItem } from '../../models/user-item.model';
 
 @Component({
   selector: 'app-board-page',
@@ -55,8 +56,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.boardId = this.route.snapshot.params.id;
     this.columns$ = this.store.select(selectColumns);
     this.cdkDragDisabled$ = this.store.select(selectCdkDragDisabled);
-    this.loadUsers();
-    this.loadColumns();
+    this.initState();
     this.updateColumns();
   }
 
@@ -70,25 +70,24 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   };
 
-  private loadUsers = (): void => {
-    const subscription = this.usersService.getUsers().subscribe(users => {
-      this.store.dispatch(fetchUsers({ users }));
-      const currentUserLogin: string | null = this.utilsService.getLoginFromStorage();
-      if (currentUserLogin) {
-        const currentUserId: string = users.find(user => user.login === currentUserLogin)?.id || '';
-        this.store.dispatch(setCurrentUserId({ currentUserId }));
-      }
-    });
-
-    this.subscriptions.push(subscription);
-  };
-
-  private loadColumns = (): void => {
-    const subscription = this.boardsService.getBoardById(this.boardId).subscribe((board: IBoardItem) => {
-      this.boardTitle = board.title;
-      this.store.dispatch(fetchColumns({ columns: board.columns || [] }));
-    });
-
+  private initState = (): void => {
+    const subscription = this.usersService
+      .getUsers()
+      .pipe(
+        map((users: IUserItem[]) => {
+          this.store.dispatch(fetchUsers({ users }));
+          const currentUserLogin: string | null = this.utilsService.getLoginFromStorage();
+          if (currentUserLogin) {
+            const currentUserId: string = users.find(user => user.login === currentUserLogin)?.id || '';
+            this.store.dispatch(setCurrentUserId({ currentUserId }));
+          }
+        }),
+        mergeMap(() => this.boardsService.getBoardById(this.boardId))
+      )
+      .subscribe((board: IBoardItem) => {
+        this.boardTitle = board.title;
+        this.store.dispatch(fetchColumns({ columns: board.columns || [] }));
+      });
     this.subscriptions.push(subscription);
   };
 
@@ -96,7 +95,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     const subscription = this.boardsService
       .getBoardById(this.boardId)
       .pipe(
-        mergeMap(board => {
+        mergeMap((board: IBoardItem) => {
           const columns = board.columns || [];
           this.store.dispatch(fetchColumns({ columns }));
           const columnsOrders: number[] = columns.map(column => column.order);
@@ -107,7 +106,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
           return this.columnsService.createColumn(this.boardId, newColumn);
         })
       )
-      .subscribe(column => {
+      .subscribe((column: IColumnItem) => {
         this.store.dispatch(addColumn({ column }));
       });
 
@@ -123,7 +122,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     });
 
     const subscription = dialogRef.afterClosed().subscribe(title => {
-      if (title) this.createColumn(title);
+      if (title && typeof title === 'string') this.createColumn(title);
     });
     this.subscriptions.push(subscription);
   }
