@@ -3,5 +3,5 @@ import { IFileItem } from './file-item.model';
 
 export interface ITaskItem extends ITask {
   id: string;
-  files: IFileItem[];
+  files?: IFileItem[];
 }

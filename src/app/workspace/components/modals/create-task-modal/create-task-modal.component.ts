@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { IUpdatedTask } from 'src/app/api/models/api.model';
+import { ITask } from 'src/app/api/models/api.model';
 import { DESCRIPTION_ERRORS_MESSAGES, TITLE_ERRORS_MESSAGES } from '../consts';
 import { hashSymbolValidator } from '../validators/hash.validator';
 
@@ -20,7 +20,7 @@ export class CreateTaskModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<CreateTaskModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public task: IUpdatedTask
+    @Inject(MAT_DIALOG_DATA) public task: Pick<ITask, 'title' | 'description'>
   ) {}
 
   ngOnInit(): void {

@@ -19,7 +19,7 @@ export interface ITask {
   userId: string;
 }
 
-export interface IUpdatedTask extends ITask {
+export interface IUpdateTask extends ITask {
   boardId: string;
   columnId: string;
 }

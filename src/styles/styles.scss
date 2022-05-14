@@ -74,6 +74,10 @@ button.mat-button:active {
   color: $primary-color;
 }
 
+button.modal-btn {
+  padding: 0 1rem;
+}
+
 mat-form-field {
   width: 100%;
 }

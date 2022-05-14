@@ -19,6 +19,7 @@ import {
 } from 'src/app/store/actions/columns.actions';
 import { fetchUsers, setCurrentUserId } from 'src/app/store/actions/users.actions';
 import { selectCdkDragDisabled, selectColumns } from 'src/app/store/selectors/columns.selectors';
+import { selectCurrentUserId } from 'src/app/store/selectors/users.selectors';
 import { CreateColumnModalComponent } from '../../components/modals/create-column-modal/create-column-modal.component';
 import { IBoardItem } from '../../models/board-item.model';
 import { IColumnItem } from '../../models/column-item.model';
@@ -30,6 +31,10 @@ import { IUserItem } from '../../models/user-item.model';
   styleUrls: ['./board-page.component.scss'],
 })
 export class BoardPageComponent implements OnInit, OnDestroy {
+  public currentUserId$!: Observable<string>;
+
+  public currentUserId!: string;
+
   private boardId!: string;
 
   public boardTitle!: string;
@@ -53,6 +58,8 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.currentUserId$ = this.store.select(selectCurrentUserId);
+    this.setCurrentUserId();
     this.boardId = this.route.snapshot.params.id;
     this.columns$ = this.store.select(selectColumns);
     this.cdkDragDisabled$ = this.store.select(selectCdkDragDisabled);
@@ -64,6 +71,11 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
     this.store.dispatch(clearColumns());
   }
+
+  private setCurrentUserId = (): void => {
+    const subscription = this.currentUserId$.subscribe(currentUserId => (this.currentUserId = currentUserId));
+    this.subscriptions.push(subscription);
+  };
 
   updateColumns = (): void => {
     const subscription = this.columns$.subscribe(columns => (this.columns = columns));
@@ -91,6 +103,11 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   };
 
+  private getNewColumnOrder = (): number => {
+    const columnsOrders: number[] = this.columns.map(column => column.order);
+    return columnsOrders.length ? Math.max(...columnsOrders) + 1 : 1;
+  };
+
   private createColumn = (title: string): void => {
     const subscription = this.boardsService
       .getBoardById(this.boardId)
@@ -98,10 +115,9 @@ export class BoardPageComponent implements OnInit, OnDestroy {
         mergeMap((board: IBoardItem) => {
           const columns = board.columns || [];
           this.store.dispatch(fetchColumns({ columns }));
-          const columnsOrders: number[] = columns.map(column => column.order);
           const newColumn: IColumn = {
             title,
-            order: columnsOrders.length ? Math.max(...columnsOrders) + 1 : 1,
+            order: this.getNewColumnOrder(),
           };
           return this.columnsService.createColumn(this.boardId, newColumn);
         })
@@ -121,8 +137,8 @@ export class BoardPageComponent implements OnInit, OnDestroy {
       },
     });
 
-    const subscription = dialogRef.afterClosed().subscribe(title => {
-      if (title && typeof title === 'string') this.createColumn(title);
+    const subscription = dialogRef.afterClosed().subscribe((title: string) => {
+      if (title) this.createColumn(title);
     });
     this.subscriptions.push(subscription);
   }
