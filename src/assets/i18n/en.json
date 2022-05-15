@@ -4,7 +4,8 @@
     "create": "create board",
     "login": "Login",
     "registration": "Signup",
-    "logout": "Logout"
+    "logout": "Logout",
+    "about": "about"
   },
   "edit": {
     "edit": "Edit profile details",

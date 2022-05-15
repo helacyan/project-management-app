@@ -11,7 +11,7 @@
         <span>{{ t('edit') }}</span>
       </button>
       <button mat-raised-button class="header-menu-btn" (click)="openCreateBoardModal()">{{ t('create') }}</button>
-      <button mat-raised-button class="header-menu-btn" [routerLink]="['/welcome']">about</button>
+      <button mat-raised-button class="header-menu-btn" [routerLink]="['/welcome']">{{ t('about') }}</button>
     </div>
     <div class="header-login-container">
       <button *ngIf="!this.utils.getTokenFromStorage()" mat-button class="login-btn" [routerLink]="['/login']">
