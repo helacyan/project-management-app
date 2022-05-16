@@ -7,7 +7,7 @@ import { Color } from './consts';
 export class MatCardBackgroundColorDirective {
   constructor(private el: ElementRef) {}
 
-  @Input() set appMatCardBackgroundColor(isTaskOwnByCurrentUser: boolean) {
+  @Input() set appMatCardBackgroundColor(isTaskOwnByCurrentUser: boolean | null) {
     if (!isTaskOwnByCurrentUser) {
       this.el.nativeElement.style.backgroundColor = Color.GrayLight;
     }

@@ -2,6 +2,7 @@ import { OpenCreateBoardModalService } from '../create-board-modal/services/open
 import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
+import { LoaderService } from 'src/app/api/services/loader/loader.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,11 @@ import jwt_decode from 'jwt-decode';
 export class HeaderComponent implements OnInit {
   isSticky: boolean = false;
 
-  constructor(private router: Router, private readonly openCreateBoardModalService: OpenCreateBoardModalService) {}
+  constructor(
+    private router: Router,
+    private readonly openCreateBoardModalService: OpenCreateBoardModalService,
+    public loaderService: LoaderService
+  ) {}
 
   ngOnInit(): void {
     this.router.events.subscribe(ev => {

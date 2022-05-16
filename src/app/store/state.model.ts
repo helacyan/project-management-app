@@ -18,6 +18,7 @@ export interface IBoardsState {
 }
 
 export interface IColumnsState {
+  cdkDragDisabled: boolean;
   columns: IColumnItem[];
 }
 
@@ -31,6 +32,7 @@ export const boardsInitialState: IBoardsState = {
 };
 
 export const columnsInitialState: IColumnsState = {
+  cdkDragDisabled: false,
   columns: [],
 };
 

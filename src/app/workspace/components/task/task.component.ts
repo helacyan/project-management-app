@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { mergeMap, Subscription } from 'rxjs';
+import { BehaviorSubject, mergeMap, Subscription } from 'rxjs';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { TasksService } from 'src/app/api/services/tasks/tasks.service';
 import { UsersService } from 'src/app/api/services/users/users.service';
@@ -30,7 +30,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   public done!: boolean;
 
-  public isTaskOwnByCurrentUser!: boolean;
+  public isTaskOwnByCurrentUser$!: BehaviorSubject<boolean>;
 
   private subscriptions: Subscription[] = [];
 
@@ -54,6 +54,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.description = this.task.description;
     this.setExecutor();
     this.done = this.task.done;
+    this.isTaskOwnByCurrentUser$ = new BehaviorSubject<boolean>(true);
     this.checkTaskExecutor();
   }
 
@@ -82,9 +83,9 @@ export class TaskComponent implements OnInit, OnDestroy {
   private checkTaskExecutor = (): void => {
     const subscription = this.store.select(selectCurrentUserId).subscribe(currentUserId => {
       if (currentUserId === this.task.userId) {
-        this.isTaskOwnByCurrentUser = true;
+        this.isTaskOwnByCurrentUser$.next(true);
       } else {
-        this.isTaskOwnByCurrentUser = false;
+        this.isTaskOwnByCurrentUser$.next(false);
       }
     });
 
