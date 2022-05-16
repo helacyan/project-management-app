@@ -1,4 +1,7 @@
-<mat-card [appMatCardBackgroundColor]="isTaskOwnByCurrentUser$ | async" (click)="openEditTaskDialog()">
+<mat-card
+  [appMatCardBackgroundColor]="isTaskOwnByCurrentUser$ | async"
+  appMatCardTransform
+  (click)="openEditTaskDialog()">
   <mat-card-title
     >{{ title }}
     <button

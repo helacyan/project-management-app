@@ -1,5 +1,9 @@
 @use "variables" as *;
 
+mat-card {
+  width: 230px;
+}
+
 mat-card-title {
   display: flex;
   justify-content: space-between;

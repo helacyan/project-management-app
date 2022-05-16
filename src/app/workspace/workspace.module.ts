@@ -16,6 +16,7 @@ import { MatCardBackgroundColorDirective } from './directives/mat-card-backgroun
 import { CursorMoveDirective } from './directives/cursor-move.directive';
 import { EditTaskModalComponent } from './components/modals/edit-task-modal/edit-task-modal.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { MatCardTransformDirective } from './directives/mat-card-transform.directive';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     CursorMoveDirective,
     EditTaskModalComponent,
     ClickOutsideDirective,
+    MatCardTransformDirective,
   ],
   imports: [
     CommonModule,
