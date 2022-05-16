@@ -1,6 +1,6 @@
 <h3 mat-dialog-title>Создание новой задачи</h3>
 <div mat-dialog-content>
-  <form id="create-task-form" [formGroup]="createTaskForm">
+  <form id="create-task-form" [formGroup]="createTaskForm" (ngSubmit)="createTask()">
     <mat-form-field appearance="fill">
       <mat-label>Название</mat-label>
       <input type="text" matInput name="title" formControlName="title" />
@@ -44,17 +44,8 @@
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button class="modal-btn" (click)="onNoClick()" cdkFocusInitial>отмена</button>
-  <button
-    mat-button
-    type="submit"
-    form="create-task-form"
-    class="modal-btn"
-    [disabled]="!createTaskForm.valid"
-    [mat-dialog-close]="{
-      title: createTaskForm.controls['title'].value,
-      description: createTaskForm.controls['description'].value
-    }">
+  <button mat-button class="modal-btn" (click)="onCancelClick()" cdkFocusInitial>отмена</button>
+  <button mat-button type="submit" form="create-task-form" class="modal-btn" [disabled]="!createTaskForm.valid">
     создать
   </button>
 </div>

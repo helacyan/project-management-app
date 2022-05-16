@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { ITask } from 'src/app/api/models/api.model';
+import { TasksService } from 'src/app/api/services/tasks/tasks.service';
+import { INewTaskDialogData } from 'src/app/workspace/models/task-item.model';
 import { DESCRIPTION_ERRORS_MESSAGES, TITLE_ERRORS_MESSAGES } from '../consts';
 import { hashSymbolValidator } from '../validators/hash.validator';
 
@@ -16,7 +20,14 @@ export class CreateTaskModalComponent implements OnInit {
 
   public readonly DESCRIPTION_ERRORS_MESSAGES = DESCRIPTION_ERRORS_MESSAGES;
 
-  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTaskModalComponent>) {}
+  private subscriptions: Subscription[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private tasksService: TasksService,
+    public dialogRef: MatDialogRef<CreateTaskModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: INewTaskDialogData
+  ) {}
 
   ngOnInit(): void {
     this.createTaskForm = this.fb.group({
@@ -25,7 +36,22 @@ export class CreateTaskModalComponent implements OnInit {
     });
   }
 
-  public onNoClick(): void {
+  public onCancelClick(): void {
     this.dialogRef.close();
   }
+
+  public createTask = (): void => {
+    const newTask: ITask = {
+      title: `${this.createTaskForm.controls.title.value} #${this.data.number}`,
+      done: false,
+      order: this.data.order,
+      description: this.createTaskForm.controls.description.value,
+      userId: this.data.userId,
+    };
+
+    const subscription = this.tasksService.createTask(this.data.boardId, this.data.columnId, newTask).subscribe();
+
+    this.subscriptions.push(subscription);
+    this.dialogRef.close(true);
+  };
 }
