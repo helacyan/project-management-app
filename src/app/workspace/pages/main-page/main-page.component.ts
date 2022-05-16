@@ -6,6 +6,7 @@ import { State } from 'src/app/store/state.model';
 import { getStoreBoards } from '../../../store/selectors/boards.selectors';
 import { clearBoards, fetchBoards } from '../../../store/actions/boards.actions';
 import { Observable, Subscription } from 'rxjs';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-main-page',
@@ -17,11 +18,16 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private readonly boardsService: BoardsService, private store: Store<State>) {}
+  constructor(
+    private readonly boardsService: BoardsService,
+    private store: Store<State>,
+    private readonly headerService: HeaderService
+  ) {}
 
   ngOnInit(): void {
     this.boards$ = this.store.select(getStoreBoards);
     this.loadBoards();
+    this.headerService.showCreateBtn();
   }
 
   ngOnDestroy(): void {

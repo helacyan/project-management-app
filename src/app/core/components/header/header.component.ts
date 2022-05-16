@@ -5,6 +5,7 @@ import jwt_decode from 'jwt-decode';
 import { UtilsService } from 'src/app/api/services/utils/utils.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { LoaderService } from 'src/app/api/services/loader/loader.service';
+import { HeaderService } from '../../services/header.service';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,8 @@ export class HeaderComponent implements OnInit {
     private readonly openCreateBoardModalService: OpenCreateBoardModalService,
     public loaderService: LoaderService,
     public utils: UtilsService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    public headerService: HeaderService
   ) {}
 
   ngOnInit(): void {

@@ -13,6 +13,7 @@
       <button mat-raised-button class="header-menu-btn" [routerLink]="['/profile']">
         <span>{{ t('edit') }}</span>
       </button>
+      <base class="createBtn" *ngIf="headerService.visibleCreateBtn" />
       <button mat-raised-button class="header-menu-btn" (click)="openCreateBoardModal()">{{ t('create') }}</button>
     </div>
     <div class="header-login-container">
