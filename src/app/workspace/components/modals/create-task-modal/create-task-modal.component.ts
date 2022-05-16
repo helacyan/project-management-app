@@ -1,7 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ITask } from 'src/app/api/models/api.model';
+import { MatDialogRef } from '@angular/material/dialog';
 import { DESCRIPTION_ERRORS_MESSAGES, TITLE_ERRORS_MESSAGES } from '../consts';
 import { hashSymbolValidator } from '../validators/hash.validator';
 
@@ -17,11 +16,7 @@ export class CreateTaskModalComponent implements OnInit {
 
   public readonly DESCRIPTION_ERRORS_MESSAGES = DESCRIPTION_ERRORS_MESSAGES;
 
-  constructor(
-    private fb: FormBuilder,
-    public dialogRef: MatDialogRef<CreateTaskModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public task: Pick<ITask, 'title' | 'description'>
-  ) {}
+  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTaskModalComponent>) {}
 
   ngOnInit(): void {
     this.createTaskForm = this.fb.group({

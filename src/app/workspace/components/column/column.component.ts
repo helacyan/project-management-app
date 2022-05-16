@@ -35,9 +35,9 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public tasks!: ITaskItem[];
 
-  public isTitleVisible$!: BehaviorSubject<boolean>;
+  public isTitleEnabled$ = new BehaviorSubject<boolean>(false);
 
-  public isTitleInputVisible$!: BehaviorSubject<boolean>;
+  public isTitleDisabled$ = new BehaviorSubject<boolean>(true);
 
   public editTitleForm!: FormGroup;
 
@@ -63,8 +63,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.setCurrentUserId();
     this.boardId = this.route.snapshot.params.id;
     this.title$ = new BehaviorSubject<string>(this.column.title);
-    this.isTitleVisible$ = new BehaviorSubject<boolean>(true);
-    this.isTitleInputVisible$ = new BehaviorSubject<boolean>(false);
     this.editTitleForm = this.fb.group({
       title: [this.column.title, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     });
@@ -86,14 +84,14 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   };
 
-  public showEditTitleInput = (): void => {
-    this.isTitleVisible$.next(false);
-    this.isTitleInputVisible$.next(true);
+  public enableTitleEditMode = (): void => {
+    this.isTitleEnabled$.next(true);
+    this.isTitleDisabled$.next(false);
   };
 
-  private hideEditTitleInput = (): void => {
-    this.isTitleVisible$.next(true);
-    this.isTitleInputVisible$.next(false);
+  private disableTitleEditMode = (): void => {
+    this.isTitleEnabled$.next(false);
+    this.isTitleDisabled$.next(true);
   };
 
   private updateColumn = (newColumn: IColumn): void => {
@@ -105,7 +103,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   };
 
-  public onTitleSubmit = (): void => {
+  public onTitleEditSubmit = (): void => {
     const newTitle = this.editTitleForm.controls.title.value;
     if (this.title$.value !== newTitle) {
       this.title$.next(newTitle);
@@ -116,11 +114,11 @@ export class ColumnComponent implements OnInit, OnDestroy {
       this.updateColumn(newColumn);
     }
 
-    this.hideEditTitleInput();
+    this.disableTitleEditMode();
   };
 
-  public onTitleCancel = (): void => {
-    this.hideEditTitleInput();
+  public onTitleEditCancel = (): void => {
+    this.disableTitleEditMode();
   };
 
   private deleteColumn = (): void => {
@@ -161,7 +159,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
       .getBoardById(this.boardId)
       .pipe(
         mergeMap((board: IBoardItem) => {
-          console.log(board.columns);
           const columns = board.columns || [];
           const tasks: ITaskItem[] = board.columns?.find(column => column.id === this.column.id)?.tasks || [];
           this.tasks$.next([...tasks]);

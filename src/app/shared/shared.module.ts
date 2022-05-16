@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TranslocoRootModule } from '../transloco-root.module';
@@ -23,6 +24,7 @@ const MATERIAL_MODULES = [
   MatCardModule,
   MatCheckboxModule,
   MatProgressBarModule,
+  MatSelectModule,
 ];
 
 @NgModule({

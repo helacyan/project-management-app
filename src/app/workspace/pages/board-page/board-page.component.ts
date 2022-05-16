@@ -77,7 +77,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   };
 
-  updateColumns = (): void => {
+  private updateColumns = (): void => {
     const subscription = this.columns$.subscribe(columns => (this.columns = columns));
     this.subscriptions.push(subscription);
   };

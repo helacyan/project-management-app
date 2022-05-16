@@ -40,41 +40,60 @@ main {
 button.mat-raised-button {
   background-color: $gray;
   color: white;
+
+  &:active {
+    background-color: $primary-color;
+    color: white;
+  }
 }
 
-button:hover {
-  background-color: $blue-dark;
-  color: white;
-}
+button {
+  &:hover {
+    background-color: $blue-dark;
+    color: white;
+  }
 
-button:disabled,
-button:disabled:active{
-  background-color: initial;
-}
+  &:active {
+    background-color: $primary-color;
+    color: white;
+  }
 
-button:active {
-  background-color: $primary-color;
-  color: white;
+  &:disabled {
+    background-color: transparent;
+  }
 }
 
 button.mat-button {
   background-color: transparent;
   padding: 0;
   color: $gray;
-}
 
-button.mat-button:hover {
-  background-color: transparent;
-  color: $blue-dark;
-}
+  &:hover {
+    background-color: transparent;
+    color: $blue-dark;
+  }
 
-button.mat-button:active {
-  background-color: transparent;
-  color: $primary-color;
+  &:active {
+    background-color: transparent;
+    color: $primary-color;
+  }
 }
 
 button.modal-btn {
   padding: 0 1rem;
+
+  &:nth-child(2):enabled {
+    background-color: $blue;
+    color: white;
+
+    &:hover {
+      background-color: $blue-dark;
+    }
+
+    &:active {
+      background-color: $primary-color;
+    }
+  }
 }
 
 mat-form-field {

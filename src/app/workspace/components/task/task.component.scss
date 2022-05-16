@@ -6,6 +6,7 @@ mat-card-title {
   align-items: center;
   color: $primary-color;
   font-size: var(--global--font-size-sm);
+  min-height: 2.25rem;
 
   .delete-btn {
     min-width: 2rem;
@@ -27,4 +28,9 @@ mat-checkbox {
   padding: 0 0.5rem;
   border-radius: $border-radius;
   pointer-events: none;
+
+  &.mat-checkbox-checked {
+    background-color: $primary-color;
+    color: white;
+  }
 }
