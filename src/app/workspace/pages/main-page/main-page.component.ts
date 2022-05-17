@@ -32,6 +32,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.headerService.hideCreateBtn();
   }
 
   private loadBoards = (): void => {

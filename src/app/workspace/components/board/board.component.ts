@@ -24,6 +24,7 @@ export class BoardComponent implements OnDestroy {
     private store: Store<State>,
     private router: Router
   ) {}
+
   public openBoard() {
     this.router.navigate(['/board/', this.board.id]);
   }
@@ -31,6 +32,7 @@ export class BoardComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
+
   public deleteBoard() {
     const subscription = this.openConfirmationModalService.openConfirmationDialog().subscribe({
       next: res => {

@@ -10,9 +10,11 @@
         </button>
         <mat-slide-toggle (click)="toggleLanguage()">{{ language }}</mat-slide-toggle>
       </div>
-      <button mat-raised-button class="header-menu-btn" [routerLink]="['/profile']">
-        <span>{{ t('edit') }}</span>
-      </button>
+      <div class="editBtn" *ngIf="headerService.getEditBtn()">
+        <button mat-raised-button class="header-menu-btn" [routerLink]="['/profile']">
+          <span>{{ t('edit') }}</span>
+        </button>
+      </div>
       <base class="createBtn" *ngIf="headerService.visibleCreateBtn" />
       <button mat-raised-button class="header-menu-btn" (click)="openCreateBoardModal()">{{ t('create') }}</button>
     </div>
