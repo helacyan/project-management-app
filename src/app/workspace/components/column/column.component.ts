@@ -15,6 +15,7 @@ import { ITaskItem } from '../../models/task-item.model';
 import { CreateTaskModalComponent } from '../modals/create-task-modal/create-task-modal.component';
 import { TITLE_ERRORS_MESSAGES } from '../modals/consts';
 import { selectCurrentUserId } from 'src/app/store/selectors/users.selectors';
+import { selectCdkDragDisabled } from 'src/app/store/selectors/columns.selectors';
 
 @Component({
   selector: 'app-column',
@@ -40,6 +41,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public readonly TITLE_ERRORS_MESSAGES = TITLE_ERRORS_MESSAGES;
 
+  public cdkDragDisabled$!: Observable<boolean>;
+
   private subscriptions: Subscription[] = [];
 
   @Input() column!: IColumnItem;
@@ -62,7 +65,11 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.editTitleForm = this.fb.group({
       title: [this.column.title, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     });
-    this.tasks = this.column.tasks || [];
+    this.tasks =
+      !this.column.tasks || !this.column.tasks.length
+        ? []
+        : this.column.tasks.slice().sort((a, b) => (a.order > b.order ? 1 : -1));
+    this.cdkDragDisabled$ = this.store.select(selectCdkDragDisabled);
   }
 
   ngOnDestroy(): void {

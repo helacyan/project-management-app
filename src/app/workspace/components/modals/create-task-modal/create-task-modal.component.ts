@@ -49,9 +49,10 @@ export class CreateTaskModalComponent implements OnInit {
       userId: this.data.userId,
     };
 
-    const subscription = this.tasksService.createTask(this.data.boardId, this.data.columnId, newTask).subscribe();
+    const subscription = this.tasksService
+      .createTask(this.data.boardId, this.data.columnId, newTask)
+      .subscribe(() => this.dialogRef.close());
 
     this.subscriptions.push(subscription);
-    this.dialogRef.close(true);
   };
 }

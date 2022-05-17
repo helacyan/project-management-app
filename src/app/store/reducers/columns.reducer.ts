@@ -5,7 +5,7 @@ import {
   disableCdkDrag,
   enableCdkDrag,
   fetchColumns,
-  sortColumns,
+  moveColumns,
 } from '../actions/columns.actions';
 import { columnsInitialState, IColumnsState } from '../state.model';
 import { moveItemInArray } from '../utils/ngrx-cdk-drag-utils';
@@ -34,7 +34,7 @@ export const columnsReducer = createReducer(
     })
   ),
   on(
-    sortColumns,
+    moveColumns,
     (state, { previousIndex, currentIndex }): IColumnsState => ({
       ...state,
       columns: moveItemInArray(state.columns, previousIndex, currentIndex),

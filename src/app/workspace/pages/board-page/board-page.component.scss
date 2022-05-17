@@ -30,8 +30,6 @@ h2 {
 
   .column-placeholder {
     width: calc(320px - 1rem);
-    height: inherit;
-    background-color: $gray;
   }
 
   .cdk-drag-placeholder {
@@ -42,7 +40,7 @@ h2 {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
 
-  &.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  &.cdk-drop-list-dragging .column-box:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
 }

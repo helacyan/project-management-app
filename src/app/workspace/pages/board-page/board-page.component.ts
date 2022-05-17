@@ -15,14 +15,16 @@ import {
   disableCdkDrag,
   enableCdkDrag,
   fetchColumns,
-  sortColumns,
+  moveColumns,
 } from 'src/app/store/actions/columns.actions';
 import { fetchUsers, setCurrentUserId } from 'src/app/store/actions/users.actions';
 import { selectCdkDragDisabled, selectColumns } from 'src/app/store/selectors/columns.selectors';
 import { selectCurrentUserId } from 'src/app/store/selectors/users.selectors';
+import { moveItemInArray, transferArrayItem } from 'src/app/store/utils/ngrx-cdk-drag-utils';
 import { CreateColumnModalComponent } from '../../components/modals/create-column-modal/create-column-modal.component';
 import { IBoardItem } from '../../models/board-item.model';
 import { IColumnItem } from '../../models/column-item.model';
+import { ITaskItem } from '../../models/task-item.model';
 import { IUserItem } from '../../models/user-item.model';
 
 @Component({
@@ -44,6 +46,8 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   private columns!: IColumnItem[];
 
   public cdkDragDisabled$!: Observable<boolean>;
+
+  public connectedList!: string[];
 
   private subscriptions: Subscription[] = [];
 
@@ -78,7 +82,10 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   };
 
   private updateColumns = (): void => {
-    const subscription = this.columns$.subscribe(columns => (this.columns = columns));
+    const subscription = this.columns$.subscribe(columns => {
+      this.columns = columns;
+      this.connectedList = columns.map(column => column.id);
+    });
     this.subscriptions.push(subscription);
   };
 
@@ -143,12 +150,12 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
-  public drop(event: CdkDragDrop<IColumnItem[]>) {
+  public dropColumn = (event: CdkDragDrop<IColumnItem[]>): void => {
     const previousIndex = event.previousIndex;
     const currentIndex = event.currentIndex;
 
     if (previousIndex === currentIndex) return;
-    this.store.dispatch(sortColumns({ previousIndex, currentIndex }));
+    this.store.dispatch(moveColumns({ previousIndex, currentIndex }));
     this.store.dispatch(disableCdkDrag());
 
     const updatedColumns: IColumnItem[] = [];
@@ -233,5 +240,30 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(subscription);
-  }
+  };
+
+  public sortTasks = (column: IColumnItem): ITaskItem[] => {
+    if (!column.tasks || !column.tasks.length) return [];
+    return column.tasks.slice().sort((a, b) => (a.order > b.order ? 1 : -1));
+  };
+
+  public dropTask = (event: CdkDragDrop<ITaskItem[]>): void => {
+    const previousIndex = event.previousIndex;
+    const currentIndex = event.currentIndex;
+    const previousColumId = event.previousContainer.id;
+    const currentColumnId = event.container.id;
+
+    // this.store.dispatch(disableCdkDrag());
+
+    console.log(previousIndex, currentIndex, event.container.data, previousColumId, currentColumnId);
+
+    if (event.previousContainer === event.container) {
+      const updatedColumn = moveItemInArray(event.container.data, previousIndex, currentIndex).map(
+        (task, index) => (task = { ...task, order: index })
+      );
+      console.log(updatedColumn);
+    } else {
+      transferArrayItem(event.previousContainer.data, event.container.data, previousIndex, currentIndex);
+    }
+  };
 }

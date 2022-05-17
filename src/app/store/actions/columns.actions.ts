@@ -9,8 +9,8 @@ export const addColumn = createAction(`${actionSource} ADD COLUMN`, props<{ colu
 
 export const clearColumns = createAction(`${actionSource} CLEAR COLUMNS`);
 
-export const sortColumns = createAction(
-  `${actionSource} SORT COLUMNS`,
+export const moveColumns = createAction(
+  `${actionSource} MOVE COLUMNS`,
   props<{ previousIndex: number; currentIndex: number }>()
 );
 
