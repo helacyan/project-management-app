@@ -1,4 +1,10 @@
 @use "variables" as *;
+.loader-container {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
 .header {
   height: 70px;
   width: 100%;

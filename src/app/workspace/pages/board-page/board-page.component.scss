@@ -27,15 +27,33 @@ h2 {
     height: 2.25rem;
     min-width: fit-content;
   }
+
+  .column-placeholder {
+    width: calc(320px - 1rem);
+    height: inherit;
+    background-color: $gray;
+  }
+
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  &.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
 }
 
 
 @media screen and (max-width: 700px) {
   .container {
-    height: calc(100vh - 220px);
+    height: calc(100vh - 220px - 2rem);
   }
 
   .columns-container {
-    height: calc(100vh - 220px - 2rem);
+    height: calc(100vh - 220px - 4rem);
   }
 }

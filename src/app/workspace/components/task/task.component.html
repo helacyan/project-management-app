@@ -1,7 +1,12 @@
-<mat-card [appMatCardBackgroundColor]="isTaskOwnByCurrentUser">
+<mat-card [appMatCardBackgroundColor]="isTaskOwnByCurrentUser$ | async">
   <mat-card-title
     >{{ title }}
-    <button *ngIf="isTaskOwnByCurrentUser" mat-button class="delete-btn" type="button" (click)="onDeleteButtonClick()">
+    <button
+      *ngIf="isTaskOwnByCurrentUser$ | async"
+      mat-button
+      class="delete-btn"
+      type="button"
+      (click)="onDeleteButtonClick()">
       <span class="material-icons">delete</span>
     </button>
   </mat-card-title>

@@ -15,6 +15,7 @@ import { CheckboxColorDirective } from './directives/checkbox-color.directive';
 import { CreateTaskModalComponent } from './components/modals/create-task-modal/create-task-modal.component';
 import { MatCardBackgroundColorDirective } from './directives/mat-card-background-color.directive';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { CursorMoveDirective } from './directives/cursor-move.directive';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
     CreateTaskModalComponent,
     MatCardBackgroundColorDirective,
     ProfilePageComponent,
+    CursorMoveDirective,
   ],
   imports: [
     CommonModule,

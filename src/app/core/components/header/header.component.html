@@ -1,4 +1,7 @@
-<div class="header" *transloco="let t; read: 'header'" [ngClass]="{ 'mat-elevation-z5': true, sticky: isSticky }">
+<div *ngIf="loaderService.isLoading$ | async" class="loader-container">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<div class="header" [ngClass]="{ 'mat-elevation-z5': true, sticky: isSticky }" *transloco="let t; read: 'header'" >
   <div class="container">
     <div class="header-menu-container">
       <div class="wrapper">
