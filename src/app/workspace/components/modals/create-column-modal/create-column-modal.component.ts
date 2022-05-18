@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
+import { TITLE_ERRORS_MESSAGES } from '../consts';
 
 @Component({
   selector: 'app-create-column-modal',
@@ -10,11 +11,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class CreateColumnModalComponent implements OnInit {
   public createColumnForm!: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    public dialogRef: MatDialogRef<CreateColumnModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public title: string
-  ) {}
+  public readonly TITLE_ERRORS_MESSAGES = TITLE_ERRORS_MESSAGES;
+
+  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateColumnModalComponent>) {}
 
   ngOnInit(): void {
     this.createColumnForm = this.fb.group({
