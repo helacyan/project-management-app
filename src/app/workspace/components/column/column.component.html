@@ -30,7 +30,11 @@
     </mat-form-field>
   </form>
   <div class="tasks-container">
-    <app-task *ngFor="let task of tasks$ | async | sortByOrder" [task]="task" [columnId]="column.id"></app-task>
+    <app-task
+      *ngFor="let task of tasks$ | async | sortByOrder"
+      [task]="task"
+      [columnId]="column.id"
+      [boardId]="boardId"></app-task>
   </div>
   <button mat-raised-button (click)="openCreateTaskDialog()">+ {{ t('board.create-task') }}</button>
 </div>

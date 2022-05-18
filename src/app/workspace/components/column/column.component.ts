@@ -26,7 +26,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public currentUserId!: string;
 
-  private boardId!: string;
+  public boardId!: string;
 
   public title$!: BehaviorSubject<string>;
 
