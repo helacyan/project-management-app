@@ -1,4 +1,7 @@
-<mat-card [appMatCardBackgroundColor]="isTaskOwnByCurrentUser$ | async">
+<mat-card
+  [appMatCardBackgroundColor]="isTaskOwnByCurrentUser$ | async"
+  appMatCardTransform
+  (click)="openEditTaskDialog()">
   <mat-card-title
     >{{ title }}
     <button
@@ -6,13 +9,13 @@
       mat-button
       class="delete-btn"
       type="button"
-      (click)="onDeleteButtonClick()">
+      (click)="onDeleteButtonClick($event)">
       <span class="material-icons">delete</span>
     </button>
   </mat-card-title>
   <mat-card-content>
     <p class="description">{{ description }}</p>
     <p>Исполнитель: {{ executor }}</p>
-    <mat-checkbox *ngIf="done" [(ngModel)]="done" [appCheckboxColor]="done">Выполнено</mat-checkbox>
+    <mat-checkbox *ngIf="done" [(ngModel)]="done">Выполнено</mat-checkbox>
   </mat-card-content>
 </mat-card>

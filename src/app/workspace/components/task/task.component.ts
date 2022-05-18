@@ -11,6 +11,7 @@ import { fetchColumns } from 'src/app/store/actions/columns.actions';
 import { selectCurrentUserId, selectUser } from 'src/app/store/selectors/users.selectors';
 import { IBoardItem } from '../../models/board-item.model';
 import { ITaskItem } from '../../models/task-item.model';
+import { EditTaskModalComponent } from '../modals/edit-task-modal/edit-task-modal.component';
 
 @Component({
   selector: 'app-task',
@@ -104,7 +105,8 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   };
 
-  public onDeleteButtonClick() {
+  public onDeleteButtonClick($event: MouseEvent) {
+    $event.stopPropagation();
     const subscription = this.openConfirmationModalService.openConfirmationDialog().subscribe(res => {
       if (res === true) {
         this.deleteTask();
@@ -112,5 +114,34 @@ export class TaskComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(subscription);
+  }
+
+  public openEditTaskDialog(): void {
+    const openSubscription = this.tasksService
+      .getTaskById(this.boardId, this.columnId, this.task.id)
+      .subscribe(task => {
+        const dialogRef = this.dialog.open(EditTaskModalComponent, {
+          maxWidth: '95vw !important',
+          data: {
+            id: task.id,
+            title: task.title,
+            order: task.order,
+            description: task.description,
+            userId: task.userId,
+            done: task.done,
+            files: task.files,
+            boardId: task.boardId,
+            columnId: task.columnId,
+          },
+        });
+
+        const closeSubscription = dialogRef
+          .afterClosed()
+          .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
+          .subscribe((board: IBoardItem) => this.store.dispatch(fetchColumns({ columns: board.columns || [] })));
+        this.subscriptions.push(closeSubscription);
+      });
+
+    this.subscriptions.push(openSubscription);
   }
 }

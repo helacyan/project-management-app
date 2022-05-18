@@ -11,10 +11,12 @@ import { CreateColumnModalComponent } from './components/modals/create-column-mo
 import { TaskComponent } from './components/task/task.component';
 import { AuthGuardService } from '../auth/guards/auth-guard.service';
 import { SortByOrderPipe } from './pipes/sort-by-order.pipe';
-import { CheckboxColorDirective } from './directives/checkbox-color.directive';
 import { CreateTaskModalComponent } from './components/modals/create-task-modal/create-task-modal.component';
 import { MatCardBackgroundColorDirective } from './directives/mat-card-background-color.directive';
 import { CursorMoveDirective } from './directives/cursor-move.directive';
+import { EditTaskModalComponent } from './components/modals/edit-task-modal/edit-task-modal.component';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { MatCardTransformDirective } from './directives/mat-card-transform.directive';
 
 @NgModule({
   declarations: [
@@ -26,10 +28,12 @@ import { CursorMoveDirective } from './directives/cursor-move.directive';
     CreateColumnModalComponent,
     TaskComponent,
     SortByOrderPipe,
-    CheckboxColorDirective,
     CreateTaskModalComponent,
     MatCardBackgroundColorDirective,
     CursorMoveDirective,
+    EditTaskModalComponent,
+    ClickOutsideDirective,
+    MatCardTransformDirective,
   ],
   imports: [
     CommonModule,

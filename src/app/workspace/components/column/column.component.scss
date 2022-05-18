@@ -10,32 +10,35 @@
   border-radius: $border-radius;
   background-color: $ferra-light;
 
+  .column-title {
+    display: flex;
+    gap: 0.2rem;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-height: 5rem;
+    margin-top: 1rem;
+
+    h2 {
+      color: $ferra-dark;
+      font-size: 1.2rem;
+      padding: 0.75em;
+      cursor: pointer;
+    }
+
+    .delete-btn {
+      min-width: 2rem;
+      height: 2.25rem;
+      margin-bottom: 1rem;
+    }
+  }
+
   .title-form {
     display: flex;
     gap: 0.2rem;
-    padding-top: 1rem;
+    min-height: 5rem;
+    margin-top: 1rem;
     background-color: inherit;
-
-    .column-title {
-      display: flex;
-      gap: 0.2rem;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-
-      h2 {
-        color: $ferra-dark;
-        font-size: 1.15rem;
-        padding: 0.75em;
-        cursor: pointer;
-      }
-
-      .delete-btn {
-        min-width: 2rem;
-        height: 2.25rem;
-        margin-bottom: 1rem;
-      }
-    }
 
     .title-btns {
       display: flex;
@@ -47,6 +50,19 @@
         min-width: 1.77rem;
         padding: 0;
         line-height: normal;
+
+        &:nth-child(2):enabled {
+          background-color: $blue;
+          color: white;
+
+          &:hover {
+            background-color: $blue-dark;
+          }
+
+          &:active {
+            background-color: $primary-color;
+          }
+        }
       }
     }
 
@@ -58,8 +74,9 @@
   .tasks-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
-    margin-bottom: 1rem;
+    padding: 0.5rem 0 1rem;
     overflow: scroll;
   }
 }

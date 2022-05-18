@@ -1,5 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
-import { clearColumns, disableCdkDrag, enableCdkDrag, fetchColumns, sortColumns } from '../actions/columns.actions';
+import {
+  addColumn,
+  clearColumns,
+  disableCdkDrag,
+  enableCdkDrag,
+  fetchColumns,
+  sortColumns,
+} from '../actions/columns.actions';
 import { columnsInitialState, IColumnsState } from '../state.model';
 import { moveItemInArray } from '../utils/ngrx-cdk-drag-utils';
 
@@ -10,6 +17,13 @@ export const columnsReducer = createReducer(
     (state, { columns }): IColumnsState => ({
       ...state,
       columns: columns.slice().sort((a, b) => (a.order > b.order ? 1 : -1)),
+    })
+  ),
+  on(
+    addColumn,
+    (state, { column }): IColumnsState => ({
+      ...state,
+      columns: [...state.columns, column],
     })
   ),
   on(

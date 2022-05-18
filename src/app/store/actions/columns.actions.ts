@@ -5,6 +5,8 @@ const actionSource = '[BOARD-PAGE]';
 
 export const fetchColumns = createAction(`${actionSource} FETCH COLUMNS`, props<{ columns: IColumnItem[] }>());
 
+export const addColumn = createAction(`${actionSource} ADD COLUMN`, props<{ column: IColumnItem }>());
+
 export const clearColumns = createAction(`${actionSource} CLEAR COLUMNS`);
 
 export const sortColumns = createAction(
