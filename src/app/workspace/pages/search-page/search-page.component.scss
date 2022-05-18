@@ -1,0 +1,14 @@
+@use "variables" as *;
+.search {
+  padding: 1rem;
+}
+.search-input {
+  background-color: transparent;
+  height: 2rem;
+  width: 13rem;
+  border: 2px solid $gray;
+}
+.search-icon {
+  vertical-align: middle;
+  font-size: 2rem;
+}

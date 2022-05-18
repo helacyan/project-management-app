@@ -1,1 +1,19 @@
-<p>search-page works!</p>
+<div class="search-container">
+  <div class="search">
+    <mat-icon matPrefix class="search-icon">search</mat-icon>
+    <input
+      matInput
+      type="search"
+      placeholder="поиск"
+      class="search-input"
+      autofocus
+      [(ngModel)]="inputSearch"
+      (ngModelChange)="searchTask()" />
+  </div>
+  <div class="search-result" *ngFor="let item of searchedItems">
+    <app-task></app-task>
+  </div>
+  <div *ngIf="searchedItems.length === 0">
+    <p>Для поиска введите корректные данные (имя таска, либо описание, либо его номер, либо пользователя)!</p>
+  </div>
+</div>

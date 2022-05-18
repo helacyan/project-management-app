@@ -6,6 +6,8 @@ import { State } from 'src/app/store/state.model';
 import { getStoreBoards } from '../../../store/selectors/boards.selectors';
 import { clearBoards, fetchBoards } from '../../../store/actions/boards.actions';
 import { Observable, Subscription } from 'rxjs';
+import { SearchTasksService } from '../../services/search-tasks.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -17,7 +19,14 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private readonly boardsService: BoardsService, private store: Store<State>) {}
+  inputSearch: string = '';
+
+  constructor(
+    private readonly boardsService: BoardsService,
+    private store: Store<State>,
+    private readonly searchTasksService: SearchTasksService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.boards$ = this.store.select(getStoreBoards);
@@ -40,4 +49,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(subscription);
   };
+
+  public searchTask() {
+    this.searchTasksService.changeTitleSearch(this.inputSearch);
+    this.router.navigate(['/search']);
+  }
 }
