@@ -66,7 +66,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   }
 
   private searchByTag(users: IUser[], enrichedBoards: IBoardItem[], searchable: string): ITaskItem[] {
-    let allTasks = enrichedBoards.flatMap(board => board.columns!.flatMap(column => column.tasks));
+    let allTasks = enrichedBoards.flatMap(board => board.columns!.flatMap(column => column.tasks!));
 
     searchable = searchable.toLowerCase().trim();
 

@@ -10,8 +10,10 @@
       [(ngModel)]="inputSearch"
       (ngModelChange)="searchTask()" />
   </div>
-  <div class="search-result" *ngFor="let item of searchedItems">
-    <app-task></app-task>
+  <div class="searched">
+    <div class="search-result" *ngFor="let item of searchedItems">
+      <app-task [task]="item"></app-task>
+    </div>
   </div>
   <div *ngIf="searchedItems.length === 0">
     <p>Для поиска введите корректные данные (имя таска, либо описание, либо его номер, либо пользователя)!</p>
