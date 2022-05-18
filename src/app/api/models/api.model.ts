@@ -4,6 +4,12 @@ export interface IUser {
   password: string;
 }
 
+export interface IRegistered {
+  id: string;
+  login: string;
+  name: string;
+}
+
 export type LoginType = Omit<IUser, 'name'>;
 
 export interface IColumn {

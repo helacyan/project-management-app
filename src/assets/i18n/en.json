@@ -5,12 +5,10 @@
     "login": "Login",
     "registration": "Signup",
     "logout": "Logout",
-    "about": "about"
+    "about": "About"
   },
   "edit": {
     "edit": "Edit profile details",
-    "name": "Name",
-    "login": "Login",
     "password": "Password",
     "delete": "Delete profile",
     "save": "Save changes"
@@ -94,5 +92,35 @@
   "error": {
     "text": "The page you're looking for can't be found",
     "okay": "Okay"
+  },
+  "welcome": {
+    "title": "Kanban boards",
+    "app-desc": "Kanban boards help you to put on display your workflow. By visualizing work on a Kanban board, you can gain a better understanding of your process and overall workload.",
+    "features": {
+      "one": {
+        "name": "Workflow Management",
+        "description": "Visualize your key processes and improve the efficiency of your workflow."
+      },
+      "two": {
+        "name": "Team Collaboration",
+        "description": "Delegate task responsibility with your mates."
+      },
+      "three": {
+        "name": "Search",
+        "description": "Do you only want to view tasks that are assigned to you or someone in your team?  Easily search for tasks on task name, user, description and task number."
+      },
+      "four": {
+        "name": "Save Time Wasted on Unnecessary Meetings",
+        "description": "A significant benefit that comes with the implementation of Kanban boards is that they save you much time spent on meetings, progress reports, and many other unnecessary interruptions."
+      }
+    },
+    "about": {
+      "title": "About us",
+      "us": {
+        "one": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione maiores, eaque reprehenderit velit ducimus dolorem dolor.",
+        "two": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione maiores, eaque reprehenderit velit ducimus dolorem dolor.",
+        "three": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione maiores, eaque reprehenderit velit ducimus dolorem dolor."
+      }
+    }
   }
 }

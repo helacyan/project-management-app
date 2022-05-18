@@ -20,8 +20,6 @@ export class ProfilePageComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      login: new FormControl('', [Validators.required]),
       password: new FormControl(null, [
         Validators.required,
         Validators.minLength(8),
@@ -40,9 +38,9 @@ export class ProfilePageComponent implements OnInit {
       let decoded: { userId: string; login: string } = jwt_decode(localStorage.getItem('userToken') as string);
       this.usersService.getUsers().subscribe(res => {
         res.find(u =>
-          u.login == this.form.value.login
-            ? this.toast.showToasterError('User with this login already exists')
-            : this.usersService.updateUser(decoded.userId, { ...this.form.value })
+          u.login == decoded.login
+            ? this.usersService.updateUser(decoded.userId, { login: decoded.login, name: u.name, ...this.form.value })
+            : null
         );
       });
     }

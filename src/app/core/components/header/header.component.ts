@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   isSticky: boolean = false;
 
   language = 'ENG';
-    
+
   constructor(
     private router: Router,
     private readonly openCreateBoardModalService: OpenCreateBoardModalService,

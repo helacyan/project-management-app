@@ -5,22 +5,6 @@
     </div>
     <div>
       <div>
-        <p class="logLabel">{{ t('edit.name') }}</p>
-        <input class="logInput" type="text" formControlName="name" />
-      </div>
-      <div>
-        <p class="logLabel">{{ t('edit.login') }}</p>
-        <input class="logInput" type="text" formControlName="login" />
-        <div *ngIf="form.get('login')!.invalid && form.get('login')!.touched" class="validation">
-          <small class="requirement" *ngIf="form.get('login')!.errors?.['required']">{{
-            t('validation.login.required')
-          }}</small>
-          <small class="requirement" *ngIf="form.get('login')!.errors?.['login']">{{
-            t('validation.login.login')
-          }}</small>
-        </div>
-      </div>
-      <div>
         <p class="logLabel">{{ t('edit.password') }}</p>
         <input class="logInput" type="password" formControlName="password" />
         <div *ngIf="form.get('password')!.invalid && form.get('password')!.touched" class="validation">
@@ -41,8 +25,8 @@
       </div>
     </div>
     <div class="buttonWrapper">
-      <button mat-raised-button class="btn" (click)="deleteUser()">{{ t('edit.delete') }}</button>
       <button [disabled]="form.invalid" mat-raised-button class="btn">{{ t('edit.save') }}</button>
     </div>
   </form>
+  <button mat-raised-button class="btn" (click)="deleteUser()">{{ t('edit.delete') }}</button>
 </div>
