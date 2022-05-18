@@ -9,7 +9,7 @@ import { State } from 'src/app/store/state.model';
 export class HeaderService {
   private visibleEditBtn: boolean;
 
-  private visibleCreateBtn: boolean;
+  public visibleCreateBtn: boolean;
 
   constructor(private store: Store<State>, private readonly utilsService: UtilsService) {
     this.visibleEditBtn = false;

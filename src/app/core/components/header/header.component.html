@@ -9,28 +9,29 @@
           <span class="material-icons">home</span>
         </button>
         <mat-slide-toggle (click)="toggleLanguage()">{{ language }}</mat-slide-toggle>
+        <div class="editBtn" *ngIf="headerService.getEditBtn()">
+          <button mat-raised-button class="header-menu-btn" [routerLink]="['/profile']">
+            <span>{{ t('edit') }}</span>
+          </button>
+        </div>
+        <div class="createBtn" *ngIf="headerService.visibleCreateBtn">
+          <button mat-raised-button class="header-menu-btn" (click)="openCreateBoardModal()">{{ t('create') }}</button>
+        </div>
       </div>
-      <div class="editBtn" *ngIf="headerService.getEditBtn()">
-        <button mat-raised-button class="header-menu-btn" [routerLink]="['/profile']">
-          <span>{{ t('edit') }}</span>
+      <div class="header-login-container">
+        <button *ngIf="!this.utils.getTokenFromStorage()" mat-button class="login-btn" [routerLink]="['/login']">
+          <span class="material-icons">login</span>
+          {{ t('login') }}
+        </button>
+        <button *ngIf="!this.utils.getTokenFromStorage()" mat-button class="login-btn" [routerLink]="['/signup']">
+          <span class="material-icons">person</span>
+          {{ t('registration') }}
+        </button>
+        <button *ngIf="this.utils.getTokenFromStorage()" mat-button class="login-btn" (click)="logOut()">
+          <span class="material-icons">logout</span>
+          {{ t('logout') }}
         </button>
       </div>
-      <base class="createBtn" *ngIf="headerService.visibleCreateBtn" />
-      <button mat-raised-button class="header-menu-btn" (click)="openCreateBoardModal()">{{ t('create') }}</button>
-    </div>
-    <div class="header-login-container">
-      <button *ngIf="!this.utils.getTokenFromStorage()" mat-button class="login-btn" [routerLink]="['/login']">
-        <span class="material-icons">login</span>
-        {{ t('login') }}
-      </button>
-      <button *ngIf="!this.utils.getTokenFromStorage()" mat-button class="login-btn" [routerLink]="['/signup']">
-        <span class="material-icons">person</span>
-        {{ t('registration') }}
-      </button>
-      <button *ngIf="this.utils.getTokenFromStorage()" mat-button class="login-btn" (click)="logOut()">
-        <span class="material-icons">logout</span>
-        {{ t('logout') }}
-      </button>
     </div>
   </div>
 </div>
