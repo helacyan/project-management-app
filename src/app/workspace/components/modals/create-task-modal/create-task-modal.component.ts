@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ITask } from 'src/app/api/models/api.model';
 import { TasksService } from 'src/app/api/services/tasks/tasks.service';
 import { INewTaskDialogData } from 'src/app/workspace/models/task-item.model';
@@ -15,6 +15,8 @@ import { hashSymbolValidator } from '../validators/hash.validator';
 })
 export class CreateTaskModalComponent implements OnInit {
   public createTaskForm!: FormGroup;
+
+  public isCreated$ = new BehaviorSubject<boolean>(false);
 
   public readonly TITLE_ERRORS_MESSAGES = TITLE_ERRORS_MESSAGES;
 
@@ -41,6 +43,7 @@ export class CreateTaskModalComponent implements OnInit {
   }
 
   public createTask = (): void => {
+    this.isCreated$.next(true);
     const newTask: ITask = {
       title: `${this.createTaskForm.controls.title.value} #${this.data.number}`,
       done: false,

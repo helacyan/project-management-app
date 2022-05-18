@@ -45,7 +45,12 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button class="modal-btn" (click)="onCancelClick()" cdkFocusInitial>отмена</button>
-  <button mat-button type="submit" form="create-task-form" class="modal-btn" [disabled]="!createTaskForm.valid">
+  <button
+    mat-button
+    type="submit"
+    form="create-task-form"
+    class="modal-btn"
+    [disabled]="!createTaskForm.valid || (isCreated$ | async)">
     создать
   </button>
 </div>

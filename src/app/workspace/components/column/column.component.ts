@@ -8,7 +8,7 @@ import { IColumn } from 'src/app/api/models/api.model';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { ColumnsService } from 'src/app/api/services/columns/columns.service';
 import { OpenConfirmationModalService } from 'src/app/core/components/modal/services/open-modal.service';
-import { fetchColumns } from 'src/app/store/actions/columns.actions';
+import { loadColumns } from 'src/app/store/actions/columns.actions';
 import { IBoardItem } from '../../models/board-item.model';
 import { IColumnItem } from '../../models/column-item.model';
 import { ITaskItem } from '../../models/task-item.model';
@@ -95,7 +95,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
     const subscription = this.columnsService
       .updateColumn(this.boardId, this.column.id, newColumn)
       .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
-      .subscribe((board: IBoardItem) => this.store.dispatch(fetchColumns({ columns: board.columns || [] })));
+      .subscribe((board: IBoardItem) => this.store.dispatch(loadColumns({ columns: board.columns || [] })));
 
     this.subscriptions.push(subscription);
   };
@@ -122,7 +122,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
     const subscription = this.columnsService
       .deleteColumn(this.boardId, this.column.id)
       .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
-      .subscribe((board: IBoardItem) => this.store.dispatch(fetchColumns({ columns: board.columns || [] })));
+      .subscribe((board: IBoardItem) => this.store.dispatch(loadColumns({ columns: board.columns || [] })));
 
     this.subscriptions.push(subscription);
   };
@@ -174,7 +174,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
         .afterClosed()
         .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
         .subscribe((updatedBoard: IBoardItem) =>
-          this.store.dispatch(fetchColumns({ columns: updatedBoard.columns || [] }))
+          this.store.dispatch(loadColumns({ columns: updatedBoard.columns || [] }))
         );
       this.subscriptions.push(closeSubscription);
     });

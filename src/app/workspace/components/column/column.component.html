@@ -30,16 +30,11 @@
     </mat-form-field>
   </form>
   <div class="tasks-container" *ngIf="tasks && tasks.length">
-    <app-task
-      *ngFor="let task of tasks"
-      [task]="task"
-      [columnId]="column.id"
-      cdkDrag
-      [cdkDragDisabled]="cdkDragDisabled$ | async"
-      [appCursorMove]="cdkDragDisabled$ | async"
-      >>
-      <div class="task-placeholder" *cdkDragPlaceholder></div>
-    </app-task>
+    <div *ngFor="let task of tasks" class="task-box" cdkDrag [cdkDragDisabled]="cdkDragDisabled$ | async">
+      <app-task [task]="task" [columnId]="column.id" [appCursorMove]="cdkDragDisabled$ | async">
+        <div class="task-placeholder" *cdkDragPlaceholder></div>
+      </app-task>
+    </div>
   </div>
   <button mat-raised-button (click)="openCreateTaskDialog()">+ создать задачу</button>
 </div>

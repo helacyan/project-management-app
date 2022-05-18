@@ -6,8 +6,8 @@
     class="columns-container"
     (cdkDropListDropped)="dropColumn($event)">
     <div
-      class="column-box"
       *ngFor="let column of columns$ | async"
+      class="column-box"
       cdkDrag
       [cdkDragDisabled]="cdkDragDisabled$ | async">
       <app-column

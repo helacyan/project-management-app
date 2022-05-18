@@ -3,9 +3,14 @@ import { IColumnItem } from 'src/app/workspace/models/column-item.model';
 
 const actionSource = '[BOARD-PAGE]';
 
-export const fetchColumns = createAction(`${actionSource} FETCH COLUMNS`, props<{ columns: IColumnItem[] }>());
+export const loadColumns = createAction(`${actionSource} LOAD COLUMNS`, props<{ columns: IColumnItem[] }>());
 
 export const addColumn = createAction(`${actionSource} ADD COLUMN`, props<{ column: IColumnItem }>());
+
+export const replaceColumn = createAction(
+  `${actionSource} REPLACE COLUMN`,
+  props<{ columnIndex: number; updatedColumn: IColumnItem }>()
+);
 
 export const clearColumns = createAction(`${actionSource} CLEAR COLUMNS`);
 
