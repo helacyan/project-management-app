@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { DESCRIPTION_ERRORS_MESSAGES, TITLE_ERRORS_MESSAGES } from '../consts';
 import { hashSymbolValidator } from '../validators/hash.validator';
 
 @Component({
@@ -11,10 +10,6 @@ import { hashSymbolValidator } from '../validators/hash.validator';
 })
 export class CreateTaskModalComponent implements OnInit {
   public createTaskForm!: FormGroup;
-
-  public readonly TITLE_ERRORS_MESSAGES = TITLE_ERRORS_MESSAGES;
-
-  public readonly DESCRIPTION_ERRORS_MESSAGES = DESCRIPTION_ERRORS_MESSAGES;
 
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTaskModalComponent>) {}
 

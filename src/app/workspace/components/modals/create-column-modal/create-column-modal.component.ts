@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { TITLE_ERRORS_MESSAGES } from '../consts';
 
 @Component({
   selector: 'app-create-column-modal',
@@ -10,8 +9,6 @@ import { TITLE_ERRORS_MESSAGES } from '../consts';
 })
 export class CreateColumnModalComponent implements OnInit {
   public createColumnForm!: FormGroup;
-
-  public readonly TITLE_ERRORS_MESSAGES = TITLE_ERRORS_MESSAGES;
 
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateColumnModalComponent>) {}
 

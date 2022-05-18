@@ -1,5 +1,5 @@
-<div class="modal-container">
-  <div mat-dialog-content>
+<div class="modal-container" *transloco="let t; read: 'task'">
+  <div mat-dialog-content *transloco="let et; read: 'edit-task'">
     <div class="title-wrapper">
       <h2 *ngIf="isTitleDisabled$ | async" (click)="enableEditMode($event, isTitleEnabled$, isTitleDisabled$)">
         {{ editTitleForm.controls['title'].value }}{{ taskNumber }}
@@ -21,18 +21,18 @@
         </div>
         <mat-form-field appearance="fill">
           <input type="text" matInput name="title" formControlName="title" />
-          <mat-error>
+          <mat-error *transloco="let e; read: 'column'">
             <span *ngIf="editTitleForm.controls['title'].hasError('required')">
-              {{ TITLE_ERRORS_MESSAGES.required }}
+              {{ e('validation.required') }}
             </span>
             <span *ngIf="editTitleForm.controls['title'].hasError('minlength')">
-              {{ TITLE_ERRORS_MESSAGES.minLength }}
+              {{ e('validation.minLength') }}
             </span>
             <span *ngIf="editTitleForm.controls['title'].hasError('maxlength')">
-              {{ TITLE_ERRORS_MESSAGES.maxLength }}
+              {{ e('validation.maxLength') }}
             </span>
             <span *ngIf="editTitleForm.controls['title'].hasError('hashSymbol')">
-              {{ TITLE_ERRORS_MESSAGES.hashSymbol }}
+              {{ e('validation.hashSymbol') }}
             </span>
           </mat-error>
         </mat-form-field>
@@ -53,10 +53,10 @@
         </button>
       </div>
     </div>
-    <p class="column-name">в колонке {{ columnTitle }}</p>
+    <p class="column-name">{{ et('name') }} {{ columnTitle }}</p>
     <div class="subtitle-wrapper">
       <span class="material-icons">description</span>
-      <h3>Описание</h3>
+      <h3>{{ t('description') }}</h3>
       <button
         mat-button
         *ngIf="isDescriptionDisabled$ | async"
@@ -85,24 +85,28 @@
           [value]="data.description"></textarea>
         <mat-error>
           <span *ngIf="editDescriptionForm.controls['description'].hasError('required')">
-            {{ DESCRIPTION_ERRORS_MESSAGES.required }}
+            {{ t('validation.required') }}
           </span>
           <span *ngIf="editDescriptionForm.controls['description'].hasError('minlength')">
-            {{ DESCRIPTION_ERRORS_MESSAGES.minLength }}
+            {{ t('validation.minLength') }}
           </span>
           <span *ngIf="editDescriptionForm.controls['description'].hasError('maxlength')">
-            {{ DESCRIPTION_ERRORS_MESSAGES.maxLength }}
+            {{ t('validation.maxLength') }}
           </span>
         </mat-error>
       </mat-form-field>
       <div *ngIf="isDescriptionEnabled$ | async" class="description-btns">
-        <button mat-button class="modal-btn" type="button" (click)="onDescriptionEditCancel()">отмена</button>
-        <button mat-button class="modal-btn" type="submit" [disabled]="!editDescriptionForm.valid">сохранить</button>
+        <button mat-button class="modal-btn" type="button" (click)="onDescriptionEditCancel()">
+          {{ et('cancel') }}
+        </button>
+        <button mat-button class="modal-btn" type="submit" [disabled]="!editDescriptionForm.valid">
+          {{ et('save') }}
+        </button>
       </div>
     </form>
     <div class="subtitle-wrapper">
       <span class="material-icons">person</span>
-      <h3>Исполнитель</h3>
+      <h3>{{ et('responsible') }}</h3>
     </div>
     <form id="edit-user-id-form" [formGroup]="editUserIdForm">
       <mat-form-field appearance="fill">
@@ -114,7 +118,7 @@
       </mat-form-field>
     </form>
     <form id="edit-done-form" [formGroup]="editDoneForm">
-      <mat-checkbox formControlName="done" (change)="updateTask()">Выполнено</mat-checkbox>
+      <mat-checkbox formControlName="done" (change)="updateTask()">{{ et('done') }}</mat-checkbox>
     </form>
   </div>
 </div>

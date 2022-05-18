@@ -14,7 +14,6 @@ import { IBoardItem } from '../../models/board-item.model';
 import { IColumnItem } from '../../models/column-item.model';
 import { ITaskItem } from '../../models/task-item.model';
 import { CreateTaskModalComponent } from '../modals/create-task-modal/create-task-modal.component';
-import { TITLE_ERRORS_MESSAGES } from '../modals/consts';
 import { selectCurrentUserId } from 'src/app/store/selectors/users.selectors';
 
 @Component({

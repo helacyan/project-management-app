@@ -124,5 +124,12 @@
         "three": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione maiores, eaque reprehenderit velit ducimus dolorem dolor."
       }
     }
+  },
+  "edit-task": {
+    "responsible": "Performer",
+    "done": "Done",
+    "cancel": "cancel",
+    "save": "save",
+    "name": "in column"
   }
 }

@@ -10,7 +10,6 @@ import { selectUsers } from 'src/app/store/selectors/users.selectors';
 import { IColumnItem } from 'src/app/workspace/models/column-item.model';
 import { ITaskItemExtended } from 'src/app/workspace/models/task-item.model';
 import { IUserItem } from 'src/app/workspace/models/user-item.model';
-import { DESCRIPTION_ERRORS_MESSAGES, TITLE_ERRORS_MESSAGES } from '../consts';
 import { hashSymbolValidator } from '../validators/hash.validator';
 
 @Component({
@@ -42,10 +41,6 @@ export class EditTaskModalComponent implements OnInit, OnDestroy {
   public isDescriptionEnabled$ = new BehaviorSubject<boolean>(false);
 
   public isDescriptionDisabled$ = new BehaviorSubject<boolean>(true);
-
-  public readonly TITLE_ERRORS_MESSAGES = TITLE_ERRORS_MESSAGES;
-
-  public readonly DESCRIPTION_ERRORS_MESSAGES = DESCRIPTION_ERRORS_MESSAGES;
 
   private subscriptions: Subscription[] = [];
 
