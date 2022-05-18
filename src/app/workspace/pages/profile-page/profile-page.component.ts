@@ -3,8 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/api/services/users/users.service';
 import { LoginValidator } from 'src/app/auth/pages/auth.validators';
 import jwt_decode from 'jwt-decode';
-import { ToastService } from 'src/app/api/services/auth/toast.service';
 import { OpenConfirmationModalService } from 'src/app/core/components/modal/services/open-modal.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-page',
@@ -12,11 +12,7 @@ import { OpenConfirmationModalService } from 'src/app/core/components/modal/serv
   styleUrls: ['./profile-page.component.scss'],
 })
 export class ProfilePageComponent implements OnInit {
-  constructor(
-    public usersService: UsersService,
-    private toast: ToastService,
-    private modal: OpenConfirmationModalService
-  ) {}
+  constructor(public usersService: UsersService, private modal: OpenConfirmationModalService, private router: Router) {}
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -48,6 +44,10 @@ export class ProfilePageComponent implements OnInit {
 
   public deleteUser() {
     let decoded: { userId: string } = jwt_decode(localStorage.getItem('userToken') as string);
-    this.modal.openConfirmationDialog().subscribe(res => (res ? this.usersService.deleteUser(decoded.userId) : null));
+    this.modal
+      .openConfirmationDialog()
+      .subscribe(res =>
+        res ? (this.usersService.deleteUser(decoded.userId), this.router.navigate(['/welcome'])) : null
+      );
   }
 }

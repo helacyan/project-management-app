@@ -10,6 +10,8 @@
   "edit": {
     "edit": "Edit profile details",
     "password": "Password",
+    "name": "Name",
+    "login": "Login",
     "delete": "Delete profile",
     "save": "Save changes"
   },
