@@ -13,6 +13,7 @@ import { AuthGuardService } from '../auth/guards/auth-guard.service';
 import { SortByOrderPipe } from './pipes/sort-by-order.pipe';
 import { CreateTaskModalComponent } from './components/modals/create-task-modal/create-task-modal.component';
 import { MatCardBackgroundColorDirective } from './directives/mat-card-background-color.directive';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { CursorMoveDirective } from './directives/cursor-move.directive';
 import { EditTaskModalComponent } from './components/modals/edit-task-modal/edit-task-modal.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
@@ -30,6 +31,7 @@ import { MatCardTransformDirective } from './directives/mat-card-transform.direc
     SortByOrderPipe,
     CreateTaskModalComponent,
     MatCardBackgroundColorDirective,
+    ProfilePageComponent,
     CursorMoveDirective,
     EditTaskModalComponent,
     ClickOutsideDirective,
@@ -52,6 +54,11 @@ import { MatCardTransformDirective } from './directives/mat-card-transform.direc
       {
         path: 'search',
         component: SearchPageComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'profile',
+        component: ProfilePageComponent,
         canActivate: [AuthGuardService],
       },
     ]),

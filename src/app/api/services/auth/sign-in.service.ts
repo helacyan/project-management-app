@@ -1,25 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { BASE_URL } from '../../consts';
-import { IUser, LoginType } from '../../models/api.model';
+import { IRegistered, IUser, LoginType } from '../../models/api.model';
 import { UtilsService } from '../utils/utils.service';
-import { ToastService } from './toast.service';
-
 @Injectable({
   providedIn: 'root',
 })
 export class SignInService {
-  constructor(private http: HttpClient, private utils: UtilsService, private toast: ToastService) {}
+  constructor(private http: HttpClient, private utils: UtilsService) {}
 
-  signUp(user: IUser) {
-    this.http.post(`${BASE_URL}signup`, user).subscribe({
-      next: data => {
-        this.toast.showToasterSuccess('You have successfully registered');
-        return data;
-      },
-      error: error => console.log(error),
-    });
+  signUp(user: IUser): Observable<IRegistered> {
+    return this.http.post<IRegistered>(`${BASE_URL}signup`, user);
   }
 
   signIn(login: LoginType) {

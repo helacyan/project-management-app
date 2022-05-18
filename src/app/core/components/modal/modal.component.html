@@ -1,12 +1,12 @@
-<div class="modal">
-  <h2 mat-dialog-title>Вы подтверждаете действие?</h2>
+<div class="modal" *transloco="let t; read: 'c-modal'">
+  <h2 mat-dialog-title>{{ t('title') }}</h2>
 
   <div mat-dialog-content>
-    <p>Это действие не может быть отменено. Вы действительно хотите его выполнить?</p>
+    <p>{{ t('content') }}</p>
   </div>
 
   <div mat-dialog-actions class="modal-buttons">
-    <button mat-button class="modal-btn" (click)="close()">отмена</button>
-    <button mat-button class="modal-btn" (click)="continue()" cdkFocusInitial>продолжить</button>
+    <button mat-button class="modal-btn" (click)="close()">{{ t('cancel') }}</button>
+    <button mat-button class="modal-btn" (click)="continue()" cdkFocusInitial>{{ t('cancel') }}</button>
   </div>
 </div>

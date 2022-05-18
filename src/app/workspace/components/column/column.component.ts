@@ -41,8 +41,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public editTitleForm!: FormGroup;
 
-  public readonly TITLE_ERRORS_MESSAGES = TITLE_ERRORS_MESSAGES;
-
   private subscriptions: Subscription[] = [];
 
   @Input() column!: IColumnItem;

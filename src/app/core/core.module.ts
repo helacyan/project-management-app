@@ -17,6 +17,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
 import { CreateBoardModalComponent } from './components/create-board-modal/create-board-modal.component';
+import { RouterModule } from '@angular/router';
 import { HighlightFooterLinkDirective } from './directives/highlight-footer-link.directive';
 import { LoaderInterceptor } from '../api/interceptors/loader.interceptor';
 import { LoaderService } from '../api/services/loader/loader.service';
@@ -49,6 +50,7 @@ const INTERCEPTOR_PROVIDER: Provider[] = [
   imports: [
     CommonModule,
     SharedModule,
+    RouterModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
     }),

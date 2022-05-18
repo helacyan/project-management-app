@@ -1,33 +1,35 @@
-<div class="logPageWrapper">
+<div class="logPageWrapper" *transloco="let t; read: 'login'">
   <form class="card" [formGroup]="form" (ngSubmit)="submit()">
     <div class="pageTitle">
-      <h1>Login</h1>
+      <h1>{{ t('login') }}</h1>
     </div>
-    <div>
+    <div *transloco="let e; read: 'validation'">
       <div>
-        <p class="logLabel">login</p>
+        <p class="logLabel">{{ t('small-login') }}</p>
         <input class="logInput" type="text" formControlName="login" />
         <div *ngIf="form.get('login')!.invalid && form.get('login')!.touched" class="validation">
-          <small class="requirement" *ngIf="form.get('login')!.errors?.['required']"> Please enter a login</small>
+          <small class="requirement" *ngIf="form.get('login')!.errors?.['required']"> {{ e('login.required') }}</small>
         </div>
       </div>
       <div>
-        <p class="logLabel">password</p>
+        <p class="logLabel">{{ t('small-password') }}</p>
         <input class="logInput" type="password" formControlName="password" />
         <div *ngIf="form.get('password')!.invalid && form.get('password')!.touched" class="validation">
           <small class="requirement" *ngIf="form.get('password')!.errors?.['required']">
-            Please enter a password
+            {{ e('password.required') }}
           </small>
-
           <small class="requirement" *ngIf="form.get('password')!.errors?.['minlength']">
-            Length must be at least {{form.get('password')!.errors?.['minlength'].requiredLength}}. Number of characters
+            {{ e('password.length') }} {{form.get('password')!.errors?.['minlength'].requiredLength}}
+            {{ e('password.characters') }}
             {{form.get('password')!.errors?.['minlength'].actualLength}}
           </small>
         </div>
       </div>
     </div>
     <div class="buttonWrapper">
-      <button class="loginButton" [disabled]="form.invalid" mat-raised-button color="primary">Login</button>
+      <button class="loginButton" [disabled]="form.invalid" mat-raised-button color="primary">
+        {{ t('login') }}
+      </button>
     </div>
   </form>
 </div>

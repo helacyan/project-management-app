@@ -1,28 +1,32 @@
 <div *ngIf="loaderService.isLoading$ | async" class="loader-container">
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
-<div class="header" [ngClass]="{ 'mat-elevation-z5': true, sticky: isSticky }">
+<div class="header" [ngClass]="{ 'mat-elevation-z5': true, sticky: isSticky }" *transloco="let t; read: 'header'">
   <div class="container">
     <div class="header-menu-container">
       <div class="wrapper">
-        <button mat-button class="home-btn" (click)="redirectToMainPage()">
+        <button mat-button class="home-btn" [routerLink]="['/']">
           <span class="material-icons">home</span>
         </button>
-        <mat-slide-toggle>ENG</mat-slide-toggle>
+        <mat-slide-toggle (click)="toggleLanguage()">{{ language }}</mat-slide-toggle>
       </div>
-      <button mat-raised-button class="header-menu-btn">
-        <span>редактировать профиль</span>
+      <button mat-raised-button class="header-menu-btn" [routerLink]="['/profile']">
+        <span>{{ t('edit') }}</span>
       </button>
-      <button mat-raised-button class="header-menu-btn" (click)="openCreateBoardModal()">создать новую доску</button>
+      <button mat-raised-button class="header-menu-btn" (click)="openCreateBoardModal()">{{ t('create') }}</button>
     </div>
     <div class="header-login-container">
-      <button mat-button class="login-btn" (click)="openLoginPage()">
+      <button *ngIf="!this.utils.getTokenFromStorage()" mat-button class="login-btn" [routerLink]="['/login']">
         <span class="material-icons">login</span>
-        Вход
+        {{ t('login') }}
       </button>
-      <button mat-button class="login-btn" (click)="openRegistrationPage()">
+      <button *ngIf="!this.utils.getTokenFromStorage()" mat-button class="login-btn" [routerLink]="['/signup']">
         <span class="material-icons">person</span>
-        Регистрация
+        {{ t('registration') }}
+      </button>
+      <button *ngIf="this.utils.getTokenFromStorage()" mat-button class="login-btn" (click)="logOut()">
+        <span class="material-icons">logout</span>
+        {{ t('logout') }}
       </button>
     </div>
   </div>

@@ -42,6 +42,16 @@
   padding-left: 0.2rem;
 }
 
+.about {
+  display: flex;
+  text-decoration: none;
+  color: rgb(84, 108, 160);
+}
+
+.about:hover {
+  color:black;
+}
+
 @media screen and (max-width: 750px) {
   .footer {
     height: 90px;

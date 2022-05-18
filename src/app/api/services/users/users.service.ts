@@ -20,6 +20,7 @@ export class UsersService {
       next: data => data,
       error: error => console.log(error.error.message),
     });
+    localStorage.clear();
   }
 
   updateUser(id: string, user: IUser) {

@@ -1,0 +1,32 @@
+<div class="logPageWrapper" *transloco="let t; lang: 'en'">
+  <form class="card" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="pageTitle">
+      <h1>{{ t('edit.edit') }}</h1>
+    </div>
+    <div>
+      <div>
+        <p class="logLabel">{{ t('edit.password') }}</p>
+        <input class="logInput" type="password" formControlName="password" />
+        <div *ngIf="form.get('password')!.invalid && form.get('password')!.touched" class="validation">
+          <small class="requirement" *ngIf="form.get('password')!.errors?.['required']">
+            {{ t('validation.password.required') }}
+          </small>
+          <small class="requirement" *ngIf="form.get('password')!.errors?.['minlength']"
+            >{{ t('validation.password.length') }} {{form.get('password')!.errors?.['minlength'].requiredLength}}
+            {{ t('validation.password.characters') }}
+            {{form.get('password')!.errors?.['minlength'].actualLength}}
+          </small>
+          <small
+            class="requirement"
+            *ngIf="(form.controls['password'].hasError('hasSmallCase') || form.controls['password'].hasError('hasSpecialCharacters') || form.controls['password'].hasError('hasCapitalCase') || form.controls['password'].hasError('hasNumber')) && !form.get('password')!.errors?.['minlength']">
+            {{ t('validation.password.strong') }}
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="buttonWrapper">
+      <button [disabled]="form.invalid" mat-raised-button class="btn">{{ t('edit.save') }}</button>
+    </div>
+  </form>
+  <button mat-raised-button class="btn" (click)="deleteUser()">{{ t('edit.delete') }}</button>
+</div>
