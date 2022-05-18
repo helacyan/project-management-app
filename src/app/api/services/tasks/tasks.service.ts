@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ITaskItem, ITaskItemExtended } from 'src/app/workspace/models/task-item.model';
 import { BASE_URL } from '../../consts';
 import { ITask, IUpdateTask } from '../../models/api.model';
 
@@ -9,39 +11,19 @@ import { ITask, IUpdateTask } from '../../models/api.model';
 export class TasksService {
   constructor(private http: HttpClient) {}
 
-  getTasks(boardId: string, columnId: string) {
-    this.http.get(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks`).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
-  }
+  getTasks = (boardId: string, columnId: string): Observable<ITaskItemExtended[]> =>
+    this.http.get<ITaskItemExtended[]>(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks`);
 
-  createTask(boardId: string, columnId: string, task: ITask) {
-    this.http.post(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks`, task).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
-  }
+  createTask = (boardId: string, columnId: string, task: ITask): Observable<ITaskItem> =>
+    this.http.post<ITaskItem>(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks`, task);
 
-  getTaskById(boardId: string, columnId: string, taskId: string) {
-    this.http.get(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks/${taskId}`).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
-  }
+  getTaskById = (boardId: string, columnId: string, taskId: string): Observable<ITaskItemExtended> =>
+    this.http.get<ITaskItemExtended>(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
 
-  deleteTask(boardId: string, columnId: string, taskId: string) {
-    this.http.delete(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks/${taskId}`).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
-  }
+  deleteTask = (boardId: string, columnId: string, taskId: string): Observable<null> =>
+    this.http.delete<null>(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
 
-  updateTask(taskId: string, updatedTask: IUpdateTask) {
-    const { boardId, columnId } = updatedTask;
-    this.http.put(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks/${taskId}`, updatedTask).subscribe({
-      next: data => data,
-      error: error => console.log(error.error.message),
-    });
-  }
+  updateTask = (boardId: string, columnId: string, taskId: string, updatedTask: IUpdateTask): Observable<ITaskItem> => {
+    return this.http.put<ITaskItem>(`${BASE_URL}boards/${boardId}/columns/${columnId}/tasks/${taskId}`, updatedTask);
+  };
 }

@@ -1,6 +1,16 @@
-<div class="container">
-  <div class="wrapper">
-    <app-column *ngFor="let column of columns$ | async" [column]="column"></app-column>
-    <button mat-raised-button (click)="openDialog()">+ создать колонку</button>
+<div class="container" *transloco="let t">
+  <h2>{{ boardTitle }}</h2>
+  <div cdkDropList cdkDropListOrientation="horizontal" class="columns-container" (cdkDropListDropped)="drop($event)">
+    <div
+      class="column-box"
+      *ngFor="let column of columns$ | async"
+      cdkDrag
+      [cdkDragDisabled]="cdkDragDisabled$ | async"
+      [appCursorMove]="cdkDragDisabled$ | async">
+      <app-column [column]="column">
+        <div class="column-placeholder" *cdkDragPlaceholder></div>
+      </app-column>
+    </div>
+    <button mat-raised-button (click)="openCreateColumnDialog()">+ {{ t('board.create-column') }}</button>
   </div>
 </div>

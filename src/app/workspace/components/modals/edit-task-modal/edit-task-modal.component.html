@@ -1,0 +1,124 @@
+<div class="modal-container" *transloco="let t; read: 'task'">
+  <div mat-dialog-content *transloco="let et; read: 'edit-task'">
+    <div class="title-wrapper">
+      <h2 *ngIf="isTitleDisabled$ | async" (click)="enableEditMode($event, isTitleEnabled$, isTitleDisabled$)">
+        {{ editTitleForm.controls['title'].value }}{{ taskNumber }}
+      </h2>
+      <form
+        *ngIf="isTitleEnabled$ | async"
+        id="edit-title-form"
+        [formGroup]="editTitleForm"
+        (ngSubmit)="onTitleEditSubmit()"
+        appClickOutside
+        (clickOutside)="onTitleEditCancel()">
+        <div class="title-btns">
+          <button mat-button type="button" (click)="onTitleEditCancel()">
+            <span class="material-icons">close</span>
+          </button>
+          <button mat-button type="submit" [disabled]="!editTitleForm.valid">
+            <span class="material-icons">done</span>
+          </button>
+        </div>
+        <mat-form-field appearance="fill">
+          <input type="text" matInput name="title" formControlName="title" />
+          <mat-error *transloco="let e; read: 'column'">
+            <span *ngIf="editTitleForm.controls['title'].hasError('required')">
+              {{ e('validation.required') }}
+            </span>
+            <span *ngIf="editTitleForm.controls['title'].hasError('minlength')">
+              {{ e('validation.minLength') }}
+            </span>
+            <span *ngIf="editTitleForm.controls['title'].hasError('maxlength')">
+              {{ e('validation.maxLength') }}
+            </span>
+            <span *ngIf="editTitleForm.controls['title'].hasError('hashSymbol')">
+              {{ e('validation.hashSymbol') }}
+            </span>
+          </mat-error>
+        </mat-form-field>
+      </form>
+      <div mat-dialog-actions class="close-action">
+        <button
+          mat-button
+          class="close-btn"
+          type="submit"
+          cdkFocusInitial
+          [mat-dialog-close]="{
+            title: editTitleForm.controls['title'].value,
+            description: editDescriptionForm.controls['description'].value,
+            userId: editUserIdForm.controls['userId'].value,
+            done: editDoneForm.controls['done'].value
+          }">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+    </div>
+    <p class="column-name">{{ et('name') }} {{ columnTitle }}</p>
+    <div class="subtitle-wrapper">
+      <span class="material-icons">description</span>
+      <h3>{{ t('description') }}</h3>
+      <button
+        mat-button
+        *ngIf="isDescriptionDisabled$ | async"
+        class="edit-btn"
+        type="button"
+        (click)="enableEditMode($event, isDescriptionEnabled$, isDescriptionDisabled$)">
+        <span class="material-icons">edit</span>
+      </button>
+    </div>
+    <form
+      id="edit-description-form"
+      [formGroup]="editDescriptionForm"
+      (ngSubmit)="onDescriptionEditSubmit()"
+      appClickOutside
+      (clickOutside)="onDescriptionEditCancel()">
+      <p *ngIf="isDescriptionDisabled$ | async">{{ editDescriptionForm.controls['description'].value }}</p>
+      <mat-form-field *ngIf="isDescriptionEnabled$ | async" appearance="fill">
+        <textarea
+          matInput
+          name="description"
+          formControlName="description"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="4"
+          cdkAutosizeMaxRows="8"
+          [value]="data.description"></textarea>
+        <mat-error>
+          <span *ngIf="editDescriptionForm.controls['description'].hasError('required')">
+            {{ t('validation.required') }}
+          </span>
+          <span *ngIf="editDescriptionForm.controls['description'].hasError('minlength')">
+            {{ t('validation.minLength') }}
+          </span>
+          <span *ngIf="editDescriptionForm.controls['description'].hasError('maxlength')">
+            {{ t('validation.maxLength') }}
+          </span>
+        </mat-error>
+      </mat-form-field>
+      <div *ngIf="isDescriptionEnabled$ | async" class="description-btns">
+        <button mat-button class="modal-btn" type="button" (click)="onDescriptionEditCancel()">
+          {{ et('cancel') }}
+        </button>
+        <button mat-button class="modal-btn" type="submit" [disabled]="!editDescriptionForm.valid">
+          {{ et('save') }}
+        </button>
+      </div>
+    </form>
+    <div class="subtitle-wrapper">
+      <span class="material-icons">person</span>
+      <h3>{{ et('responsible') }}</h3>
+    </div>
+    <form id="edit-user-id-form" [formGroup]="editUserIdForm">
+      <mat-form-field appearance="fill">
+        <mat-select formControlName="userId">
+          <mat-option *ngFor="let user of users$ | async" [value]="user.id" (click)="onSelectChange(user.id)">
+            {{ user.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <form id="edit-done-form" [formGroup]="editDoneForm">
+      <mat-checkbox formControlName="done" (change)="updateTask()">{{ et('done') }}</mat-checkbox>
+    </form>
+  </div>
+</div>

@@ -1,1 +1,135 @@
-{}
+{
+  "header": {
+    "edit": "edit profile",
+    "create": "create board",
+    "login": "Login",
+    "registration": "Signup",
+    "logout": "Logout",
+    "about": "About"
+  },
+  "edit": {
+    "edit": "Edit profile details",
+    "password": "Password",
+    "name": "Name",
+    "login": "Login",
+    "delete": "Delete profile",
+    "save": "Save changes"
+  },
+  "board": {
+    "create-task": "create task",
+    "responsible": "Performer",
+    "create-column": "create column",
+    "delete": "delete",
+    "done": "Done"
+  },
+  "task": {
+    "create-task": "Create new task",
+    "title": "Title",
+    "description": "Description",
+    "cancel": "cancel",
+    "create": "create",
+    "validation": {
+      "required": "Please enter a description",
+      "minLength": "The description is too short",
+      "maxLength": "The description is too long"
+    }
+  },
+  "login": {
+    "login": "Login",
+    "small-login": "login",
+    "small-password": "password"
+  },
+  "registration": {
+    "register": "Signup"
+  },
+  "validation": {
+    "name": {
+      "required": "Please enter a name"
+    },
+    "login": {
+      "required": "Please enter a login",
+      "login": "The login is invalid"
+    },
+    "password": {
+      "required": "Please enter a password",
+      "length": "Length must be at least",
+      "characters": "symbols. Number of characters",
+      "strong": "Your password isn't strong enough"
+    }
+  },
+  "column": {
+    "createColumn": "Create a new column",
+    "title": "Title",
+    "validation": {
+      "required": "Please, enter a title",
+      "minLength": "The title is too short",
+      "maxLength": "The title is too long",
+      "hashSymbol": "The name cannot contain the '#' character."
+    },
+    "create": "create",
+    "cancel": "cancel"
+  },
+  "b-modal": {
+    "create": "Create board",
+    "title": "Title",
+    "description": "Description",
+    "validation": {
+      "title": {
+        "required": "Please enter a title",
+        "length": "String length should be 8 to 12 characters"
+      },
+      "description": {
+        "required": "Please enter a description"
+      }
+    },
+    "cancel": "cancel",
+    "bCreate": "create"
+  },
+  "c-modal": {
+    "title": "Are you confirming this action?",
+    "content": "This action cannot be reversed. Do you really want to do it?",
+    "continue": "continue",
+    "cancel": "cancel"
+  },
+  "error": {
+    "text": "The page you're looking for can't be found",
+    "okay": "Okay"
+  },
+  "welcome": {
+    "title": "Kanban boards",
+    "app-desc": "Kanban boards help you to put on display your workflow. By visualizing work on a Kanban board, you can gain a better understanding of your process and overall workload.",
+    "features": {
+      "one": {
+        "name": "Workflow Management",
+        "description": "Visualize your key processes and improve the efficiency of your workflow."
+      },
+      "two": {
+        "name": "Team Collaboration",
+        "description": "Delegate task responsibility with your mates."
+      },
+      "three": {
+        "name": "Search",
+        "description": "Do you only want to view tasks that are assigned to you or someone in your team?  Easily search for tasks on task name, user, description and task number."
+      },
+      "four": {
+        "name": "Save Time Wasted on Unnecessary Meetings",
+        "description": "A significant benefit that comes with the implementation of Kanban boards is that they save you much time spent on meetings, progress reports, and many other unnecessary interruptions."
+      }
+    },
+    "about": {
+      "title": "About us",
+      "us": {
+        "one": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione maiores, eaque reprehenderit velit ducimus dolorem dolor.",
+        "two": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione maiores, eaque reprehenderit velit ducimus dolorem dolor.",
+        "three": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione maiores, eaque reprehenderit velit ducimus dolorem dolor."
+      }
+    }
+  },
+  "edit-task": {
+    "responsible": "Performer",
+    "done": "Done",
+    "cancel": "cancel",
+    "save": "save",
+    "name": "in column"
+  }
+}

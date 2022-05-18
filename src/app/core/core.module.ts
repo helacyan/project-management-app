@@ -17,13 +17,25 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
 import { CreateBoardModalComponent } from './components/create-board-modal/create-board-modal.component';
+import { RouterModule } from '@angular/router';
+import { HighlightFooterLinkDirective } from './directives/highlight-footer-link.directive';
+import { LoaderInterceptor } from '../api/interceptors/loader.interceptor';
+import { LoaderService } from '../api/services/loader/loader.service';
 
-const INTERCEPTOR_PROVIDER: Provider = {
-  provide: HTTP_INTERCEPTORS,
-  useClass: AuthInterceptor,
-  multi: true,
-  deps: [UtilsService, ToastService],
-};
+const INTERCEPTOR_PROVIDER: Provider[] = [
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true,
+    deps: [UtilsService, ToastService],
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoaderInterceptor,
+    multi: true,
+    deps: [LoaderService],
+  },
+];
 
 @NgModule({
   declarations: [
@@ -33,10 +45,12 @@ const INTERCEPTOR_PROVIDER: Provider = {
     ErrorPageComponent,
     CreateBoardModalComponent,
     WelcomePageComponent,
+    HighlightFooterLinkDirective,
   ],
   imports: [
     CommonModule,
     SharedModule,
+    RouterModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
     }),
@@ -47,6 +61,6 @@ const INTERCEPTOR_PROVIDER: Provider = {
     ToastrModule.forRoot(),
   ],
   exports: [HeaderComponent, FooterComponent, ModalComponent, ErrorPageComponent, CreateBoardModalComponent],
-  providers: [INTERCEPTOR_PROVIDER, AuthGuardService],
+  providers: [AuthGuardService, ...INTERCEPTOR_PROVIDER],
 })
 export default class CoreModule {}

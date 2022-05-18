@@ -4,8 +4,8 @@
 
 @include mat.core();
 
-$project-management-app-primary: mat.define-palette(mat.$blue-palette, 900);
-$project-management-app-accent: mat.define-palette(mat.$blue-gray-palette, 500);
+$project-management-app-primary: mat.define-palette(mat.$blue-gray-palette, 500);
+$project-management-app-accent: mat.define-palette(mat.$blue-palette, 900);
 $project-management-app-warn: mat.define-palette(mat.$red-palette);
 
 $project-management-app-theme: mat.define-light-theme(
@@ -30,7 +30,6 @@ main {
 }
 
 .container {
-  max-width: 1800px;
   padding-left: 1rem;
   padding-right: 1rem;
   margin: 0 auto;
@@ -41,37 +40,60 @@ main {
 button.mat-raised-button {
   background-color: $gray;
   color: white;
+
+  &:active {
+    background-color: $primary-color;
+    color: white;
+  }
 }
 
-button:hover {
-  background-color: $blue-dark;
-  color: white;
-}
+button {
+  &:hover {
+    background-color: $blue-dark;
+    color: white;
+  }
 
-button:disabled,
-button:disabled:active{
-  background-color: initial;
-}
+  &:active {
+    background-color: $primary-color;
+    color: white;
+  }
 
-button:active {
-  background-color: $primary-color;
-  color: white;
+  &:disabled {
+    background-color: transparent;
+  }
 }
 
 button.mat-button {
   background-color: transparent;
   padding: 0;
   color: $gray;
+
+  &:hover {
+    background-color: transparent;
+    color: $blue-dark;
+  }
+
+  &:active {
+    background-color: transparent;
+    color: $primary-color;
+  }
 }
 
-button.mat-button:hover {
-  background-color: transparent;
-  color: $blue-dark;
-}
+button.modal-btn {
+  padding: 0 1rem;
 
-button.mat-button:active {
-  background-color: transparent;
-  color: $primary-color;
+  &:nth-child(2):enabled {
+    background-color: $blue;
+    color: white;
+
+    &:hover {
+      background-color: $blue-dark;
+    }
+
+    &:active {
+      background-color: $primary-color;
+    }
+  }
 }
 
 mat-form-field {
@@ -82,7 +104,7 @@ mat-form-field {
   font-size: 1.2rem;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 750px) {
   main {
     padding-bottom: 90px;
   }

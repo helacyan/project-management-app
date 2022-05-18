@@ -11,27 +11,21 @@
       </a>
     </div>
     <div class="github-members">
-      <a class="footer__link" target="_blank" href="https://github.com/WeronikaFed">
-        <svg-icon
-          src="../../../../assets/svg/icon-github.svg"
-          class="footer_svg"
-          [svgStyle]="{ fill: '#546CA0' }"></svg-icon>
+      <a class="footer__link" target="_blank" href="https://github.com/WeronikaFed" appHighlightFooterLink>
+        <svg-icon src="../../../../assets/svg/icon-github.svg" class="footer_svg"></svg-icon>
         <p class="name">WeronikaFed</p>
       </a>
-      <a class="footer__link" target="_blank" href="https://github.com/personagrata9">
-        <svg-icon
-          src="../../../../assets/svg/icon-github.svg"
-          class="footer_svg"
-          [svgStyle]="{ fill: '#546CA0' }"></svg-icon>
+      <a class="footer__link" target="_blank" href="https://github.com/personagrata9" appHighlightFooterLink>
+        <svg-icon src="../../../../assets/svg/icon-github.svg" class="footer_svg"></svg-icon>
         <p class="name">personagrata9</p>
       </a>
-      <a class="footer__link" target="_blank" href="https://github.com/helacyan">
-        <svg-icon
-          src="../../../../assets/svg/icon-github.svg"
-          class="footer_svg"
-          [svgStyle]="{ fill: '#546CA0' }"></svg-icon>
+      <a class="footer__link" target="_blank" href="https://github.com/helacyan" appHighlightFooterLink>
+        <svg-icon src="../../../../assets/svg/icon-github.svg" class="footer_svg"></svg-icon>
         <p class="name">helacyan</p>
       </a>
+      <a class="about" [routerLink]="['/welcome']" *transloco="let x"
+        ><mat-icon>person</mat-icon>{{ x('welcome.about.title') }}</a
+      >
     </div>
     <p class="year">2022</p>
   </div>

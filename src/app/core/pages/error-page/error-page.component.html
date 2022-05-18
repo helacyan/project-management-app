@@ -1,1 +1,5 @@
-<p>error-page works!</p>
+<div class="wrapper" *transloco="let t; read: 'error'">
+  <p class="error">404</p>
+  <p class="text"><span class="material-icons">error_outline</span>{{ t('text') }}.</p>
+  <button mat-raised-button class="btn" [routerLink]="['/']">{{ t('okay') }}</button>
+</div>

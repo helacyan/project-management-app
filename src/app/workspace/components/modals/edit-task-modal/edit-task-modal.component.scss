@@ -1,0 +1,132 @@
+
+@use "variables" as *;
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  min-height: 70vh;
+  color: $blue-dark;
+
+  .title-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+
+    .close-action {
+      display: block;
+      padding: 0;
+
+      .close-btn {
+        border-radius: 50%;
+        min-width: 2.2rem;
+        width: 2.2rem;
+        height: 2.2rem;
+      }
+    }
+
+    h2 {
+      min-height: 4.1rem;
+      width: fit-content;
+      margin: 0;
+      padding-top: 1.4rem;
+      padding-left: 2.2rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    #edit-title-form {
+      flex-grow: 1;
+      display: flex;
+      gap: 0.2rem;
+      min-height: 5.5rem;
+      background-color: inherit;
+
+      .title-btns {
+        display: flex;
+        gap: 0.2rem;
+        flex-direction: column;
+
+        button {
+          height: 1.77rem;
+          min-width: 2.2rem;
+          padding: 0;
+          line-height: normal;
+
+          &:nth-child(2):enabled {
+            background-color: $blue;
+            color: white;
+
+            &:hover {
+              background-color: $blue-dark;
+            }
+
+            &:active {
+              background-color: $primary-color;
+            }
+          }
+        }
+      }
+
+      input {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .column-name {
+    padding-left: 2.2rem;
+    color: $gray;
+  }
+
+  .subtitle-wrapper {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    height: 2.25rem;
+    margin-bottom: 0.5rem;
+
+    h3 {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+
+    .edit-btn {
+      min-width: 2rem;
+      height: 2.25rem;
+    }
+  }
+
+  #edit-description-form,
+  #edit-user-id-form,
+  #edit-done-form {
+    padding-left: 2.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .description-btns {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  mat-checkbox {
+    padding: 0 0.5rem;
+    border-radius: $border-radius;
+
+    &.mat-checkbox-checked {
+      background-color: $primary-color;
+      color: white;
+    }
+  }
+
+  .save-btn {
+    justify-self: end;
+  }
+}
+
+@media screen and (max-width: 548px) {
+  .modal-container {
+    width: calc(95vw - 3rem);
+  }
+}

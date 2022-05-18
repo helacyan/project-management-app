@@ -23,15 +23,16 @@
 
   .footer__link {
     height: 24px;
-  }
-  .footer__link:hover p{
-    color: $blue-dark;
-  }
-  .footer__link:hover .footer_svg{
-    stroke: $blue-dark; 
-    fill: $blue-dark;
-  } 
 
+    p {
+      transition: 0.3s ease all;
+    }
+
+    svg-icon {
+      fill: $blue;
+      transition: 0.3s ease all;
+    }
+  }
 }
 .name {
   display: inline-block;
@@ -41,7 +42,17 @@
   padding-left: 0.2rem;
 }
 
-@media screen and (max-width: 700px) {
+.about {
+  display: flex;
+  text-decoration: none;
+  color: rgb(84, 108, 160);
+}
+
+.about:hover {
+  color:black;
+}
+
+@media screen and (max-width: 750px) {
   .footer {
     height: 90px;
   }

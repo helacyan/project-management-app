@@ -1,37 +1,37 @@
-<div class="new-board-modal">
+<div class="new-board-modal" *transloco="let t; read: 'b-modal'">
   <div class="modal-container">
-    <h2 mat-dialog-title>Создать доску</h2>
+    <h2 mat-dialog-title>{{ t('create') }}</h2>
 
     <mat-dialog-content>
       <form [formGroup]="createBoardForm" class="form-create-board">
-        <label class="label" for="title">Название</label>
-        <input type="text" id="title" placeholder="Title" formControlName="title" />
+        <label class="label" for="title">{{ t('title') }}</label>
+        <input type="text" id="title" placeholder="{{ t('title') }}" formControlName="title" />
         <span class="text-danger" *ngIf="createBoardFormControl.title.errors?.required">
-          Пожалуйста введите название
+          {{ t('validation.title.required') }}
         </span>
         <span
           class="text-danger"
           *ngIf="createBoardFormControl.title.errors?.minlength || createBoardFormControl.title.errors?.maxlength">
-          Длина строки должна быть от 8 до 12 символов
+          {{ t('validation.title.length') }}
         </span>
-        <label class="label" for="description">Описание</label>
-        <input type="text" id="description" placeholder="Description" formControlName="description" />
+        <label class="label" for="description">{{ t('description') }}</label>
+        <input type="text" id="description" placeholder="{{ t('description') }}" formControlName="description" />
         <span class="text-danger" *ngIf="createBoardFormControl.description.errors?.required">
-          Пожалуйста введите описание
+          {{ t('validation.description.required') }}
         </span>
         <span
           class="text-danger"
           *ngIf="
             createBoardFormControl.description.errors?.minlength || createBoardFormControl.description.errors?.maxlength
           ">
-          Длина строки должна быть от 8 до 12 символов
+          {{ t('validation.title.length') }}
         </span>
       </form>
     </mat-dialog-content>
 
     <mat-dialog-actions class="modal-buttons">
-      <button class="mat-raised-button form-btn" (click)="close()">отмена</button>
-      <button class="mat-raised-button form-btn" (click)="submit()">создать</button>
+      <button class="mat-raised-button form-btn" (click)="close()">{{ t('cancel') }}</button>
+      <button class="mat-raised-button form-btn" (click)="submit()">{{ t('bCreate') }}</button>
     </mat-dialog-actions>
   </div>
 </div>
