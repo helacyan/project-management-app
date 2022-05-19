@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, catchError, concat, EMPTY, mergeMap, Observable, Subscription } from 'rxjs';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
@@ -49,6 +49,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   @Input() searchBoardId!: string;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private store: Store,
     private usersService: UsersService,
@@ -73,6 +74,10 @@ export class TaskComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
+
+  private redirectToErrorPage = (): void => {
+    this.router.navigate(['error']);
+  };
 
   private fetchExecutor = (): void => {
     if (this.task.userId) {
@@ -127,7 +132,10 @@ export class TaskComponent implements OnInit, OnDestroy {
     const subscription = this.tasksService
       .deleteTask(this.boardId, this.columnId, this.task.id)
       .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
-      .subscribe((board: IBoardItem) => this.updateColumnsState(board));
+      .subscribe({
+        next: (board: IBoardItem) => this.updateColumnsState(board),
+        error: () => this.redirectToErrorPage(),
+      });
 
     this.subscriptions.push(subscription);
   };
