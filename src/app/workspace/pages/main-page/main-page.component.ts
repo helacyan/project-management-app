@@ -8,6 +8,7 @@ import { clearBoards, fetchBoards } from '../../../store/actions/boards.actions'
 import { Observable, Subscription } from 'rxjs';
 import { SearchTasksService } from '../../services/search-tasks.service';
 import { Router } from '@angular/router';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-main-page',
@@ -25,16 +26,19 @@ export class MainPageComponent implements OnInit, OnDestroy {
     private readonly boardsService: BoardsService,
     private store: Store<State>,
     private readonly searchTasksService: SearchTasksService,
-    private router: Router
+    private router: Router,
+    private readonly headerService: HeaderService
   ) {}
 
   ngOnInit(): void {
     this.boards$ = this.store.select(getStoreBoards);
     this.loadBoards();
+    this.headerService.showCreateBtn();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.headerService.hideCreateBtn();
   }
 
   private loadBoards = (): void => {
