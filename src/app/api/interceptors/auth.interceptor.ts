@@ -15,7 +15,17 @@ export class AuthInterceptor implements HttpInterceptor {
         : req.clone();
     return next.handle(cloned).pipe(
       catchError((error: HttpErrorResponse) => {
-        this.toast.showToasterError(error.error.message);
+        if (!req.url.includes('file')) {
+          this.toast.showToasterError(error.error.message);
+        } else {
+          if (error.status === 409) {
+            this.toast.showToasterError(error.error.message);
+            return throwError(() => 'File already exists!');
+          }
+          if (error.status === 200) {
+            this.toast.showToasterSuccess('File uploaded!');
+          }
+        }
         return throwError(() => 'Something went wrong');
       })
     );

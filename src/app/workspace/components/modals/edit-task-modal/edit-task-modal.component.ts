@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { IUpdateTask } from 'src/app/api/models/api.model';
+import { FilesService } from 'src/app/api/services/files/files.service';
 import { TasksService } from 'src/app/api/services/tasks/tasks.service';
 import { UsersService } from 'src/app/api/services/users/users.service';
 import { selectColumn } from 'src/app/store/selectors/columns.selectors';
@@ -11,6 +12,9 @@ import { IColumnItem } from 'src/app/workspace/models/column-item.model';
 import { ITaskItemExtended } from 'src/app/workspace/models/task-item.model';
 import { IUserItem } from 'src/app/workspace/models/user-item.model';
 import { hashSymbolValidator } from '../validators/hash.validator';
+import { DomSanitizer } from '@angular/platform-browser';
+import { IFileItem } from 'src/app/workspace/models/file-item.model';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-edit-task-modal',
@@ -42,11 +46,19 @@ export class EditTaskModalComponent implements OnInit, OnDestroy {
 
   public isDescriptionDisabled$ = new BehaviorSubject<boolean>(true);
 
+  public fileName$ = new BehaviorSubject<string>('Загрузить файл');
+
+  public fileToUpload: File | null = null;
+
+  public files$!: BehaviorSubject<IFileItem[]>;
+
   private subscriptions: Subscription[] = [];
 
   constructor(
     private store: Store,
     private tasksService: TasksService,
+    private filesService: FilesService,
+    private sanitizer: DomSanitizer,
     private fb: FormBuilder,
     private userService: UsersService,
     public dialogRef: MatDialogRef<EditTaskModalComponent>,
@@ -74,6 +86,7 @@ export class EditTaskModalComponent implements OnInit, OnDestroy {
     this.editDoneForm = this.fb.group({
       done: [this.data.done],
     });
+    this.files$ = new BehaviorSubject<IFileItem[]>(this.data.files || []);
   }
 
   ngOnDestroy(): void {
@@ -149,6 +162,55 @@ export class EditTaskModalComponent implements OnInit, OnDestroy {
     const subscription = this.tasksService
       .updateTask(this.data.boardId, this.data.columnId, this.data.id, updatedTask)
       .subscribe();
+
+    this.subscriptions.push(subscription);
+  };
+
+  public onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+      this.fileName$.next(file.name);
+
+      const subscription = this.filesService.uploadFile(file, this.data.id).subscribe({
+        error: error => {
+          if (error !== 'File already exists!') {
+            const completeSubscription = this.filesService.downloadFile(this.data.id, file.name).subscribe({
+              next: blob => {
+                if (blob) {
+                  let objectURL = URL.createObjectURL(blob);
+                  const fileUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                  const newFile: IFileItem = {
+                    filename: file.name,
+                    fileSize: blob.size,
+                    fileUrl,
+                  };
+                  this.files$.next([...this.files$.value, newFile]);
+                  this.fileName$.next('Загрузить файл');
+                }
+              },
+              error: () => {
+                const newFile: IFileItem = {
+                  filename: file.name,
+                  fileSize: 0,
+                  fileUrl: '',
+                };
+                this.files$.next([...this.files$.value, newFile]);
+              },
+            });
+            this.subscriptions.push(completeSubscription);
+          }
+        },
+      });
+
+      this.subscriptions.push(subscription);
+    }
+  }
+
+  public onDownloadFile = (filename: string): void => {
+    const subscription = this.filesService
+      .downloadFile(this.data.id, filename)
+      .subscribe(blob => saveAs(blob, filename));
 
     this.subscriptions.push(subscription);
   };

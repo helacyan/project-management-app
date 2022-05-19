@@ -1,8 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, mergeMap, Subscription } from 'rxjs';
+import { BehaviorSubject, catchError, concat, EMPTY, mergeMap, Observable, Subscription } from 'rxjs';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
+import { FilesService } from 'src/app/api/services/files/files.service';
 import { TasksService } from 'src/app/api/services/tasks/tasks.service';
 import { UsersService } from 'src/app/api/services/users/users.service';
 import { OpenConfirmationModalService } from 'src/app/core/components/modal/services/open-modal.service';
@@ -11,6 +13,7 @@ import { selectCurrentUserId } from 'src/app/store/selectors/users.selectors';
 import { IBoardItem } from '../../models/board-item.model';
 import { ITaskItem } from '../../models/task-item.model';
 import { EditTaskModalComponent } from '../modals/edit-task-modal/edit-task-modal.component';
+import { IFileItem } from '../../models/file-item.model';
 
 @Component({
   selector: 'app-task',
@@ -30,6 +33,10 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   public isTaskOwnByCurrentUser$!: BehaviorSubject<boolean>;
 
+  private files: IFileItem[] = [];
+
+  private index: number = 0;
+
   private subscriptions: Subscription[] = [];
 
   @Input() task!: ITaskItem;
@@ -43,6 +50,8 @@ export class TaskComponent implements OnInit, OnDestroy {
     private usersService: UsersService,
     private boardsService: BoardsService,
     private tasksService: TasksService,
+    private filesService: FilesService,
+    private sanitizer: DomSanitizer,
     private dialog: MatDialog,
     private readonly openConfirmationModalService: OpenConfirmationModalService
   ) {}
@@ -110,39 +119,65 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
-  public openEditTaskDialog(): void {
-    const openSubscription = this.tasksService
-      .getTaskById(this.boardId, this.columnId, this.task.id)
-      .subscribe(task => {
-        const dialogRef = this.dialog.open(EditTaskModalComponent, {
-          maxWidth: '95vw !important',
-          data: {
-            id: task.id,
-            title: task.title,
-            order: task.order,
-            description: task.description,
-            userId: task.userId,
-            done: task.done,
-            files: task.files,
-            boardId: task.boardId,
-            columnId: task.columnId,
-          },
-        });
-
-        const closeSubscription = dialogRef
-          .afterClosed()
-          .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
-          .subscribe((board: IBoardItem) => {
-            this.store.dispatch(loadColumns({ columns: board.columns || [] }));
-            this.tasksService.getTaskById(this.boardId, this.columnId, this.task.id).subscribe(taskItem => {
-              this.task = taskItem;
-              this.fetchExecutor();
-              this.fetchExtraOptions();
-            });
-          });
-        this.subscriptions.push(closeSubscription);
+  private getFilesRequests = (task: ITaskItem): Observable<Blob>[] => {
+    const requests: Observable<Blob>[] = [];
+    if (task.files && task.files.length) {
+      task.files.forEach(file => {
+        const request$ = this.filesService.downloadFile(this.task.id, file.filename).pipe(
+          catchError(() => {
+            this.files.push({ filename: file.filename, fileSize: 0, fileUrl: '' });
+            this.index++;
+            return EMPTY;
+          })
+        );
+        requests.push(request$);
       });
+      return requests;
+    } else {
+      return [];
+    }
+  };
 
-    this.subscriptions.push(openSubscription);
+  public openEditTaskDialog(): void {
+    const subscription = this.tasksService.getTaskById(this.boardId, this.columnId, this.task.id).subscribe(task => {
+      const openSubscription = concat(...this.getFilesRequests(task)).subscribe({
+        next: blob => {
+          if (task.files) {
+            if (blob) {
+              let objectURL = URL.createObjectURL(blob);
+              const fileUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+              this.files.push({ ...task.files[this.index], fileUrl });
+              this.index++;
+            }
+          }
+        },
+        complete: () => {
+          const dialogRef = this.dialog.open(EditTaskModalComponent, {
+            maxWidth: '95vw !important',
+            data: {
+              id: task.id,
+              title: task.title,
+              order: task.order,
+              description: task.description,
+              userId: task.userId,
+              done: task.done,
+              files: this.files,
+              boardId: task.boardId,
+              columnId: task.columnId,
+            },
+          });
+
+          const closeSubscription = dialogRef
+            .afterClosed()
+            .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
+            .subscribe((board: IBoardItem) => this.store.dispatch(loadColumns({ columns: board.columns || [] })));
+
+          this.subscriptions.push(closeSubscription);
+        },
+      });
+      this.subscriptions.push(openSubscription);
+    });
+
+    this.subscriptions.push(subscription);
   }
 }

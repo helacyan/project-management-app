@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { BASE_URL } from '../../consts';
+import { environment } from 'src/environments/environment';
 import { IRegistered, IUser, LoginType } from '../../models/api.model';
 import { UtilsService } from '../utils/utils.service';
 @Injectable({
@@ -11,11 +11,11 @@ export class SignInService {
   constructor(private http: HttpClient, private utils: UtilsService) {}
 
   signUp(user: IUser): Observable<IRegistered> {
-    return this.http.post<IRegistered>(`${BASE_URL}signup`, user);
+    return this.http.post<IRegistered>(`${environment.API_URL}signup`, user);
   }
 
   signIn(login: LoginType) {
-    return this.http.post<{ token: string }>(`${BASE_URL}signin`, login).pipe(
+    return this.http.post<{ token: string }>(`${environment.API_URL}signin`, login).pipe(
       map((data: { token: string }) => {
         this.utils.setLocalStorage(login.login, data.token);
         return data.token;
