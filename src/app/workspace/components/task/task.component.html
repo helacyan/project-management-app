@@ -1,7 +1,6 @@
 <mat-card
   [appMatCardBackgroundColor]="isTaskOwnByCurrentUser$ | async"
   appMatCardTransform
-  [ngStyle]="{ 'pointer-events': cardPointerEvents$ | async }"
   (click)="openEditTaskDialog()">
   <mat-card-title
     >{{ title }}

@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, mergeMap, Observable, Subscription } from 'rxjs';
 import { IColumn } from 'src/app/api/models/api.model';
@@ -46,6 +46,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private route: ActivatedRoute,
     private store: Store,
     private boardsService: BoardsService,
@@ -73,6 +74,10 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
+  private redirectToErrorPage = (): void => {
+    this.router.navigate(['error']);
+  };
+
   private setCurrentUserId = (): void => {
     const subscription = this.currentUserId$.subscribe(currentUserId => (this.currentUserId = currentUserId));
     this.subscriptions.push(subscription);
@@ -92,7 +97,10 @@ export class ColumnComponent implements OnInit, OnDestroy {
     const subscription = this.columnsService
       .updateColumn(this.boardId, this.column.id, newColumn)
       .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
-      .subscribe((board: IBoardItem) => this.store.dispatch(loadColumns({ columns: board.columns || [] })));
+      .subscribe({
+        next: (board: IBoardItem) => this.store.dispatch(loadColumns({ columns: board.columns || [] })),
+        error: () => this.redirectToErrorPage(),
+      });
 
     this.subscriptions.push(subscription);
   };
@@ -119,7 +127,10 @@ export class ColumnComponent implements OnInit, OnDestroy {
     const subscription = this.columnsService
       .deleteColumn(this.boardId, this.column.id)
       .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
-      .subscribe((board: IBoardItem) => this.store.dispatch(loadColumns({ columns: board.columns || [] })));
+      .subscribe({
+        next: (board: IBoardItem) => this.store.dispatch(loadColumns({ columns: board.columns || [] })),
+        error: () => this.redirectToErrorPage(),
+      });
 
     this.subscriptions.push(subscription);
   };

@@ -14,7 +14,8 @@ h1 {
 }
 
 .logInput {
-  width: 25vw;
+  min-width: 25vw;
+  width: calc(320px - 2rem);
   height: 38px;
   background-color: #E0E0E0;
   border: 0;
@@ -37,7 +38,7 @@ h1 {
 }
 
 .pageTitle {
-  width: 25vw;
+  min-width: 25vw;
   text-align: left;
   font-size: 18px;
   font-weight: 900;
@@ -45,16 +46,16 @@ h1 {
 
 .buttonWrapper {
   display: flex;
-  width: 30vw;
+  min-width: 30vw;
   justify-content: center;
   align-content: center;
   align-items: center;
 }
 
 .btn {
-  font-size: 1vw;
+  font-size: 14px;
   width:auto;
-  height: 5vh;
+  height: 3rem;
   margin-left: 10px;
   margin-top: 20px;
 }

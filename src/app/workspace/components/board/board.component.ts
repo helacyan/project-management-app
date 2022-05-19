@@ -33,20 +33,25 @@ export class BoardComponent implements OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  public deleteBoard() {
+  private redirectToErrorPage = (): void => {
+    this.router.navigate(['error']);
+  };
+
+  public deleteBoard(event: MouseEvent) {
+    event.stopPropagation();
     const subscription = this.openConfirmationModalService.openConfirmationDialog().subscribe({
       next: res => {
         if (res === true) {
           this.boardsService
             .deleteBoard(this.board.id)
             .pipe(mergeMap(() => this.boardsService.getBoards()))
-            .subscribe((boards: IBoardItem[]) => {
-              this.store.dispatch(fetchBoards({ boards }));
+            .subscribe({
+              next: (boards: IBoardItem[]) => {
+                this.store.dispatch(fetchBoards({ boards }));
+              },
+              error: () => this.redirectToErrorPage(),
             });
         }
-      },
-      error: er => {
-        console.log(er);
       },
     });
     this.subscriptions.push(subscription);

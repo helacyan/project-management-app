@@ -1,7 +1,8 @@
 @use "variables" as *;
 .main {
   height: 100%;
-  padding: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   .boards-list {
     width: 100%;
     height: auto;
@@ -13,8 +14,10 @@
 }
 .search {
   padding-bottom: 1rem;
-  padding-right: 3rem;
-  text-align: right;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 0.5rem;
 }
 .search-input {
   background-color: transparent;
@@ -22,6 +25,7 @@
   height: 2rem;
   width: 13rem;
   border: 2px solid $gray;
+  padding-left: 0.3rem;
 }
 .search-icon {
   vertical-align: middle;

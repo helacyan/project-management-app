@@ -4,7 +4,7 @@ import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/store/state.model';
 import { getStoreBoards } from '../../../store/selectors/boards.selectors';
-import { clearBoards, fetchBoards } from '../../../store/actions/boards.actions';
+import { fetchBoards } from '../../../store/actions/boards.actions';
 import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { HeaderService } from 'src/app/core/services/header.service';
@@ -21,8 +21,12 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   inputSearch: string = '';
 
-  constructor(private readonly boardsService: BoardsService, private store: Store<State>, private router: Router, private readonly headerService: HeaderService) {}
-
+  constructor(
+    private readonly boardsService: BoardsService,
+    private store: Store<State>,
+    private router: Router,
+    private readonly headerService: HeaderService
+  ) {}
 
   ngOnInit(): void {
     this.boards$ = this.store.select(getStoreBoards);
@@ -35,14 +39,16 @@ export class MainPageComponent implements OnInit, OnDestroy {
     this.headerService.hideCreateBtn();
   }
 
+  private redirectToErrorPage = (): void => {
+    this.router.navigate(['error']);
+  };
+
   private loadBoards = (): void => {
     const subscription = this.boardsService.getBoards().subscribe({
       next: (boards: IBoardItem[]) => {
         this.store.dispatch(fetchBoards({ boards }));
       },
-      error: () => {
-        this.store.dispatch(clearBoards());
-      },
+      error: () => this.redirectToErrorPage(),
     });
 
     this.subscriptions.push(subscription);

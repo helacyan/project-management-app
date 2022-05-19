@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, catchError, concat, EMPTY, mergeMap, Observable, Subscription } from 'rxjs';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
@@ -40,8 +40,6 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   private index: number = 0;
 
-  public cardPointerEvents$ = new BehaviorSubject<string>('auto');
-
   private subscriptions: Subscription[] = [];
 
   @Input() task!: ITaskItem;
@@ -51,6 +49,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   @Input() searchBoardId!: string;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private store: Store,
     private usersService: UsersService,
@@ -75,6 +74,10 @@ export class TaskComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
+
+  private redirectToErrorPage = (): void => {
+    this.router.navigate(['error']);
+  };
 
   private fetchExecutor = (): void => {
     if (this.task.userId) {
@@ -129,7 +132,10 @@ export class TaskComponent implements OnInit, OnDestroy {
     const subscription = this.tasksService
       .deleteTask(this.boardId, this.columnId, this.task.id)
       .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
-      .subscribe((board: IBoardItem) => this.updateColumnsState(board));
+      .subscribe({
+        next: (board: IBoardItem) => this.updateColumnsState(board),
+        error: () => this.redirectToErrorPage(),
+      });
 
     this.subscriptions.push(subscription);
   };
@@ -165,7 +171,6 @@ export class TaskComponent implements OnInit, OnDestroy {
   };
 
   public openEditTaskDialog(): void {
-    this.cardPointerEvents$.next('none');
     if (this.route.snapshot.url[0].toString().includes('search')) {
       this.boardId = this.searchBoardId;
     }
@@ -198,13 +203,10 @@ export class TaskComponent implements OnInit, OnDestroy {
           });
 
           if (this.searchBoardId) {
-            console.log('SEARCH');
-
             const closeSubscription = dialogRef
               .afterClosed()
               .pipe(mergeMap(() => this.tasksService.getTaskById(this.boardId, this.columnId, this.task.id)))
               .subscribe(taskItem => {
-                this.cardPointerEvents$.next('auto');
                 this.task = taskItem;
                 this.fetchExecutor();
                 this.fetchExtraOptions();
@@ -216,7 +218,6 @@ export class TaskComponent implements OnInit, OnDestroy {
               .afterClosed()
               .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
               .subscribe((board: IBoardItem) => {
-                this.cardPointerEvents$.next('auto');
                 this.store.dispatch(loadColumns({ columns: board.columns || [] }));
               });
 
