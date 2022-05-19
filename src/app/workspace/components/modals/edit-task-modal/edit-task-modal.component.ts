@@ -196,6 +196,7 @@ export class EditTaskModalComponent implements OnInit, OnDestroy {
                   fileUrl: '',
                 };
                 this.files$.next([...this.files$.value, newFile]);
+                this.fileName$.next('Загрузить файл');
               },
             });
             this.subscriptions.push(completeSubscription);

@@ -170,7 +170,14 @@ export class TaskComponent implements OnInit, OnDestroy {
           const closeSubscription = dialogRef
             .afterClosed()
             .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
-            .subscribe((board: IBoardItem) => this.store.dispatch(loadColumns({ columns: board.columns || [] })));
+            .subscribe((board: IBoardItem) => {
+              this.store.dispatch(loadColumns({ columns: board.columns || [] }));
+              this.tasksService.getTaskById(this.boardId, this.columnId, this.task.id).subscribe(taskItem => {
+                this.task = taskItem;
+                this.fetchExecutor();
+                this.fetchExtraOptions();
+              });
+            });
 
           this.subscriptions.push(closeSubscription);
         },
