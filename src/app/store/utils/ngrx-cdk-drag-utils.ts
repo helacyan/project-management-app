@@ -33,59 +33,59 @@ export function moveItemInArray<T = any>(arraySource: T[], fromIndex: number, to
 
 /**
  * Moves an item from one array to another.
- * @param currentArraySource Array from which to transfer the item.
- * @param targetArraySource Array into which to put the item.
- * @param currentIndex Index of the item in its current array.
- * @param targetIndex Index at which to insert the item.
+ * @param previousArraySource Array from which to transfer the item.
+ * @param currentArraySource Array into which to put the item.
+ * @param previousIndex Index of the item in its current array.
+ * @param currentIndex Index at which to insert the item.
  */
 export function transferArrayItem<T = any>(
+  previousArraySource: T[],
   currentArraySource: T[],
-  targetArraySource: T[],
-  currentIndex: number,
-  targetIndex: number
-): { currentArray: T[]; targetArray: T[] } {
+  previousIndex: number,
+  currentIndex: number
+): { previousArray: T[]; currentArray: T[] } {
+  const previousArray = JSON.parse(JSON.stringify(previousArraySource));
   const currentArray = JSON.parse(JSON.stringify(currentArraySource));
-  const targetArray = JSON.parse(JSON.stringify(targetArraySource));
 
-  const from = clamp(currentIndex, currentArray.length - 1);
-  const to = clamp(targetIndex, targetArray.length);
+  const from = clamp(previousIndex, previousArray.length - 1);
+  const to = clamp(currentIndex, currentArray.length);
 
-  if (currentArray.length) {
-    targetArray.splice(to, 0, currentArray.splice(from, 1)[0]);
+  if (previousArray.length) {
+    currentArray.splice(to, 0, previousArray.splice(from, 1)[0]);
   }
 
   return {
+    previousArray,
     currentArray,
-    targetArray,
   };
 }
 
 /**
  * Copies an item from one array to another, leaving it in its
  * original position in current array.
- * @param currentArraySource Array from which to copy the item.
- * @param targetArraySource Array into which is copy the item.
- * @param currentIndex Index of the item in its current array.
- * @param targetIndex Index at which to insert the item.
+ * @param previousArraySource Array from which to copy the item.
+ * @param currentArraySource Array into which is copy the item.
+ * @param previousIndex Index of the item in its current array.
+ * @param currentIndex Index at which to insert the item.
  *
  */
 export function copyArrayItem<T = any>(
+  previousArraySource: T[],
   currentArraySource: T[],
-  targetArraySource: T[],
-  currentIndex: number,
-  targetIndex: number
-): { currentArray: T[]; targetArray: T[] } {
+  previousIndex: number,
+  currentIndex: number
+): { previousArray: T[]; currentArray: T[] } {
+  const previousArray = JSON.parse(JSON.stringify(previousArraySource));
   const currentArray = JSON.parse(JSON.stringify(currentArraySource));
-  const targetArray = JSON.parse(JSON.stringify(targetArraySource));
 
-  const to = clamp(targetIndex, targetArray.length);
+  const to = clamp(currentIndex, currentArray.length);
 
-  if (currentArray.length) {
-    targetArray.splice(to, 0, currentArray[currentIndex]);
+  if (previousArray.length) {
+    currentArray.splice(to, 0, previousArray[previousIndex]);
   }
 
   return {
+    previousArray,
     currentArray,
-    targetArray,
   };
 }

@@ -4,8 +4,9 @@ import {
   clearColumns,
   disableCdkDrag,
   enableCdkDrag,
-  fetchColumns,
-  sortColumns,
+  loadColumns,
+  moveColumns,
+  replaceColumn,
 } from '../actions/columns.actions';
 import { columnsInitialState, IColumnsState } from '../state.model';
 import { moveItemInArray } from '../utils/ngrx-cdk-drag-utils';
@@ -13,7 +14,7 @@ import { moveItemInArray } from '../utils/ngrx-cdk-drag-utils';
 export const columnsReducer = createReducer(
   columnsInitialState,
   on(
-    fetchColumns,
+    loadColumns,
     (state, { columns }): IColumnsState => ({
       ...state,
       columns: columns.slice().sort((a, b) => (a.order > b.order ? 1 : -1)),
@@ -27,6 +28,13 @@ export const columnsReducer = createReducer(
     })
   ),
   on(
+    replaceColumn,
+    (state, { columnIndex, updatedColumn }): IColumnsState => ({
+      ...state,
+      columns: [...state.columns.slice(0, columnIndex), updatedColumn, ...state.columns.slice(columnIndex + 1)],
+    })
+  ),
+  on(
     clearColumns,
     (state): IColumnsState => ({
       ...state,
@@ -34,7 +42,7 @@ export const columnsReducer = createReducer(
     })
   ),
   on(
-    sortColumns,
+    moveColumns,
     (state, { previousIndex, currentIndex }): IColumnsState => ({
       ...state,
       columns: moveItemInArray(state.columns, previousIndex, currentIndex),

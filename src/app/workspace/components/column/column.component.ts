@@ -4,17 +4,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, mergeMap, Observable, Subscription } from 'rxjs';
-import { IColumn, ITask } from 'src/app/api/models/api.model';
+import { IColumn } from 'src/app/api/models/api.model';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { ColumnsService } from 'src/app/api/services/columns/columns.service';
-import { TasksService } from 'src/app/api/services/tasks/tasks.service';
 import { OpenConfirmationModalService } from 'src/app/core/components/modal/services/open-modal.service';
-import { fetchColumns } from 'src/app/store/actions/columns.actions';
+import { loadColumns } from 'src/app/store/actions/columns.actions';
 import { IBoardItem } from '../../models/board-item.model';
 import { IColumnItem } from '../../models/column-item.model';
 import { ITaskItem } from '../../models/task-item.model';
 import { CreateTaskModalComponent } from '../modals/create-task-modal/create-task-modal.component';
 import { selectCurrentUserId } from 'src/app/store/selectors/users.selectors';
+import { selectCdkDragDisabled } from 'src/app/store/selectors/columns.selectors';
 
 @Component({
   selector: 'app-column',
@@ -30,8 +30,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public title$!: BehaviorSubject<string>;
 
-  public tasks$!: BehaviorSubject<ITaskItem[]>;
-
   public tasks!: ITaskItem[];
 
   public isTitleEnabled$ = new BehaviorSubject<boolean>(false);
@@ -39,6 +37,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public isTitleDisabled$ = new BehaviorSubject<boolean>(true);
 
   public editTitleForm!: FormGroup;
+
+  public cdkDragDisabled$!: Observable<boolean>;
 
   private subscriptions: Subscription[] = [];
 
@@ -50,7 +50,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
     private store: Store,
     private boardsService: BoardsService,
     private columnsService: ColumnsService,
-    private tasksService: TasksService,
     private dialog: MatDialog,
     private readonly openConfirmationModalService: OpenConfirmationModalService
   ) {}
@@ -63,8 +62,11 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.editTitleForm = this.fb.group({
       title: [this.column.title, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     });
-    this.tasks$ = new BehaviorSubject<ITaskItem[]>(this.column.tasks || []);
-    this.updateTasks();
+    this.tasks =
+      !this.column.tasks || !this.column.tasks.length
+        ? []
+        : this.column.tasks.slice().sort((a, b) => (a.order > b.order ? 1 : -1));
+    this.cdkDragDisabled$ = this.store.select(selectCdkDragDisabled);
   }
 
   ngOnDestroy(): void {
@@ -73,11 +75,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   private setCurrentUserId = (): void => {
     const subscription = this.currentUserId$.subscribe(currentUserId => (this.currentUserId = currentUserId));
-    this.subscriptions.push(subscription);
-  };
-
-  private updateTasks = (): void => {
-    const subscription = this.tasks$.subscribe(tasks => (this.tasks = tasks));
     this.subscriptions.push(subscription);
   };
 
@@ -95,7 +92,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
     const subscription = this.columnsService
       .updateColumn(this.boardId, this.column.id, newColumn)
       .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
-      .subscribe((board: IBoardItem) => this.store.dispatch(fetchColumns({ columns: board.columns || [] })));
+      .subscribe((board: IBoardItem) => this.store.dispatch(loadColumns({ columns: board.columns || [] })));
 
     this.subscriptions.push(subscription);
   };
@@ -122,7 +119,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
     const subscription = this.columnsService
       .deleteColumn(this.boardId, this.column.id)
       .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
-      .subscribe((board: IBoardItem) => this.store.dispatch(fetchColumns({ columns: board.columns || [] })));
+      .subscribe((board: IBoardItem) => this.store.dispatch(loadColumns({ columns: board.columns || [] })));
 
     this.subscriptions.push(subscription);
   };
@@ -137,12 +134,12 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
-  private getNewTaskOrder = (): number => {
-    const tasksOrders: number[] = this.tasks.map(task => task.order);
+  private getNewTaskOrder = (tasks: ITaskItem[]): number => {
+    const tasksOrders: number[] = tasks.map(task => task.order);
     return tasksOrders.length ? Math.max(...tasksOrders) + 1 : 1;
   };
 
-  private getNewTaskNumber = (columns: IColumnItem[]) => {
+  private getNewTaskNumber = (columns: IColumnItem[]): number => {
     const tasksNumbers: number[] = columns
       .map(column => column.tasks || [])
       .flat()
@@ -151,43 +148,34 @@ export class ColumnComponent implements OnInit, OnDestroy {
     return tasksNumbers.length ? Math.max(...tasksNumbers) + 1 : 1;
   };
 
-  private createTask = (task: Pick<ITask, 'title' | 'description'>): void => {
-    const subscription = this.boardsService
-      .getBoardById(this.boardId)
-      .pipe(
-        mergeMap((board: IBoardItem) => {
-          const columns = board.columns || [];
-          const tasks: ITaskItem[] = board.columns?.find(column => column.id === this.column.id)?.tasks || [];
-          this.tasks$.next([...tasks]);
-
-          const newTask: ITask = {
-            title: `${task.title} #${this.getNewTaskNumber(columns)}`,
-            done: false,
-            order: this.getNewTaskOrder(),
-            description: task.description,
-            userId: this.currentUserId,
-          };
-          return this.tasksService.createTask(this.boardId, this.column.id, newTask);
-        })
-      )
-      .subscribe((createdTask: ITaskItem) => this.tasks$.next([...this.tasks, createdTask]));
-
-    this.subscriptions.push(subscription);
-  };
-
   public openCreateTaskDialog(): void {
-    const dialogRef = this.dialog.open(CreateTaskModalComponent, {
-      width: '300px',
-      position: {
-        top: 'calc(70px + 2rem)',
-      },
+    const openSubscription = this.boardsService.getBoardById(this.boardId).subscribe((board: IBoardItem) => {
+      const columns = board.columns || [];
+      const tasks: ITaskItem[] = board.columns?.find(column => column.id === this.column.id)?.tasks || [];
+
+      const dialogRef = this.dialog.open(CreateTaskModalComponent, {
+        width: '300px',
+        position: {
+          top: 'calc(70px + 2rem)',
+        },
+        data: {
+          number: this.getNewTaskNumber(columns),
+          order: this.getNewTaskOrder(tasks),
+          userId: this.currentUserId,
+          boardId: this.boardId,
+          columnId: this.column.id,
+        },
+      });
+
+      const closeSubscription = dialogRef
+        .afterClosed()
+        .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
+        .subscribe((updatedBoard: IBoardItem) =>
+          this.store.dispatch(loadColumns({ columns: updatedBoard.columns || [] }))
+        );
+      this.subscriptions.push(closeSubscription);
     });
 
-    const subscription = dialogRef.afterClosed().subscribe((task: Pick<ITask, 'title' | 'description'>) => {
-      if (task) {
-        this.createTask(task);
-      }
-    });
-    this.subscriptions.push(subscription);
+    this.subscriptions.push(openSubscription);
   }
 }

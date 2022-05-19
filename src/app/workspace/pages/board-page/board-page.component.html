@@ -1,13 +1,24 @@
 <div class="container" *transloco="let t">
   <h2>{{ boardTitle }}</h2>
-  <div cdkDropList cdkDropListOrientation="horizontal" class="columns-container" (cdkDropListDropped)="drop($event)">
+  <div
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    class="columns-container"
+    (cdkDropListDropped)="dropColumn($event)">
     <div
-      class="column-box"
       *ngFor="let column of columns$ | async"
+      class="column-box"
       cdkDrag
-      [cdkDragDisabled]="cdkDragDisabled$ | async"
-      [appCursorMove]="cdkDragDisabled$ | async">
-      <app-column [column]="column">
+      [cdkDragDisabled]="cdkDragDisabled$ | async">
+      <app-column
+        [column]="column"
+        cdkDragHandle
+        [appCursorMove]="cdkDragDisabled$ | async"
+        cdkDropList
+        [id]="column.id"
+        [cdkDropListData]="sortTasks(column)"
+        [cdkDropListConnectedTo]="connectedList"
+        (cdkDropListDropped)="dropTask($event)">
         <div class="column-placeholder" *cdkDragPlaceholder></div>
       </app-column>
     </div>

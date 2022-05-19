@@ -1,7 +1,7 @@
 <ng-container *transloco="let t; read: 'task'">
   <h3 mat-dialog-title>{{ t('create-task') }}</h3>
   <div mat-dialog-content>
-    <form id="create-task-form" [formGroup]="createTaskForm">
+    <form id="create-task-form" [formGroup]="createTaskForm" (ngSubmit)="createTask()">
       <mat-form-field appearance="fill">
         <mat-label>{{ t('title') }}</mat-label>
         <input type="text" matInput name="title" formControlName="title" />
@@ -45,17 +45,13 @@
     </form>
   </div>
   <div mat-dialog-actions>
-    <button mat-button class="modal-btn" (click)="onNoClick()" cdkFocusInitial>{{ t('cancel') }}</button>
+    <button mat-button class="modal-btn" (click)="onCancelClick()" cdkFocusInitial>{{ t('cancel') }}</button>
     <button
       mat-button
       type="submit"
       form="create-task-form"
       class="modal-btn"
-      [disabled]="!createTaskForm.valid"
-      [mat-dialog-close]="{
-        title: createTaskForm.controls['title'].value,
-        description: createTaskForm.controls['description'].value
-      }">
+      [disabled]="!createTaskForm.valid || (isCreated$ | async)">>
       {{ t('create') }}
     </button>
   </div>

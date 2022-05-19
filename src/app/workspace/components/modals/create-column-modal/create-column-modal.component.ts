@@ -18,7 +18,7 @@ export class CreateColumnModalComponent implements OnInit {
     });
   }
 
-  public onNoClick(): void {
+  public onCancelClick(): void {
     this.dialogRef.close();
   }
 }

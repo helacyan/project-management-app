@@ -6,7 +6,7 @@ import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { TasksService } from 'src/app/api/services/tasks/tasks.service';
 import { UsersService } from 'src/app/api/services/users/users.service';
 import { OpenConfirmationModalService } from 'src/app/core/components/modal/services/open-modal.service';
-import { fetchColumns } from 'src/app/store/actions/columns.actions';
+import { loadColumns } from 'src/app/store/actions/columns.actions';
 import { selectCurrentUserId } from 'src/app/store/selectors/users.selectors';
 import { IBoardItem } from '../../models/board-item.model';
 import { ITaskItem } from '../../models/task-item.model';
@@ -88,7 +88,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   };
 
   private updateColumnsState = (board: IBoardItem) =>
-    this.store.dispatch(fetchColumns({ columns: board.columns || [] }));
+    this.store.dispatch(loadColumns({ columns: board.columns || [] }));
 
   private deleteTask = (): void => {
     const subscription = this.tasksService
@@ -133,7 +133,7 @@ export class TaskComponent implements OnInit, OnDestroy {
           .afterClosed()
           .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
           .subscribe((board: IBoardItem) => {
-            this.store.dispatch(fetchColumns({ columns: board.columns || [] }));
+            this.store.dispatch(loadColumns({ columns: board.columns || [] }));
             this.tasksService.getTaskById(this.boardId, this.columnId, this.task.id).subscribe(taskItem => {
               this.task = taskItem;
               this.fetchExecutor();

@@ -7,3 +7,7 @@ export interface ITaskItem extends ITask {
 }
 
 export interface ITaskItemExtended extends ITaskItem, IUpdateTask {}
+
+export interface INewTaskDialogData extends Pick<ITaskItemExtended, 'order' | 'userId' | 'boardId' | 'columnId'> {
+  number: number;
+}

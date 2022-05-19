@@ -29,12 +29,12 @@
       </mat-error>
     </mat-form-field>
   </form>
-  <div class="tasks-container">
-    <app-task
-      *ngFor="let task of tasks$ | async | sortByOrder"
-      [task]="task"
-      [columnId]="column.id"
-      [boardId]="boardId"></app-task>
+  <div class="tasks-container" *ngIf="tasks && tasks.length">
+    <div *ngFor="let task of tasks" class="task-box" cdkDrag [cdkDragDisabled]="cdkDragDisabled$ | async">
+      <app-task [task]="task" [columnId]="column.id" [appCursorMove]="cdkDragDisabled$ | async">
+        <div class="task-placeholder" *cdkDragPlaceholder></div>
+      </app-task>
+    </div>
   </div>
   <button mat-raised-button (click)="openCreateTaskDialog()">+ {{ t('board.create-task') }}</button>
 </div>

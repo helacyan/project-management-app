@@ -10,7 +10,6 @@ import { ColumnComponent } from './components/column/column.component';
 import { CreateColumnModalComponent } from './components/modals/create-column-modal/create-column-modal.component';
 import { TaskComponent } from './components/task/task.component';
 import { AuthGuardService } from '../auth/guards/auth-guard.service';
-import { SortByOrderPipe } from './pipes/sort-by-order.pipe';
 import { CreateTaskModalComponent } from './components/modals/create-task-modal/create-task-modal.component';
 import { MatCardBackgroundColorDirective } from './directives/mat-card-background-color.directive';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
@@ -28,7 +27,6 @@ import { MatCardTransformDirective } from './directives/mat-card-transform.direc
     ColumnComponent,
     CreateColumnModalComponent,
     TaskComponent,
-    SortByOrderPipe,
     CreateTaskModalComponent,
     MatCardBackgroundColorDirective,
     ProfilePageComponent,
