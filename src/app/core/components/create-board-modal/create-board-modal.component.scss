@@ -3,8 +3,6 @@
   margin: 0 auto;
   padding: 15px;
   width: 30vw;
-  min-height: 45vh;
-  background-color: $blue-light;
   text-align: center;
   p {
     font-family: 'Roboto';
@@ -30,10 +28,6 @@ input.ng-touched.ng-invalid {
   border: 2px solid $ferra;
 }
 
-form.ng-touched.ng-invalid {
-  background-color: $ferra-light;
-}
-
 .text-danger {
   display: block;
   color: $ferra;
@@ -41,16 +35,15 @@ form.ng-touched.ng-invalid {
 
 .modal-buttons {
   justify-content: center;
-  .form-btn {
-    margin: 5px;
-  }
-  .form-btn:hover {
-    background-color: $blue;
-  }
-
 }
 
 @media screen and (max-width: 900px) {
+  .new-board-modal {
+    width: 60vw;
+  }
+}
+
+@media screen and (max-width: 750px) {
   .new-board-modal {
     width: 60vw;
   }

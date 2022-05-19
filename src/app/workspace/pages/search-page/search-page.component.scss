@@ -1,5 +1,10 @@
 @use "variables" as *;
 
+.search-container {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 .searched {
   width: 100%;
   height: auto;
@@ -9,13 +14,17 @@
   gap: 1rem;
 }
 .search {
-  padding: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 .search-input {
   background-color: transparent;
   height: 2rem;
   width: 13rem;
   border: 2px solid $gray;
+  padding-left: 0.3rem;
 }
 .search-icon {
   vertical-align: middle;

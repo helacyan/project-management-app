@@ -1,7 +1,7 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { concat, map, mergeMap, Observable, Subscription } from 'rxjs';
 import { IColumn, IUpdateTask } from 'src/app/api/models/api.model';
@@ -54,6 +54,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private store: Store,
     private usersService: UsersService,
@@ -78,6 +79,10 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
     this.store.dispatch(clearColumns());
   }
+
+  private redirectToErrorPage = (): void => {
+    this.router.navigate(['error']);
+  };
 
   private setCurrentUserId = (): void => {
     const subscription = this.currentUserId$.subscribe(currentUserId => (this.currentUserId = currentUserId));
@@ -106,9 +111,13 @@ export class BoardPageComponent implements OnInit, OnDestroy {
         }),
         mergeMap(() => this.boardsService.getBoardById(this.boardId))
       )
-      .subscribe((board: IBoardItem) => {
-        this.boardTitle = board.title;
-        this.store.dispatch(loadColumns({ columns: board.columns || [] }));
+      .subscribe({
+        next: (board: IBoardItem) => {
+          this.boardTitle = board.title;
+          this.connectedList = board.columns!.map(column => column.id);
+          this.store.dispatch(loadColumns({ columns: board.columns || [] }));
+        },
+        error: () => this.redirectToErrorPage(),
       });
     this.subscriptions.push(subscription);
   };
@@ -132,8 +141,11 @@ export class BoardPageComponent implements OnInit, OnDestroy {
           return this.columnsService.createColumn(this.boardId, newColumn);
         })
       )
-      .subscribe((column: IColumnItem) => {
-        this.store.dispatch(addColumn({ column }));
+      .subscribe({
+        next: (column: IColumnItem) => {
+          this.store.dispatch(addColumn({ column }));
+        },
+        error: () => this.redirectToErrorPage(),
       });
 
     this.subscriptions.push(subscription);

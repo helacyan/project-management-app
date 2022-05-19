@@ -111,7 +111,7 @@
     <form id="edit-user-id-form" [formGroup]="editUserIdForm">
       <mat-form-field appearance="fill">
         <mat-select formControlName="userId">
-          <mat-option *ngFor="let user of users" [value]="user.id" (click)="onSelectChange(user.id)">
+          <mat-option *ngFor="let user of users$ | async" [value]="user.id" (click)="onSelectChange(user.id)">
             {{ user.name }}
           </mat-option>
         </mat-select>

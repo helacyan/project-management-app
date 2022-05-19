@@ -6,7 +6,6 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { IUpdateTask } from 'src/app/api/models/api.model';
 import { FilesService } from 'src/app/api/services/files/files.service';
 import { TasksService } from 'src/app/api/services/tasks/tasks.service';
-import { UsersService } from 'src/app/api/services/users/users.service';
 import { selectColumn } from 'src/app/store/selectors/columns.selectors';
 import { IColumnItem } from 'src/app/workspace/models/column-item.model';
 import { ITaskItemExtended } from 'src/app/workspace/models/task-item.model';
@@ -15,6 +14,7 @@ import { hashSymbolValidator } from '../validators/hash.validator';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IFileItem } from 'src/app/workspace/models/file-item.model';
 import { saveAs } from 'file-saver';
+import { selectUsers } from 'src/app/store/selectors/users.selectors';
 
 @Component({
   selector: 'app-edit-task-modal',
@@ -26,7 +26,7 @@ export class EditTaskModalComponent implements OnInit, OnDestroy {
 
   public columnTitle!: string | undefined;
 
-  public users!: IUserItem[];
+  public users$!: Observable<IUserItem[]>;
 
   public taskNumber!: string;
 
@@ -60,16 +60,14 @@ export class EditTaskModalComponent implements OnInit, OnDestroy {
     private filesService: FilesService,
     private sanitizer: DomSanitizer,
     private fb: FormBuilder,
-    private userService: UsersService,
     public dialogRef: MatDialogRef<EditTaskModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ITaskItemExtended
-  ) {
-    this.userService.getUsers().subscribe(users => (this.users = users));
-  }
+  ) {}
 
   ngOnInit(): void {
     this.column$ = this.store.select(selectColumn(this.data.columnId));
     this.setColumnName();
+    this.users$ = this.store.select(selectUsers);
     this.taskNumber = this.data.title.slice(this.data.title.indexOf('#') - 1);
     this.editTitleForm = this.fb.group({
       title: [

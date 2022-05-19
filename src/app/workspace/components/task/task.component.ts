@@ -40,8 +40,6 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   private index: number = 0;
 
-  public cardPointerEvents$ = new BehaviorSubject<string>('auto');
-
   private subscriptions: Subscription[] = [];
 
   @Input() task!: ITaskItem;
@@ -165,7 +163,6 @@ export class TaskComponent implements OnInit, OnDestroy {
   };
 
   public openEditTaskDialog(): void {
-    this.cardPointerEvents$.next('none');
     if (this.route.snapshot.url[0].toString().includes('search')) {
       this.boardId = this.searchBoardId;
     }
@@ -198,13 +195,10 @@ export class TaskComponent implements OnInit, OnDestroy {
           });
 
           if (this.searchBoardId) {
-            console.log('SEARCH');
-
             const closeSubscription = dialogRef
               .afterClosed()
               .pipe(mergeMap(() => this.tasksService.getTaskById(this.boardId, this.columnId, this.task.id)))
               .subscribe(taskItem => {
-                this.cardPointerEvents$.next('auto');
                 this.task = taskItem;
                 this.fetchExecutor();
                 this.fetchExtraOptions();
@@ -216,7 +210,6 @@ export class TaskComponent implements OnInit, OnDestroy {
               .afterClosed()
               .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
               .subscribe((board: IBoardItem) => {
-                this.cardPointerEvents$.next('auto');
                 this.store.dispatch(loadColumns({ columns: board.columns || [] }));
               });
 
