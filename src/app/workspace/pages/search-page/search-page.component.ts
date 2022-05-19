@@ -60,7 +60,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       .subscribe();
     this.subscriptions.push(subscription);
   }
-
   private searchByTag(users: IUser[], enrichedBoards: IBoardItem[], searchable: string): ITaskItemExtended[] {
     let allTasks: ITaskItemExtended[] = enrichedBoards.flatMap(board =>
       board.columns!.flatMap(column =>
