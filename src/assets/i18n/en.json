@@ -119,9 +119,9 @@
     "about": {
       "title": "About us",
       "us": {
-        "one": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione maiores, eaque reprehenderit velit ducimus dolorem dolor.",
-        "two": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione maiores, eaque reprehenderit velit ducimus dolorem dolor.",
-        "three": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione maiores, eaque reprehenderit velit ducimus dolorem dolor."
+        "one": "Team lead, front-end developer. Team coordination, architecture/project base, api implementation, authorization, single pages, localization.",
+        "two": "Front-end developer. Boards, columns, tasks logic/drag and drop implementation, also great work as a code reviewer.",
+        "three": "Front-end developer. Took part in the creation of the main route, header, footer, search and board creation. "
       }
     }
   },
