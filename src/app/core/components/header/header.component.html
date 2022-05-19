@@ -5,17 +5,23 @@
   <div class="container">
     <div class="header-menu-container">
       <div class="wrapper">
-        <button mat-button class="home-btn" [routerLink]="['/']">
-          <span class="material-icons">home</span>
-        </button>
-        <mat-slide-toggle (click)="toggleLanguage()">{{ language }}</mat-slide-toggle>
-        <div class="editBtn" *ngIf="headerService.getEditBtn()">
-          <button mat-raised-button class="header-menu-btn" [routerLink]="['/profile']">
-            <span>{{ t('edit') }}</span>
+        <div class="home-loco-container">
+          <button mat-button class="home-btn" [routerLink]="['/']">
+            <span class="material-icons">home</span>
           </button>
+          <mat-slide-toggle (click)="toggleLanguage()">{{ language }}</mat-slide-toggle>
         </div>
-        <div class="createBtn" *ngIf="headerService.visibleCreateBtn">
-          <button mat-raised-button class="header-menu-btn" (click)="openCreateBoardModal()">{{ t('create') }}</button>
+        <div class="btns-container">
+          <div class="editBtn" *ngIf="headerService.getEditBtn()">
+            <button mat-raised-button class="header-menu-btn" [routerLink]="['/profile']">
+              <span>{{ t('edit') }}</span>
+            </button>
+          </div>
+          <div class="createBtn" *ngIf="headerService.visibleCreateBtn">
+            <button mat-raised-button class="header-menu-btn" (click)="openCreateBoardModal()">
+              {{ t('create') }}
+            </button>
+          </div>
         </div>
       </div>
       <div class="header-login-container">

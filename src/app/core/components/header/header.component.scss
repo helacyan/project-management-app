@@ -27,7 +27,18 @@
     .wrapper {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 1rem;
+
+      .home-loco-container {
+        display: flex;
+        align-items: center;
+        align-self: start;
+      }
+
+      .btns-container {
+        display: flex;
+        gap: 0.5rem;
+      }
     }
   }
 
@@ -61,8 +72,17 @@
     height: 130px;
 
     .header-menu-container {
-      flex-direction: column;
       min-width: unset;
+
+      .wrapper {
+        flex-direction: column;
+        gap: 0.2rem;
+
+        .btns-container {
+          flex-direction: column;
+          gap: 0.2rem;
+        }
+      }
 
       mat-slide-toggle {
         align-self: auto;

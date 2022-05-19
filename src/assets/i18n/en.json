@@ -130,7 +130,9 @@
     "done": "Done",
     "cancel": "cancel",
     "save": "save",
-    "name": "in column"
+    "name": "in column",
+    "attachment": "Attachment",
+    "upload": "Upload file"
   },
   "search-page": {
     "comment": "To search, enter the correct data (task name, or description, or its number, or user)!"

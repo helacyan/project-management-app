@@ -46,7 +46,7 @@ export class EditTaskModalComponent implements OnInit, OnDestroy {
 
   public isDescriptionDisabled$ = new BehaviorSubject<boolean>(true);
 
-  public fileName$ = new BehaviorSubject<string>('Загрузить файл');
+  public fileName$ = new BehaviorSubject<string>('');
 
   public fileToUpload: File | null = null;
 
@@ -186,7 +186,7 @@ export class EditTaskModalComponent implements OnInit, OnDestroy {
                     fileUrl,
                   };
                   this.files$.next([...this.files$.value, newFile]);
-                  this.fileName$.next('Загрузить файл');
+                  this.fileName$.next('');
                 }
               },
               error: () => {
@@ -196,7 +196,7 @@ export class EditTaskModalComponent implements OnInit, OnDestroy {
                   fileUrl: '',
                 };
                 this.files$.next([...this.files$.value, newFile]);
-                this.fileName$.next('Загрузить файл');
+                this.fileName$.next('');
               },
             });
             this.subscriptions.push(completeSubscription);
