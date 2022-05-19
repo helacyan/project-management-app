@@ -31,7 +31,7 @@
   </form>
   <div class="tasks-container" *ngIf="tasks && tasks.length">
     <div *ngFor="let task of tasks" class="task-box" cdkDrag [cdkDragDisabled]="cdkDragDisabled$ | async">
-      <app-task [task]="task" [boardId]="boardId" [columnId]="column.id" [appCursorMove]="cdkDragDisabled$ | async">
+      <app-task [task]="task" [columnId]="column.id" [appCursorMove]="cdkDragDisabled$ | async">
         <div class="task-placeholder" *cdkDragPlaceholder></div>
       </app-task>
     </div>

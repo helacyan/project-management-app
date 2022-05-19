@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, catchError, concat, EMPTY, mergeMap, Observable, Subscription } from 'rxjs';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
@@ -9,7 +10,7 @@ import { TasksService } from 'src/app/api/services/tasks/tasks.service';
 import { UsersService } from 'src/app/api/services/users/users.service';
 import { OpenConfirmationModalService } from 'src/app/core/components/modal/services/open-modal.service';
 import { loadColumns } from 'src/app/store/actions/columns.actions';
-import { selectCurrentUserId } from 'src/app/store/selectors/users.selectors';
+import { selectCurrentUserId, selectUser } from 'src/app/store/selectors/users.selectors';
 import { IBoardItem } from '../../models/board-item.model';
 import { ITaskItem } from '../../models/task-item.model';
 import { EditTaskModalComponent } from '../modals/edit-task-modal/edit-task-modal.component';
@@ -21,6 +22,8 @@ import { IFileItem } from '../../models/file-item.model';
   styleUrls: ['./task.component.scss'],
 })
 export class TaskComponent implements OnInit, OnDestroy {
+  public boardId!: string;
+
   public title!: string;
 
   public order!: number;
@@ -37,15 +40,18 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   private index: number = 0;
 
+  public cardPointerEvents$ = new BehaviorSubject<string>('auto');
+
   private subscriptions: Subscription[] = [];
 
   @Input() task!: ITaskItem;
 
   @Input() columnId!: string;
 
-  @Input() boardId!: string;
+  @Input() searchBoardId!: string;
 
   constructor(
+    private route: ActivatedRoute,
     private store: Store,
     private usersService: UsersService,
     private boardsService: BoardsService,
@@ -57,9 +63,10 @@ export class TaskComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.boardId = this.route.snapshot.params.id;
     this.title = this.task.title;
     this.description = this.task.description;
-    this.fetchExecutor();
+    this.setExecutor();
     this.done = this.task.done;
     this.isTaskOwnByCurrentUser$ = new BehaviorSubject<boolean>(true);
     this.checkTaskExecutor();
@@ -70,16 +77,35 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   private fetchExecutor = (): void => {
-    const subscription = this.usersService.getUserById(this.task.userId).subscribe(user => {
-      this.executor = user.name;
+    if (this.task.userId) {
+      const subscription = this.usersService.getUserById(this.task.userId).subscribe({
+        next: user => {
+          this.executor = user.name;
+        },
+      });
+      this.subscriptions.push(subscription);
+    } else {
+      this.executor = 'пользователь удален';
+    }
+  };
+
+  private setExecutor = (): void => {
+    const subscription = this.store.select(selectUser(this.task.userId)).subscribe(user => {
+      if (user) {
+        this.executor = user.name;
+      } else {
+        this.fetchExecutor();
+      }
     });
     this.subscriptions.push(subscription);
   };
 
   private fetchExtraOptions = (): void => {
     const subscription = this.tasksService.getTaskById(this.boardId, this.columnId, this.task.id).subscribe(task => {
+      this.title = task.title;
       this.description = task.description;
       this.done = task.done;
+      this.files = task.files || [];
     });
     this.subscriptions.push(subscription);
   };
@@ -139,6 +165,10 @@ export class TaskComponent implements OnInit, OnDestroy {
   };
 
   public openEditTaskDialog(): void {
+    this.cardPointerEvents$.next('none');
+    if (this.route.snapshot.url[0].toString().includes('search')) {
+      this.boardId = this.searchBoardId;
+    }
     const subscription = this.tasksService.getTaskById(this.boardId, this.columnId, this.task.id).subscribe(task => {
       const openSubscription = concat(...this.getFilesRequests(task)).subscribe({
         next: blob => {
@@ -167,19 +197,31 @@ export class TaskComponent implements OnInit, OnDestroy {
             },
           });
 
-          const closeSubscription = dialogRef
-            .afterClosed()
-            .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
-            .subscribe((board: IBoardItem) => {
-              this.store.dispatch(loadColumns({ columns: board.columns || [] }));
-              this.tasksService.getTaskById(this.boardId, this.columnId, this.task.id).subscribe(taskItem => {
+          if (this.searchBoardId) {
+            console.log('SEARCH');
+
+            const closeSubscription = dialogRef
+              .afterClosed()
+              .pipe(mergeMap(() => this.tasksService.getTaskById(this.boardId, this.columnId, this.task.id)))
+              .subscribe(taskItem => {
+                this.cardPointerEvents$.next('auto');
                 this.task = taskItem;
                 this.fetchExecutor();
                 this.fetchExtraOptions();
               });
-            });
 
-          this.subscriptions.push(closeSubscription);
+            this.subscriptions.push(closeSubscription);
+          } else {
+            const closeSubscription = dialogRef
+              .afterClosed()
+              .pipe(mergeMap(() => this.boardsService.getBoardById(this.boardId)))
+              .subscribe((board: IBoardItem) => {
+                this.cardPointerEvents$.next('auto');
+                this.store.dispatch(loadColumns({ columns: board.columns || [] }));
+              });
+
+            this.subscriptions.push(closeSubscription);
+          }
         },
       });
       this.subscriptions.push(openSubscription);

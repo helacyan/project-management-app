@@ -12,7 +12,7 @@
   </div>
   <div class="searched">
     <div class="search-result" *ngFor="let item of searchedItems">
-      <app-task [task]="item" [columnId]="item.columnId" [boardId]="item.boardId"></app-task>
+      <app-task [task]="item" [columnId]="item.columnId" [searchBoardId]="item.boardId"></app-task>
     </div>
   </div>
   <div *ngIf="searchedItems.length === 0">

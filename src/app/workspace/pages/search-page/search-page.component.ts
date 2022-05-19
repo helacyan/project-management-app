@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, forkJoin, map, mergeMap, Subject, Subscription, takeUntil } from 'rxjs';
 import { IUser } from 'src/app/api/models/api.model';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
 import { UsersService } from 'src/app/api/services/users/users.service';
-import { State } from 'src/app/store/state.model';
 import { IBoardItem } from '../../models/board-item.model';
 import { ITaskItemExtended } from '../../models/task-item.model';
 import { SearchTasksService } from '../../services/search-tasks.service';
@@ -26,8 +24,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   constructor(
     private readonly boardsService: BoardsService,
     private readonly usersService: UsersService,
-    private readonly searchTasksService: SearchTasksService,
-    private store: Store<State>
+    private readonly searchTasksService: SearchTasksService
   ) {}
 
   notifier = new Subject();
@@ -60,6 +57,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       .subscribe();
     this.subscriptions.push(subscription);
   }
+
   private searchByTag(users: IUser[], enrichedBoards: IBoardItem[], searchable: string): ITaskItemExtended[] {
     let allTasks: ITaskItemExtended[] = enrichedBoards.flatMap(board =>
       board.columns!.flatMap(column =>
