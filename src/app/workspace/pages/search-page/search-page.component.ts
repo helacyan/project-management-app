@@ -1,14 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, forkJoin, map, mergeMap, Subject, Subscription, takeUntil } from 'rxjs';
 import { IUser } from 'src/app/api/models/api.model';
 import { BoardsService } from 'src/app/api/services/boards/boards.service';
-import { TasksService } from 'src/app/api/services/tasks/tasks.service';
 import { UsersService } from 'src/app/api/services/users/users.service';
-import { getStoreBoards } from 'src/app/store/selectors/boards.selectors';
 import { State } from 'src/app/store/state.model';
 import { IBoardItem } from '../../models/board-item.model';
-import { ITaskItem } from '../../models/task-item.model';
+import { ITaskItemExtended } from '../../models/task-item.model';
 import { SearchTasksService } from '../../services/search-tasks.service';
 
 @Component({
@@ -17,7 +15,7 @@ import { SearchTasksService } from '../../services/search-tasks.service';
   styleUrls: ['./search-page.component.scss'],
 })
 export class SearchPageComponent implements OnInit, OnDestroy {
-  searchedItems: Array<ITaskItem> = [];
+  searchedItems: Array<ITaskItemExtended> = [];
 
   searchSubscription: Subscription | null = null;
 
@@ -27,7 +25,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly boardsService: BoardsService,
-    private readonly tasksService: TasksService,
     private readonly usersService: UsersService,
     private readonly searchTasksService: SearchTasksService,
     private store: Store<State>
@@ -43,7 +40,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         debounceTime(1000),
         distinctUntilChanged(),
         mergeMap(searchable => {
-          return this.store.pipe(select(getStoreBoards)).pipe(
+          return this.boardsService.getBoards().pipe(
             mergeMap(boards => {
               let observableBoards = boards.map(board => this.boardsService.getBoardById(board.id));
               observableBoards.forEach(ob => ob.subscribe());
@@ -55,8 +52,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 .pipe(map(users => [users, enrichedBoards] as [IUser[], IBoardItem[]]));
             }),
             map(([users, enrichedBoards]) => {
-              let searchedTasks = this.searchByTag(users, enrichedBoards, searchable);
-              this.searchedItems = searchedTasks;
+              this.searchedItems = this.searchByTag(users, enrichedBoards, searchable);
             })
           );
         })
@@ -64,9 +60,24 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       .subscribe();
     this.subscriptions.push(subscription);
   }
-
-  private searchByTag(users: IUser[], enrichedBoards: IBoardItem[], searchable: string): ITaskItem[] {
-    let allTasks = enrichedBoards.flatMap(board => board.columns!.flatMap(column => column.tasks!));
+  private searchByTag(users: IUser[], enrichedBoards: IBoardItem[], searchable: string): ITaskItemExtended[] {
+    let allTasks: ITaskItemExtended[] = enrichedBoards.flatMap(board =>
+      board.columns!.flatMap(column =>
+        column.tasks!.map(task => {
+          return {
+            title: task.title,
+            done: task.done,
+            order: task.order,
+            description: task.description,
+            userId: task.userId,
+            id: task.id,
+            files: task.files,
+            boardId: board.id,
+            columnId: column.id,
+          };
+        })
+      )
+    );
 
     searchable = searchable.toLowerCase().trim();
 
@@ -79,7 +90,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       let tasksByUserName = allTasks.filter(task => foundUsers.find(user => user.id === task.userId));
       tasks = tasks.concat(tasksByUserName);
     }
-    console.log(tasks);
     return tasks;
   }
 

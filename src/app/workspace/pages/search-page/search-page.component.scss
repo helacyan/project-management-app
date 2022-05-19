@@ -1,4 +1,13 @@
 @use "variables" as *;
+
+.searched {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
 .search {
   padding: 1rem;
 }

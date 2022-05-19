@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { IUpdateTask } from 'src/app/api/models/api.model';
 import { TasksService } from 'src/app/api/services/tasks/tasks.service';
+import { UsersService } from 'src/app/api/services/users/users.service';
 import { selectColumn } from 'src/app/store/selectors/columns.selectors';
-import { selectUsers } from 'src/app/store/selectors/users.selectors';
 import { IColumnItem } from 'src/app/workspace/models/column-item.model';
 import { ITaskItemExtended } from 'src/app/workspace/models/task-item.model';
 import { IUserItem } from 'src/app/workspace/models/user-item.model';
@@ -22,7 +22,7 @@ export class EditTaskModalComponent implements OnInit, OnDestroy {
 
   public columnTitle!: string | undefined;
 
-  public users$!: Observable<IUserItem[]>;
+  public users!: IUserItem[];
 
   public taskNumber!: string;
 
@@ -48,14 +48,16 @@ export class EditTaskModalComponent implements OnInit, OnDestroy {
     private store: Store,
     private tasksService: TasksService,
     private fb: FormBuilder,
+    private userService: UsersService,
     public dialogRef: MatDialogRef<EditTaskModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ITaskItemExtended
-  ) {}
+  ) {
+    this.userService.getUsers().subscribe(users => (this.users = users));
+  }
 
   ngOnInit(): void {
     this.column$ = this.store.select(selectColumn(this.data.columnId));
     this.setColumnName();
-    this.users$ = this.store.select(selectUsers);
     this.taskNumber = this.data.title.slice(this.data.title.indexOf('#') - 1);
     this.editTitleForm = this.fb.group({
       title: [
