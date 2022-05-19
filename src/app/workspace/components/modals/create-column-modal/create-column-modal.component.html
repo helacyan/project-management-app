@@ -1,0 +1,34 @@
+<ng-container *transloco="let t; read: 'column'">
+  <h3 mat-dialog-title>{{ t('createColumn') }}</h3>
+  <div mat-dialog-content>
+    <form id="create-column-form" [formGroup]="createColumnForm">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ t('title') }}</mat-label>
+        <input type="text" matInput formControlName="title" />
+        <mat-error>
+          <span *ngIf="createColumnForm.controls['title'].hasError('required')">
+            {{ t('validation.required') }}
+          </span>
+          <span *ngIf="createColumnForm.controls['title'].hasError('minlength')">
+            {{ t('validation.minLength') }}
+          </span>
+          <span *ngIf="createColumnForm.controls['title'].hasError('maxlength')">
+            {{ t('validation.maxLength') }}
+          </span>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button class="modal-btn" (click)="onCancelClick()" cdkFocusInitial>{{ t('cancel') }}</button>
+    <button
+      mat-button
+      type="submit"
+      form="create-column-form"
+      class="modal-btn"
+      [disabled]="!createColumnForm.valid"
+      [mat-dialog-close]="createColumnForm.controls['title'].value">
+      {{ t('create') }}
+    </button>
+  </div>
+</ng-container>

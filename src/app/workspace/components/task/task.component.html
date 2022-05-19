@@ -1,0 +1,21 @@
+<mat-card
+  [appMatCardBackgroundColor]="isTaskOwnByCurrentUser$ | async"
+  appMatCardTransform
+  (click)="openEditTaskDialog()">
+  <mat-card-title
+    >{{ title }}
+    <button
+      *ngIf="isTaskOwnByCurrentUser$ | async"
+      mat-button
+      class="delete-btn"
+      type="button"
+      (click)="onDeleteButtonClick($event)">
+      <span class="material-icons">delete</span>
+    </button>
+  </mat-card-title>
+  <mat-card-content *transloco="let t; read: 'board'">
+    <p class="description">{{ description }}</p>
+    <p>{{ t('responsible') }}: {{ executor }}</p>
+    <mat-checkbox *ngIf="done" [(ngModel)]="done">{{ t('done') }}</mat-checkbox>
+  </mat-card-content>
+</mat-card>

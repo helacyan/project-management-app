@@ -1,0 +1,9 @@
+<div class="board-wrapper" *transloco="let t; lang: 'en'" (click)="openBoard()">
+  <div class="board">
+    <p class="board-title">{{ board.title }}</p>
+    <p class="board-description">{{ board.description }}</p>
+  </div>
+  <div class="board-preview">
+    <button mat-raised-button (click)="deleteBoard($event)">{{ t('board.delete') }}</button>
+  </div>
+</div>

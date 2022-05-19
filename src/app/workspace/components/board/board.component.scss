@@ -1,0 +1,25 @@
+@use "variables" as *;
+
+.board-wrapper {
+
+  display: flex;
+  flex-direction: column;
+  height: 140px;
+  box-sizing: border-box;
+  width: calc(320px - 1rem);
+  background-image: url(../../../../assets/bg.jpg);
+  background-size: cover;
+  padding: 10px;
+  border-radius: $border-radius;
+}
+.board {
+  height: 70%;
+}
+.board-preview {
+  align-self: flex-end;
+  height: 30%;
+}
+.board-title {
+  font-size: var(--global--font-size-sm);
+  color: $blue-dark;
+}

@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+mat-dialog-title {
+  color: $blue-dark;
+}
+
+.modal-buttons {
+  justify-content: center;
+}

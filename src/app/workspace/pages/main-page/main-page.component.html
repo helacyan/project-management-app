@@ -1,0 +1,15 @@
+<div class="main container">
+  <div class="search">
+    <mat-icon matPrefix class="search-icon">search</mat-icon>
+    <input
+      matInput
+      type="search"
+      placeholder="search"
+      class="search-input"
+      [(ngModel)]="inputSearch"
+      (focus)="searchTask()" />
+  </div>
+  <div class="boards-list">
+    <app-board *ngFor="let board of boards$ | async" [board]="board"></app-board>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="new-board-modal" *transloco="let t; read: 'b-modal'">
+  <div class="modal-container">
+    <h2 mat-dialog-title>{{ t('create') }}</h2>
+
+    <mat-dialog-content>
+      <form [formGroup]="createBoardForm" class="form-create-board">
+        <label class="label" for="title">{{ t('title') }}</label>
+        <input type="text" id="title" placeholder="{{ t('title') }}" formControlName="title" />
+        <span class="text-danger" *ngIf="createBoardFormControl.title.errors?.required">
+          {{ t('validation.title.required') }}
+        </span>
+        <span
+          class="text-danger"
+          *ngIf="createBoardFormControl.title.errors?.minlength || createBoardFormControl.title.errors?.maxlength">
+          {{ t('validation.title.length') }}
+        </span>
+        <label class="label" for="description">{{ t('description') }}</label>
+        <input type="text" id="description" placeholder="{{ t('description') }}" formControlName="description" />
+        <span class="text-danger" *ngIf="createBoardFormControl.description.errors?.required">
+          {{ t('validation.description.required') }}
+        </span>
+        <span
+          class="text-danger"
+          *ngIf="
+            createBoardFormControl.description.errors?.minlength || createBoardFormControl.description.errors?.maxlength
+          ">
+          {{ t('validation.title.length') }}
+        </span>
+      </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="modal-buttons">
+      <button mat-button class="modal-btn" (click)="close()">{{ t('cancel') }}</button>
+      <button mat-button class="modal-btn" (click)="submit()">{{ t('bCreate') }}</button>
+    </mat-dialog-actions>
+  </div>
+</div>

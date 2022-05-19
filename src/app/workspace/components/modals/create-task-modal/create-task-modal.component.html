@@ -1,0 +1,58 @@
+<ng-container *transloco="let t; read: 'task'">
+  <h3 mat-dialog-title>{{ t('create-task') }}</h3>
+  <div mat-dialog-content>
+    <form id="create-task-form" [formGroup]="createTaskForm" (ngSubmit)="createTask()">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ t('title') }}</mat-label>
+        <input type="text" matInput name="title" formControlName="title" />
+        <mat-error *transloco="let e; read: 'column'">
+          <span *ngIf="createTaskForm.controls['title'].hasError('required')">
+            {{ e('validation.required') }}
+          </span>
+          <span *ngIf="createTaskForm.controls['title'].hasError('minlength')">
+            {{ e('validation.minLength') }}
+          </span>
+          <span *ngIf="createTaskForm.controls['title'].hasError('maxlength')">
+            {{ e('validation.maxLength') }}
+          </span>
+          <span *ngIf="createTaskForm.controls['title'].hasError('hashSymbol')">
+            {{ e('validation.hashSymbol') }}
+          </span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>{{ t('description') }}</mat-label>
+        <textarea
+          matInput
+          name="description"
+          formControlName="description"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="8"></textarea>
+        <mat-error>
+          <span *ngIf="createTaskForm.controls['description'].hasError('required')">
+            {{ t('validation.required') }}
+          </span>
+          <span *ngIf="createTaskForm.controls['description'].hasError('minlength')">
+            {{ t('validation.minLength') }}
+          </span>
+          <span *ngIf="createTaskForm.controls['description'].hasError('maxlength')">
+            {{ t('validation.maxLength') }}
+          </span>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button class="modal-btn" (click)="onCancelClick()" cdkFocusInitial>{{ t('cancel') }}</button>
+    <button
+      mat-button
+      type="submit"
+      form="create-task-form"
+      class="modal-btn"
+      [disabled]="!createTaskForm.valid || (isCreated$ | async)">
+      {{ t('create') }}
+    </button>
+  </div>
+</ng-container>

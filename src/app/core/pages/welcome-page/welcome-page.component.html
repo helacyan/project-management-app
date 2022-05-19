@@ -1,0 +1,56 @@
+<div class="wrapper" *transloco="let t; read: 'welcome'">
+  <div class="app">
+    <h1 class="app-title">{{ t('title') }}</h1>
+    <p class="app-text">
+      {{ t('app-desc') }}
+    </p>
+    <div class="app-content">
+      <div class="feature">
+        <p class="feature-title"><span class="material-icons">event_available</span>{{ t('features.one.name') }}</p>
+        <p class="feature-description">{{ t('features.one.description') }}</p>
+      </div>
+      <div class="feature">
+        <p class="feature-title"><span class="material-icons">group_work</span>{{ t('features.two.name') }}</p>
+        <p class="feature-description">{{ t('features.two.description') }}</p>
+      </div>
+      <div class="feature">
+        <p class="feature-title"><span class="material-icons">search</span>{{ t('features.three.name') }}</p>
+        <p class="feature-description">
+          {{ t('features.three.description') }}
+        </p>
+      </div>
+      <div class="feature">
+        <p class="feature-title"><span class="material-icons">timeline</span>{{ t('features.four.name') }}</p>
+        <p class="feature-description">
+          {{ t('features.four.description') }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="about">
+    <h2 class="about-title">{{ t('about.title') }}</h2>
+    <div class="about-us">
+      <div class="about-one">
+        <h3 class="name">HelacyAn</h3>
+        <img class="img" src="../../../../assets/svg/Cozy Setting.svg" />
+        <p class="description">
+          {{ t('about.us.one') }}
+        </p>
+      </div>
+      <div class="about-one">
+        <h3 class="name">personagrata9</h3>
+        <img class="img" src="../../../../assets/svg/female developer 1.svg" />
+        <p class="description">
+          {{ t('about.us.two') }}
+        </p>
+      </div>
+      <div class="about-one">
+        <h3 class="name">WeronikaFed</h3>
+        <img class="img" src="../../../../assets/svg/female developer.svg" />
+        <p class="description">
+          {{ t('about.us.three') }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

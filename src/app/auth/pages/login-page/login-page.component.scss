@@ -1,0 +1,83 @@
+input {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.loginButton {
+  background-color: #0b70f3;
+  width: 124px;
+  height: 30px;
+  margin-top: 22px;
+  font-size: 12px;
+  font-weight: 400;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.logInput {
+  width: 304px;
+  height: 38px;
+  background-color: #E0E0E0;
+  border: 0;
+  padding: 10px;
+}
+
+.logLabel {
+  color: #828282;
+  font-size: 10px;
+  padding-left: 6px;
+}
+
+.logPageWrapper {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pageTitle {
+  width: 304px;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.buttonWrapper {
+  display: flex;
+  width: 304px;
+  justify-content: flex-end;
+}
+
+p {
+  font-size: 1.5rem;
+}
+
+input {
+  &.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+
+  &.ng-valid.ng-touched {
+    border: 1px solid green;
+  }
+}
+
+.requirement {
+  color: rgb(236, 34, 34) ;
+}
+
+.mat-raised-button.mat-button-disabled.mat-button-disabled {
+  background-color: #2f81ed88;
+}

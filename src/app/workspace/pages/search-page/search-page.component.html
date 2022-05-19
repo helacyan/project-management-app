@@ -1,0 +1,21 @@
+<div class="search-container container" *transloco="let t">
+  <div class="search">
+    <mat-icon matPrefix class="search-icon">search</mat-icon>
+    <input
+      matInput
+      type="search"
+      placeholder="search"
+      class="search-input"
+      autofocus
+      [(ngModel)]="inputSearch"
+      (ngModelChange)="searchTask()" />
+  </div>
+  <div class="searched">
+    <div class="search-result" *ngFor="let item of searchedItems">
+      <app-task [task]="item" [columnId]="item.columnId" [searchBoardId]="item.boardId"></app-task>
+    </div>
+  </div>
+  <div *ngIf="searchedItems.length === 0">
+    <p>{{ t('search-page.comment') }}</p>
+  </div>
+</div>

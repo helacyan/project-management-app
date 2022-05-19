@@ -1,0 +1,12 @@
+<div class="modal" *transloco="let t; read: 'c-modal'">
+  <h2 mat-dialog-title>{{ t('title') }}</h2>
+
+  <div mat-dialog-content>
+    <p>{{ t('content') }}</p>
+  </div>
+
+  <div mat-dialog-actions class="modal-buttons">
+    <button mat-button class="modal-btn" (click)="close()">{{ t('cancel') }}</button>
+    <button mat-button class="modal-btn" (click)="continue()" cdkFocusInitial>{{ t('continue') }}</button>
+  </div>
+</div>

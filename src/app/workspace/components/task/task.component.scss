@@ -1,0 +1,41 @@
+@use "variables" as *;
+
+mat-card {
+  width: 230px;
+  min-height: 120px;
+}
+
+mat-card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $primary-color;
+  font-size: var(--global--font-size-sm);
+  min-height: 2.25rem;
+
+  .delete-btn {
+    min-width: 2rem;
+    height: 2.25rem;
+  }
+}
+
+p {
+  margin-bottom: 0.2rem;
+  color: $gray;
+
+  &.description {
+    margin-bottom: 0.5rem;
+    color: $blue-dark;
+  }
+}
+
+mat-checkbox {
+  padding: 0 0.5rem;
+  border-radius: $border-radius;
+  pointer-events: none;
+
+  &.mat-checkbox-checked {
+    background-color: $primary-color;
+    color: white;
+  }
+}

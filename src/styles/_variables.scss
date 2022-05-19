@@ -1,0 +1,17 @@
+@use "global.scss";
+
+$primary-color: var(--global--color-blue-50);
+
+$black: var(--global--color-black);
+$gray: var(--global--color-gray-50);
+$gray-light: var(--global--color-gray-10);
+
+$blue: var(--global--color-blue-70);
+$blue-light: var(--global--color-blue-10);
+$blue-dark: var(--global--color-blue-90);
+
+$ferra: var(--global--color-ferra-50);
+$ferra-light: var(--global--color-ferra-10);
+$ferra-dark: var(--global--color-ferra-70);
+
+$border-radius: 5px;

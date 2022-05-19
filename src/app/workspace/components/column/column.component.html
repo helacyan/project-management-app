@@ -1,0 +1,40 @@
+<div class="column" *transloco="let t; lang: 'en'">
+  <div *ngIf="isTitleDisabled$ | async" class="column-title">
+    <h2 (click)="enableTitleEditMode()">{{ title$ | async }}</h2>
+    <button mat-button class="delete-btn" type="button" (click)="onDeleteButtonClick()">
+      <span class="material-icons">delete</span>
+    </button>
+  </div>
+  <form *ngIf="isTitleEnabled$ | async" class="title-form" [formGroup]="editTitleForm" (ngSubmit)="onTitleEditSubmit()">
+    <div class="title-btns">
+      <button mat-button type="button" (click)="onTitleEditCancel()" cdkFocusInitial>
+        <span class="material-icons">close</span>
+      </button>
+      <button mat-button type="submit" [disabled]="!editTitleForm.valid">
+        <span class="material-icons">done</span>
+      </button>
+    </div>
+    <mat-form-field appearance="fill">
+      <input type="text" matInput formControlName="title" />
+      <mat-error>
+        <span *ngIf="editTitleForm.controls['title'].hasError('required')">
+          {{ t('column.validation.required') }}
+        </span>
+        <span *ngIf="editTitleForm.controls['title'].hasError('minlength')">
+          {{ t('column.validation.minLength') }}
+        </span>
+        <span *ngIf="editTitleForm.controls['title'].hasError('maxlength')">
+          {{ t('column.validation.maxLength') }}
+        </span>
+      </mat-error>
+    </mat-form-field>
+  </form>
+  <div class="tasks-container" *ngIf="tasks && tasks.length">
+    <div *ngFor="let task of tasks" class="task-box" cdkDrag [cdkDragDisabled]="cdkDragDisabled$ | async">
+      <app-task [task]="task" [columnId]="column.id" [appCursorMove]="cdkDragDisabled$ | async">
+        <div class="task-placeholder" *cdkDragPlaceholder></div>
+      </app-task>
+    </div>
+  </div>
+  <button mat-raised-button (click)="openCreateTaskDialog()">+ {{ t('board.create-task') }}</button>
+</div>

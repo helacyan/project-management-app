@@ -1,0 +1,27 @@
+<div class="container" *transloco="let t">
+  <h2>{{ boardTitle }}</h2>
+  <div
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    class="columns-container"
+    (cdkDropListDropped)="dropColumn($event)">
+    <div
+      *ngFor="let column of columns$ | async"
+      class="column-box"
+      cdkDrag
+      [cdkDragDisabled]="cdkDragDisabled$ | async">
+      <app-column
+        [column]="column"
+        cdkDragHandle
+        [appCursorMove]="cdkDragDisabled$ | async"
+        cdkDropList
+        [id]="column.id"
+        [cdkDropListData]="sortTasks(column)"
+        [cdkDropListConnectedTo]="connectedList"
+        (cdkDropListDropped)="dropTask($event)">
+        <div class="column-placeholder" *cdkDragPlaceholder></div>
+      </app-column>
+    </div>
+    <button mat-raised-button (click)="openCreateColumnDialog()">+ {{ t('board.create-column') }}</button>
+  </div>
+</div>
