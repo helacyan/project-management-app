@@ -1,34 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BASE_URL } from '../../consts';
-import { saveAs } from 'file-saver';
+import { Observable } from 'rxjs';
+import { IFileItem } from 'src/app/workspace/models/file-item.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilesService {
-  fileName: string = '';
-
-  formData = new FormData();
-
   constructor(private http: HttpClient) {}
 
-  uploadFile(file: File, taksId: string) {
-    if (file) {
-      let formParams = new FormData();
-      formParams.append('file', file);
-      formParams.append('taskId', taksId);
-      let upload$ = this.http.post(`${BASE_URL}file`, formParams);
-      upload$.subscribe({
-        next: data => data,
-        error: error => console.log(error.error.message),
-      });
-    }
-  }
+  uploadFile = (file: File, taksId: string): Observable<IFileItem> => {
+    let formParams = new FormData();
+    formParams.append('file', file);
+    formParams.append('taskId', taksId);
+    return this.http.post<IFileItem>(`${environment.API_URL}file`, formParams);
+  };
 
-  downloadFile(taskId: string, filename: string) {
-    this.http.get(`${BASE_URL}file/${taskId}/${filename}`, { responseType: 'blob' }).subscribe(data => {
-      saveAs(data, `${filename}`);
-    });
-  }
+  downloadFile = (taskId: string, filename: string) => {
+    return this.http.get(`${environment.API_URL}file/${taskId}/${filename}`, { responseType: 'blob' });
+  };
 }

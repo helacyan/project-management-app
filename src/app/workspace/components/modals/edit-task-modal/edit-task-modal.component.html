@@ -116,5 +116,36 @@
     <form id="edit-done-form" [formGroup]="editDoneForm">
       <mat-checkbox formControlName="done" (change)="updateTask()">Выполнено</mat-checkbox>
     </form>
+    <div class="subtitle-wrapper">
+      <span class="material-icons">attach_file</span>
+      <h3>Вложения</h3>
+    </div>
+    <div class="files">
+      <div class="file" *ngFor="let file of files$ | async">
+        <div *ngIf="file.fileUrl" class="file-image-wrapper">
+          <img class="file-image" [src]="file.fileUrl" [alt]="file.filename" />
+          <mat-icon class="download-btn" (click)="onDownloadFile(file.filename)">download_for_offline</mat-icon>
+        </div>
+        <div *ngIf="!file.fileUrl" class="unable-downloads">
+          <span class="material-icons">block</span>
+          <p>{{ file.filename }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="file-input-wrapper">
+      <button mat-mini-fab class="upload-btn" (click)="fileUpload.click()">
+        <mat-icon>upload</mat-icon>
+      </button>
+      <input
+        type="file"
+        class="file-input"
+        name="file"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+        #fileUpload />
+      <div class="file-upload">
+        {{ fileName$ | async }}
+      </div>
+    </div>
   </div>
 </div>

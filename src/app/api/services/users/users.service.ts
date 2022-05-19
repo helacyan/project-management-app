@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IUserItem } from 'src/app/workspace/models/user-item.model';
-import { BASE_URL } from '../../consts';
+import { environment } from 'src/environments/environment';
 import { IUser } from '../../models/api.model';
 
 @Injectable({
@@ -11,19 +11,19 @@ import { IUser } from '../../models/api.model';
 export class UsersService {
   constructor(private http: HttpClient) {}
 
-  getUsers = (): Observable<IUserItem[]> => this.http.get<IUserItem[]>(`${BASE_URL}users`);
+  getUsers = (): Observable<IUserItem[]> => this.http.get<IUserItem[]>(`${environment.API_URL}users`);
 
-  getUserById = (id: string): Observable<IUserItem> => this.http.get<IUserItem>(`${BASE_URL}users/${id}`);
+  getUserById = (id: string): Observable<IUserItem> => this.http.get<IUserItem>(`${environment.API_URL}users/${id}`);
 
   deleteUser(id: string) {
-    this.http.delete(`${BASE_URL}users/${id}`).subscribe({
+    this.http.delete(`${environment.API_URL}users/${id}`).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });
   }
 
   updateUser(id: string, user: IUser) {
-    this.http.put(`${BASE_URL}users/${id}`, user).subscribe({
+    this.http.put(`${environment.API_URL}users/${id}`, user).subscribe({
       next: data => data,
       error: error => console.log(error.error.message),
     });
